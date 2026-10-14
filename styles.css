@@ -1,0 +1,5707 @@
+/* ==========================================================================
+   DESIGN SYSTEM ÉDITORIAL SUISSE (PROTOCOLE DU SILENCE - VINCENT MERCIER)
+   Design épuré, solide, minimaliste et haute autorité médicale.
+   Fond clair #F8FAFC / #FFFFFF, cartes solides blanches (#FFFFFF) avec bordures subtiles #E2E8F0,
+   Typographie nette en Plus Jakarta Sans, accents en Bleu Profond (#0066CC / #0F172A).
+   Zéro effet glassmorphism flou, zéro bordure néon, zéro carte imbriquée artificielle.
+   ========================================================================== */
+
+:root {
+  /* Swiss Editorial Palette */
+  --canvas: #F8FAFC;
+  --surface: #FFFFFF;
+  --surface-alt: #F1F5F9;
+  --surface-subtle: #F8FAFC;
+
+  --ink: #0F172A;
+  /* Slate 900 - Titres et contrastes forts */
+  --body: #334155;
+  /* Slate 700 - Corps de texte principal */
+  --muted: #64748B;
+  /* Slate 500 - Textes secondaires */
+  --dim: #94A3B8;
+  /* Slate 400 - Éléments discrets */
+
+  --primary: #0F284E;
+  /* Bleu Médical / Acoustique */
+  --primary-hover: #0A1B36;
+  --primary-light: #F1F5F9;
+  --primary-dark: #0F172A;
+
+  --accent: #0066CC;
+  --accent-emerald: #16A34A;
+  --accent-emerald-light: #DCFCE7;
+  --accent-coral: #E11D48;
+  --accent-amber: #D97706;
+  --accent-amber-light: #FEF3C7;
+
+  --border: #E2E8F0;
+  --border-strong: #CBD5E1;
+  --border-active: #0F284E;
+
+  /* Shadows - Élévation suisse subtile */
+  --shadow-subtle: 0 1px 3px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.03);
+  --shadow-card: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
+  --shadow-elevated: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+
+  /* Radius - Géométrie équilibrée, pas de ballons démesurés */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 9999px;
+
+  /* Typography */
+  --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Layout */
+  --container-max: 680px;
+  --container-wide: 800px;
+}
+
+/* Base Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--canvas);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--canvas);
+  color: var(--body);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: clip;
+  width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   TOP PROGRESS BAR (FINE, ÉPURÉE, SANS LOGO GÊNANTE AU SOMMET)
+   ========================================================================== */
+.progress-bar-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background-color: #E2E8F0;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0F284E 0%, #1E3A8A 100%);
+  width: 0%;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 8px rgba(15, 40, 78, 0.35);
+}
+
+/* ==========================================================================
+   STRUCTURE DES ÉCRANS (CONTAINERS PROPRES)
+   ========================================================================== */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 24px;
+  box-sizing: border-box;
+}
+
+.screen-pane {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 4rem;
+  box-sizing: border-box;
+  display: none;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.screen-pane.active {
+  display: flex;
+  flex-direction: column;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.screen-pane.wide-pane {
+  max-width: var(--container-wide);
+}
+
+/* Typographie Éditoriale */
+.question-heading {
+  font-size: clamp(1.5rem, 4.5vw, 2.1rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+  text-wrap: pretty;
+}
+
+.question-helper {
+  font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+  line-height: 1.55;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+  text-wrap: pretty;
+}
+
+.question-meta-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.question-number-pill {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--primary);
+  background-color: var(--primary-light);
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+}
+
+/* ==========================================================================
+   BOUTONS PRINCIPAUX (SOLIDES, BLEU PROFOND OU BLANC AVEC BORDURE NETTE)
+   ========================================================================== */
+.btn-primary-pill,
+.btn-unlock-program {
+  width: 100%;
+  height: 54px;
+  background-color: #16A34A;
+  color: #FFFFFF;
+  font-size: clamp(0.84rem, 3.2vw, 0.98rem);
+  font-weight: 800;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.25);
+  box-sizing: border-box;
+}
+
+.btn-primary-pill:hover:not(:disabled),
+.btn-unlock-program:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 102, 204, 0.35);
+}
+
+.btn-primary-pill:active:not(:disabled),
+.btn-unlock-program:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.btn-primary-pill:disabled,
+.btn-primary-pill.disabled {
+  background-color: #E2E8F0;
+  color: #94A3B8;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none !important;
+}
+
+.action-btn-row {
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+/* ==========================================================================
+   TELA 0: HERO SCREEN (ÉDITORIAL SUISSE HARMONIEUX)
+   ========================================================================== */
+.hero-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.15rem;
+}
+
+.hero-eyebrow-trust-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #FFFFFF;
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #334155;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+}
+
+.hero-trust-stars {
+  color: #F59E0B;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+}
+
+.hero-start-btn {
+  background-color: #16A34A !important;
+  box-shadow: 0 4px 16px rgba(22, 163, 74, 0.3) !important;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.hero-start-btn:hover {
+  background-color: #15803D !important;
+  box-shadow: 0 6px 22px rgba(22, 163, 74, 0.45) !important;
+  transform: translateY(-1px);
+}
+
+.hero-quick-reassurance {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.84rem;
+  color: #475569;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.hero-pill-badge,
+.hero-square-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--surface-alt);
+  border: 1px solid var(--border-strong);
+  padding: 6px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0A1B36;
+  box-shadow: var(--shadow-subtle);
+}
+
+.pulse-dot {
+  display: none;
+}
+
+.hero-promise-title {
+  font-size: clamp(1.85rem, 5vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  max-width: 620px;
+}
+
+.hero-sensory-hook {
+  font-size: clamp(1rem, 2.8vw, 1.15rem);
+  line-height: 1.6;
+  color: var(--body);
+  max-width: 580px;
+}
+
+.hero-transparency-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  text-align: left;
+  background-color: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-left: 3px solid #0A1B36;
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  max-width: 580px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.hero-transparency-card svg {
+  color: #0A1B36;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.hero-transparency-text {
+  font-size: 0.92rem;
+  color: var(--body);
+  line-height: 1.5;
+}
+
+.hero-transparency-text strong {
+  color: var(--ink);
+}
+
+.hero-microcopy {
+  font-size: 0.85rem;
+  color: var(--muted);
+  display: block;
+}
+
+.hero-biblio-box {
+  width: 100%;
+  max-width: 580px;
+  text-align: left;
+  margin-top: 0.5rem;
+}
+
+.biblio-header-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.biblio-header-row h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.biblio-header-row svg {
+  color: var(--primary);
+}
+
+.biblio-bullets-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.biblio-bullet-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.92rem;
+  color: var(--body);
+  line-height: 1.5;
+}
+
+.biblio-bullet-item strong {
+  color: var(--ink);
+}
+
+.bullet-check-icon {
+  color: var(--accent-emerald);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.hero-disclaimer-divider {
+  border: none;
+  height: 1px;
+  background-color: var(--border);
+  width: 100%;
+  max-width: 580px;
+  margin: 1.25rem auto 0.75rem;
+}
+
+.hero-medical-disclaimer-box {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.5;
+  max-width: 580px;
+  text-align: center;
+}
+
+/* ==========================================================================
+   TELA 1: SÉLECTEUR DE SONS (8 SONS SOLIDES)
+   ========================================================================== */
+.sound-options-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.sound-card-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  padding: 14px 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-shadow: var(--shadow-subtle);
+  box-sizing: border-box;
+}
+
+.sound-card-item:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-card);
+}
+
+.sound-card-item.selected {
+  border-color: var(--primary);
+  background-color: var(--primary-light);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+
+.btn-play-sound {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: var(--surface-alt);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+  border: 1px solid var(--border);
+}
+
+.sound-card-item:hover .btn-play-sound {
+  background-color: #E2E8F0;
+}
+
+.sound-card-item.selected .btn-play-sound {
+  background-color: var(--primary);
+  color: #FFFFFF;
+  border-color: var(--primary);
+}
+
+.sound-card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.sound-card-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.sound-card-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+.option-radio-marker {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #CBD5E1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.18s ease;
+  background-color: #FFFFFF;
+}
+
+.sound-card-item.selected .option-radio-marker {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.sound-card-item.selected .option-radio-marker::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+}
+
+/* ==========================================================================
+   TUILES DE QUESTIONS STANDARD (OREILLE, DURÉE, PIC)
+   ========================================================================== */
+.choice-tiles-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.choice-tile-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  padding: 16px 18px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-shadow: var(--shadow-subtle);
+  box-sizing: border-box;
+}
+
+.choice-tile-btn:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-card);
+}
+
+.choice-tile-btn.selected {
+  border-color: var(--primary);
+  background-color: var(--primary-light);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+
+.choice-tile-text {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.choice-tile-sub {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.choice-tile-btn.selected .option-radio-marker {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.choice-tile-btn.selected .option-radio-marker::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+}
+
+.reassurance-empathy-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background-color: #F8FAFC;
+  border: 1px solid #F1F5F9;
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin-top: 20px;
+  color: var(--ink);
+}
+
+.reassurance-empathy-card svg {
+  color: #0F284E;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.reassurance-empathy-text {
+  font-size: 0.92rem;
+  color: var(--body);
+  line-height: 1.5;
+}
+
+.reassurance-empathy-text strong {
+  color: var(--ink);
+}
+
+/* Peak Time Visual */
+.peak-time-visual-card {
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.peak-time-visual-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ==========================================================================
+   TELA 5: HISTOGRAMME DE SÉVÉRITÉ 1-10
+   ========================================================================== */
+.severity-scale-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.severity-histogram-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 6px;
+  align-items: end;
+  height: 160px;
+  padding: 16px 8px 8px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-subtle);
+}
+
+.severity-bar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  height: 100%;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.severity-bar-pill {
+  width: 100%;
+  background-color: #E2E8F0;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.severity-bar-col:hover .severity-bar-pill {
+  background-color: #CBD5E1;
+}
+
+.severity-bar-col.selected .severity-bar-pill {
+  background-color: var(--primary);
+}
+
+.severity-bar-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.severity-bar-col.selected .severity-bar-label {
+  color: var(--primary);
+}
+
+.severity-bar-percent {
+  font-size: 0.72rem;
+  color: var(--dim);
+}
+
+.severity-bar-col.selected .severity-bar-percent {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.severity-feedback-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.severity-feedback-badge {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  background-color: #DC2626;
+  color: #FFFFFF;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+
+.severity-feedback-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.severity-feedback-text {
+  font-size: 0.92rem;
+  color: var(--body);
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   TELA 6: HISTOIRE DE VINCENT MERCIER (ÉDITORIAL FLUIDE)
+   ========================================================================== */
+.author-editorial-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-subtle);
+}
+
+@media (min-width: 600px) {
+  .author-editorial-wrap {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.author-photo-floating-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.author-float-circle,
+.author-portrait-square {
+  width: 150px;
+  height: 150px;
+  border-radius: 6px;
+  object-fit: cover;
+  object-position: center 15%;
+  border: 2px solid #E2E8F0;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+}
+
+.author-float-caption {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-top: 10px;
+  line-height: 1.35;
+}
+
+.author-float-caption strong {
+  color: var(--ink);
+}
+
+.author-editorial-text {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.author-editorial-text p {
+  font-size: 0.95rem;
+  color: var(--body);
+  line-height: 1.6;
+}
+
+.author-editorial-text strong {
+  color: var(--ink);
+}
+
+/* ==========================================================================
+   TELA 7: CONSULTATION WHATSAPP (AVEC NOTE VOCALE DE VINCENT)
+   ========================================================================== */
+.wa-fullscreen-container {
+  width: 100%;
+  max-width: 100%;
+  background-color: #EFEAE2;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #D1D7DB;
+  box-shadow: var(--shadow-card);
+}
+
+.wa-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #008069;
+  padding: 12px 16px;
+  color: #FFFFFF;
+}
+
+.wa-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wa-header-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.wa-header-info h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+
+.wa-header-info span {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.wa-chat-scroll {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  min-height: 340px;
+  max-height: 440px;
+  overflow-y: auto;
+  background-color: #EFEAE2;
+}
+
+.wa-date-pill {
+  align-self: center;
+  background-color: #FFFFFF;
+  color: #54656F;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.wa-bubble-in {
+  align-self: flex-start;
+  max-width: 85%;
+  background-color: #FFFFFF;
+  color: #111B21;
+  border-radius: 10px 10px 10px 2px;
+  padding: 10px 14px;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.wa-bubble-out {
+  align-self: flex-end;
+  max-width: 85%;
+  background-color: #D9FDD3;
+  color: #111B21;
+  border-radius: 10px 10px 2px 10px;
+  padding: 10px 14px;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* Bulle d'indication de frappe WhatsApp */
+.wa-typing-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 16px;
+  background-color: #FFFFFF;
+  border-radius: 12px 12px 12px 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  width: fit-content;
+  margin-bottom: 6px;
+}
+
+.wa-typing-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 12px;
+}
+
+.wa-dot {
+  width: 6px;
+  height: 6px;
+  background-color: #8696A0;
+  border-radius: 50%;
+  display: inline-block;
+  animation: waTypingDotPulse 1.3s infinite ease-in-out both;
+}
+
+.wa-dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.wa-dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+.wa-dot:nth-child(3) {
+  animation-delay: 0s;
+}
+
+@keyframes waTypingDotPulse {
+
+  0%,
+  80%,
+  100% {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+
+  40% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+.wa-time-tag {
+  display: block;
+  text-align: right;
+  font-size: 0.68rem;
+  color: #667781;
+  margin-top: 4px;
+}
+
+.wa-blue-ticks {
+  color: #53BDEB;
+  font-weight: bold;
+}
+
+/* Audio Voice Note Bubble */
+.wa-voice-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wa-voice-avatar-wrap {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+}
+
+.wa-voice-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.wa-mic-badge {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 14px;
+  height: 14px;
+  background-color: #00A884;
+  border-radius: 50%;
+  border: 1.5px solid #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+}
+
+.wa-voice-play-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: #008069;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.1s ease;
+}
+
+.wa-voice-play-btn:active {
+  transform: scale(0.92);
+}
+
+/* Waveform Bars réelles simulant l'enregistrement vocal natif WhatsApp */
+.wa-waveform-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 26px;
+  padding: 0;
+  min-width: 0;
+}
+
+.wa-wave-bar {
+  width: 2.5px;
+  background-color: #8696A0;
+  border-radius: 2px;
+  transition: background-color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.wa-wave-bar.active {
+  background-color: #00A884;
+}
+
+/* Balões de Áudio WhatsApp (Vincent gravado e Élodie encaminhado) */
+.wa-bubble-voice {
+  width: 268px !important;
+  max-width: 88% !important;
+  box-sizing: border-box !important;
+  padding: 10px 12px !important;
+}
+
+.wa-bubble-forwarded {
+  width: 268px !important;
+  max-width: 88% !important;
+  box-sizing: border-box !important;
+  padding: 10px 12px !important;
+}
+
+.wa-voice-track {
+  flex: 1;
+  min-width: 120px;
+  height: 4px;
+  background-color: #D1D7DB;
+  border-radius: 2px;
+  position: relative;
+  cursor: pointer;
+  margin: 0 4px;
+}
+
+.wa-voice-progress {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0%;
+  background-color: #00A884;
+  border-radius: 2px;
+  transition: width 0.1s linear;
+}
+
+/* Bolinha de reprodução / Scrubber do WhatsApp */
+.wa-voice-thumb {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 12px;
+  height: 12px;
+  background-color: #00A884;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  transition: left 0.1s linear;
+}
+
+.wa-voice-time {
+  font-size: 0.75rem;
+  color: #667781;
+  font-weight: 600;
+  min-width: 32px;
+  text-align: right;
+  flex-shrink: 0;
+  margin-left: 2px;
+}
+
+.wa-voice-caption {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #54656F;
+  margin-top: 6px;
+}
+
+/* En-tête Encaminhado WhatsApp (Transféré ↗) */
+.wa-forward-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  color: #8696A0;
+  font-style: italic;
+  margin-bottom: 6px;
+}
+
+.wa-forward-icon {
+  transform: scaleX(-1);
+  color: #8696A0;
+}
+
+/* Balão de Foto POV WhatsApp */
+.wa-photo-bubble {
+  padding: 5px 5px 6px !important;
+  max-width: 290px;
+  background-color: #FFFFFF !important;
+  border-radius: 8px 8px 8px 2px !important;
+  box-shadow: 0 1px 2px rgba(11, 20, 26, 0.1);
+}
+
+.wa-photo-preview {
+  width: 100%;
+  height: auto;
+  max-height: 225px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 6px;
+  display: block;
+}
+
+.wa-photo-caption {
+  font-size: 0.85rem;
+  color: #111B21;
+  padding: 8px 8px 2px;
+  line-height: 1.35;
+}
+
+/* Quick Replies WhatsApp */
+/* Zone d'Interaction WhatsApp (Barres de Saisie Réelles & Boutons d'Envoi Verts) */
+.wa-footer-interactive-area {
+  background-color: #F0F2F5;
+  border-top: 1px solid #D1D7DB;
+  padding: 10px 14px 12px;
+  box-sizing: border-box;
+}
+
+@keyframes waSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 1. Barre standard inactive (affichée pendant la rédaction ou l'écoute audio) */
+.wa-bottom-input-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.wa-bar-input-box {
+  flex: 1;
+  background-color: #FFFFFF;
+  border-radius: 24px;
+  padding: 11px 18px;
+  font-size: 0.9rem;
+  color: #667781;
+  min-height: 20px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 1px 3px rgba(11, 20, 26, 0.04);
+  user-select: none;
+}
+
+.wa-bar-send-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: #00A884;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: #FFFFFF;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+}
+
+.wa-bar-send-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* 2. Options d'Entrée Interactives WhatsApp (Deux Boîtes d'Entrée Réelles avec Bouton d'Envoi Vert) */
+.wa-options-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  animation: waSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.wa-input-option-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.15s ease;
+}
+
+.wa-input-option-row:hover {
+  transform: translateY(-1px);
+}
+
+.wa-input-option-box {
+  flex: 1;
+  background-color: #FFFFFF;
+  border-radius: 24px;
+  padding: 12px 18px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #111B21;
+  border: 1.5px solid #CBD5E1;
+  box-shadow: 0 2px 6px rgba(11, 20, 26, 0.06);
+  display: flex;
+  align-items: center;
+  min-height: 22px;
+  text-align: left;
+  line-height: 1.35;
+  transition: all 0.2s ease;
+}
+
+.wa-input-option-row:hover .wa-input-option-box {
+  border-color: #00A884;
+  box-shadow: 0 3px 10px rgba(0, 168, 132, 0.15);
+}
+
+.wa-input-option-send-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #00A884;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 168, 132, 0.35);
+  transition: all 0.2s ease;
+}
+
+.wa-input-option-row:hover .wa-input-option-send-btn {
+  background-color: #008F6F;
+  transform: scale(1.06);
+  box-shadow: 0 4px 12px rgba(0, 168, 132, 0.45);
+}
+
+.wa-input-option-send-btn svg {
+  display: block;
+}
+
+/* ==========================================================================
+   TELA 8: FREQ INTRO (DEUX CARTES + 3 BULLETS + MICRO-VIDÉO MYÉLINE)
+   ========================================================================== */
+.freq-compare-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+@media (min-width: 560px) {
+  .freq-compare-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.freq-compare-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.freq-compare-card.target-card {
+  border-color: #CBD5E1;
+  background-color: #F8FAFC;
+}
+
+.freq-compare-img {
+  width: 100%;
+  max-width: 130px;
+  height: 110px;
+  object-fit: contain;
+}
+
+.freq-compare-card h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.freq-compare-card p {
+  font-size: 0.85rem;
+  color: var(--body);
+  line-height: 1.45;
+}
+
+.freq-bullets-box {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.freq-bullet-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.92rem;
+  color: var(--body);
+  line-height: 1.45;
+}
+
+.freq-bullet-line strong {
+  color: var(--ink);
+}
+
+.freq-bullet-line svg {
+  color: var(--accent-emerald);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Micro-Vidéo Pédagogique Intégrée Proprement (Sans card imbriquée) */
+.educational-video-box {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin: 18px 0;
+  box-shadow: var(--shadow-subtle);
+  background-color: #000000;
+}
+
+.educational-video-box video {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transform: scale(1.02);
+}
+
+.science-fmri-image {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  border-radius: 4px;
+  border: 1px solid #CBD5E1;
+  object-fit: contain;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+  display: block;
+  margin: 0 auto 16px;
+}
+
+.educational-video-caption {
+  padding: 10px 14px;
+  background-color: var(--surface);
+  border-top: 1px solid var(--border);
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.educational-video-caption strong {
+  color: var(--ink);
+}
+
+/* ==========================================================================
+   TELAS 9-11: CALIBRATION DE FRÉQUENCE (GRILLE, FINETUNE, OCTAVE)
+   ========================================================================== */
+.freq-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+  width: 100%;
+}
+
+.freq-square-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  text-align: center;
+  box-shadow: var(--shadow-subtle);
+}
+
+.freq-square-card:hover {
+  border-color: var(--border-strong);
+}
+
+.freq-square-card.selected {
+  border-color: var(--primary);
+  background-color: var(--primary-light);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+
+.play-circle-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: var(--surface-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+}
+
+.freq-square-card.selected .play-circle-icon {
+  background-color: var(--primary);
+  color: #FFFFFF;
+}
+
+.freq-hz-label {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* Finetune Slider */
+.finetune-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: var(--shadow-subtle);
+}
+
+.finetune-hz-display {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+}
+
+.finetune-slider {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background-color: #E2E8F0;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.finetune-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 102, 204, 0.4);
+}
+
+/* ==========================================================================
+   TELA 12: ALGORITHME EN CASCADE (LOADING 5 ÉTAPES)
+   ========================================================================== */
+.loading-soundwave-anim {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 60px;
+  margin: 1.5rem 0;
+}
+
+.soundwave-bar {
+  width: 6px;
+  height: 24px;
+  background-color: var(--primary);
+  border-radius: 9999px;
+  animation: soundwave-pulse 1.2s infinite ease-in-out alternate;
+}
+
+.soundwave-bar:nth-child(1) {
+  animation-delay: 0.1s;
+  height: 18px;
+}
+
+.soundwave-bar:nth-child(2) {
+  animation-delay: 0.3s;
+  height: 42px;
+}
+
+.soundwave-bar:nth-child(3) {
+  animation-delay: 0.5s;
+  height: 56px;
+}
+
+.soundwave-bar:nth-child(4) {
+  animation-delay: 0.2s;
+  height: 46px;
+}
+
+.soundwave-bar:nth-child(5) {
+  animation-delay: 0.4s;
+  height: 32px;
+}
+
+.soundwave-bar:nth-child(6) {
+  animation-delay: 0.6s;
+  height: 20px;
+}
+
+@keyframes soundwave-pulse {
+  0% {
+    transform: scaleY(0.4);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: scaleY(1.1);
+    opacity: 1;
+  }
+}
+
+.loading-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.loading-phrase-text {
+  font-size: 0.95rem;
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+.loading-cascade-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.loading-step-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background-color: #243044;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.08);
+  animation: cascadeItemEnter 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: background-color 0.25s ease, opacity 0.25s ease;
+}
+
+@keyframes cascadeItemEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.loading-step-item.cascade-done {
+  background-color: #243044;
+  border: none;
+}
+
+.load-step-title {
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+}
+
+.loading-step-item.cascade-hidden .load-step-title {
+  color: #94A3B8;
+}
+
+.load-step-status {
+  font-size: 0.8rem;
+  color: #94A3B8;
+}
+
+.loading-step-item.cascade-done .load-step-status {
+  color: #34D399;
+  font-weight: 600;
+}
+
+.load-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #38BDF8;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==========================================================================
+   TELA 13: PROFIL NEUROACOUSTIQUE & TOOLKIT DE VINCENT (ÉDITORIAL SUISSE)
+   ========================================================================== */
+.diag-profile-hero-card {
+  width: 100%;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  text-align: center;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 24px;
+  box-sizing: border-box;
+}
+
+.diag-pill-label {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--primary);
+  background-color: var(--primary-light);
+  padding: 4px 14px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+}
+
+.diag-frequency-number {
+  font-size: clamp(2.8rem, 8vw, 3.8rem);
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1;
+  margin: 6px 0;
+  letter-spacing: -0.03em;
+}
+
+.diag-sound-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+.diag-reassurance-text {
+  font-size: 0.95rem;
+  color: var(--body);
+  line-height: 1.5;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Toolkit Grid */
+.toolkit-section-header {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.toolkit-section-desc {
+  font-size: 0.92rem;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.toolkit-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+@media (min-width: 540px) {
+  .toolkit-cards-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.toolkit-mini-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+  box-shadow: var(--shadow-subtle);
+}
+
+.toolkit-mini-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background-color: var(--primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+}
+
+.toolkit-mini-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.toolkit-mini-desc {
+  font-size: 0.85rem;
+  color: var(--body);
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   TELA 14: FILTRE NOTCH VISUALIZER
+   ========================================================================== */
+.notch-before-after-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+@media (min-width: 560px) {
+  .notch-before-after-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.notch-visual-box {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.notch-box-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  width: fit-content;
+}
+
+.badge-danger-soft {
+  background-color: #FEE2E2;
+  color: #DC2626;
+}
+
+.badge-success-soft {
+  background-color: #DCFCE7;
+  color: #16A34A;
+}
+
+/* ==========================================================================
+   TELA 15: PREUVE SCIENTIFIQUE HARVARD / MÜNSTER (ÉDITORIAL ÉPURÉ)
+   ========================================================================== */
+.science-card-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.science-fmri-image {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  border-radius: 4px;
+  border: 1px solid #CBD5E1;
+  object-fit: contain;
+  display: block;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+}
+
+.science-quote-box {
+  background-color: var(--surface);
+  border-left: 3px solid var(--primary);
+  border: 1px solid var(--border);
+  border-left-width: 3px;
+  border-left-color: var(--primary);
+  padding: 16px 18px;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  color: var(--body);
+  line-height: 1.6;
+  box-shadow: var(--shadow-subtle);
+}
+
+/* ==========================================================================
+   TELA 16: TRAJECTOIRE DE RÉCUPÉRATION (COURBES CROISÉES)
+   ========================================================================== */
+.trajectory-chart-wrap {
+  width: 100%;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.trajectory-svg-canvas {
+  width: 100%;
+  height: 220px;
+  display: block;
+}
+
+.trajectory-legend-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 14px;
+}
+
+.trajectory-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--body);
+}
+
+.legend-dot-orange {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #EA580C;
+}
+
+.legend-dot-blue {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #0284C7;
+}
+
+/* ==========================================================================
+   TELA 17: MICRO-ENGAGEMENT (10 MINUTES PAR JOUR AVEC COCHES)
+   ========================================================================== */
+.commitment-checkmarks-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 1.5rem 0 2rem;
+  flex-wrap: wrap;
+}
+
+.commitment-box-item {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid #CBD5E1;
+  background-color: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-emerald);
+  box-shadow: var(--shadow-subtle);
+}
+
+.commitment-box-clock {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--accent-amber);
+  background-color: var(--accent-amber-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-amber);
+}
+
+/* ==========================================================================
+   TELA 18: BIFURCATION (LES DEUX CHEMINS)
+   ========================================================================== */
+.bifurcation-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 580px) {
+  .bifurcation-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.bifurcation-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.bifurcation-card.path-inertia {
+  border-color: #FECACA;
+}
+
+.bifurcation-card.path-protocole {
+  border-color: #A7F3D0;
+  background-color: #F0FDF4;
+}
+
+.bifurcation-img-wrap {
+  width: 100%;
+  height: 140px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.bifurcation-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bifurcation-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: var(--body);
+}
+
+.bifurcation-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   TELA 19: PRÉSENTATION VSL CINÉMA
+   ========================================================================== */
+.vsl-video-container {
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-elevated);
+  margin-bottom: 24px;
+  background-color: #000000;
+  aspect-ratio: 16 / 9;
+}
+
+.vsl-video-container video {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ==========================================================================
+   TELA 20: TELA DÉDIÉE DU VOUCHER DE 85% (RESTAURADA E SÓLIDA)
+   ========================================================================== */
+.voucher-interactive-panel {
+  width: 100%;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-sizing: border-box;
+  box-shadow: var(--shadow-card);
+  text-align: center;
+}
+
+.voucher-counter-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--accent-amber-light);
+  border: 1px solid #FCD34D;
+  color: #92400E;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.voucher-main-card {
+  border: 2px dashed var(--primary);
+  border-radius: var(--radius-md);
+  padding: 24px 20px;
+  background-color: var(--primary-light);
+  margin: 18px 0;
+  position: relative;
+}
+
+.voucher-stamp-unlocked {
+  display: inline-block;
+  background-color: var(--accent-emerald);
+  color: #FFFFFF;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 4px 14px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+}
+
+.voucher-percentage {
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+  margin: 8px 0;
+}
+
+.voucher-subtext {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.voucher-urgency-timer {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+/* ==========================================================================
+   TELA 21: PAGE DE VENTE ÉDITORIALE SUISSE COMPLÈTE
+   ========================================================================== */
+.sales-timer-banner {
+  width: 100%;
+  background-color: #FEF3C7;
+  border: 1px solid #FCD34D;
+  color: #92400E;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 10px 16px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.sales-profile-card {
+  width: 100%;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 22px;
+  text-align: center;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.sales-profile-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--primary);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.sales-profile-hz {
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.sales-profile-sound {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--body);
+  margin-bottom: 10px;
+}
+
+/* Roadmap de 7 Jours */
+.roadmap-card {
+  width: 100%;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 22px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-subtle);
+  text-align: left;
+}
+
+.roadmap-card h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.roadmap-steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.roadmap-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.roadmap-step-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--accent-emerald-light);
+  color: var(--accent-emerald);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.roadmap-step-content strong {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.roadmap-step-content p {
+  font-size: 0.85rem;
+  color: var(--body);
+  line-height: 1.4;
+}
+
+/* Boîte d'Offre Unique Premium (37 €) */
+.single-offer-box {
+  width: 100%;
+  background-color: var(--surface);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius-md);
+  padding: 28px 24px;
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-card);
+  text-align: left;
+}
+
+.offer-headline-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.offer-headline-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.offer-price-tag {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.offer-price-old {
+  font-size: 1rem;
+  color: var(--dim);
+  text-decoration: line-through;
+  margin-right: 6px;
+}
+
+.offer-features-checklist {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0 24px;
+}
+
+.offer-features-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.92rem;
+  color: var(--body);
+  line-height: 1.45;
+}
+
+.offer-features-checklist li strong {
+  color: var(--ink);
+}
+
+.feat-check {
+  color: var(--accent-emerald);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Avis App Store */
+.social-proof-header {
+  text-align: center;
+  margin: 1.5rem 0 1rem;
+}
+
+.social-proof-stars {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  color: #F59E0B;
+  margin-bottom: 4px;
+}
+
+.social-proof-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.reviews-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.review-appstore-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  text-align: left;
+  box-shadow: var(--shadow-subtle);
+}
+
+.review-top-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.review-stars-small {
+  color: #F59E0B;
+  display: flex;
+  gap: 2px;
+}
+
+.review-author-date {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.review-headline {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.review-body-text {
+  font-size: 0.88rem;
+  color: var(--body);
+  line-height: 1.5;
+}
+
+.review-developer-reply {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background-color: var(--surface-alt);
+  border-left: 2px solid var(--primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.reply-author {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 2px;
+}
+
+.reply-text {
+  font-size: 0.82rem;
+  color: var(--body);
+  line-height: 1.4;
+}
+
+/* Garantie Béton de 90 Jours */
+.guarantee-seal-card {
+  width: 100%;
+  background-color: var(--surface);
+  border: 1px solid #FECACA;
+  border-radius: var(--radius-md);
+  padding: 22px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+  text-align: left;
+  box-shadow: var(--shadow-subtle);
+}
+
+.guarantee-seal-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: #FEF2F2;
+  border: 2px solid #DC2626;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #DC2626;
+  flex-shrink: 0;
+}
+
+.guarantee-seal-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.guarantee-seal-desc {
+  font-size: 0.88rem;
+  color: var(--body);
+  line-height: 1.5;
+}
+
+/* Badges de Paiement Vectoriels Suisses */
+.payment-brands-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.payment-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  background-color: var(--surface);
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: var(--body);
+  box-shadow: var(--shadow-subtle);
+}
+
+
+/* ==========================================================================
+   CHECKBOX MULTI-SELECT FOR SCREEN-PREV-TREATMENTS
+   ========================================================================== */
+.option-check-marker {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid #CBD5E1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.18s ease;
+  background-color: #FFFFFF;
+}
+
+.choice-tile-btn.selected .option-check-marker {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.choice-tile-btn.selected .option-check-marker::after {
+  content: '';
+  width: 6px;
+  height: 10px;
+  border: solid #FFFFFF;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  margin-top: -2px;
+}
+
+/* Typography polish: prevent hanging punctuation */
+.question-heading,
+.question-helper,
+.hero-promise-title,
+.hero-sensory-hook {
+  text-wrap: pretty;
+}
+
+/* ==========================================================================
+   PAGE DE VENTES OFFICIELLE V5 (STYLE SWISS EDITORIAL & TARIF PIZZA)
+   ========================================================================== */
+.mypattern-timer-banner,
+.mypattern-timer-banner-solid {
+  position: sticky;
+  top: 10px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #F59E0B;
+  border: none;
+  color: #451A03;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  margin: 0 auto 20px;
+  max-width: 95%;
+  width: fit-content;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.28);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mypattern-timer-banner svg,
+.mypattern-timer-banner-solid svg {
+  stroke: #451A03;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.mypattern-timer-banner strong,
+.mypattern-timer-banner-solid strong {
+  font-weight: 800;
+  color: #451A03;
+  letter-spacing: 0.02em;
+  font-size: 0.88rem;
+}
+
+.features-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 24px 0;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .features-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.feature-pill-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+  transition: all 0.2s ease;
+}
+
+.feature-pill-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-elevated);
+}
+
+.feature-icon-wrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--primary-light);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.feature-pill-card h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.feature-pill-card p {
+  font-size: 0.88rem;
+  color: var(--body);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Storytelling : Lettre Ouverte de Vincent Mercier */
+.story-letter-card {
+  background: #FCFDFE;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+  position: relative;
+  text-align: left;
+  box-shadow: var(--shadow-subtle);
+}
+
+.letter-stamp-badge {
+  display: inline-block;
+  background: #0F172A;
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 12px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+}
+
+.letter-headline {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.35;
+  margin-bottom: 16px;
+}
+
+.letter-body-prose p {
+  font-size: 0.96rem;
+  color: var(--body);
+  line-height: 1.65;
+  margin-bottom: 14px;
+}
+
+.letter-signature-block {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--border-strong);
+}
+
+.sig-name {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+
+.sig-title {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* Bonus Showcase */
+.bonuses-showcase-section {
+  margin: 36px 0;
+  text-align: left;
+}
+
+.bonuses-section-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.badge-pill-accent {
+  display: inline-block;
+  background: #F1F5F9;
+  color: #0F284E;
+  border: 1px solid #E2E8F0;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+
+.bonuses-main-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+
+.bonuses-main-sub {
+  font-size: 0.92rem;
+  color: var(--muted);
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+.bonuses-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .bonuses-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bonus-individual-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+}
+
+.bonus-card-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.bonus-number-badge {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--primary);
+  background: var(--primary-light);
+  padding: 3px 10px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+}
+
+.bonus-val-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #15803D;
+  background: #DCFCE7;
+  padding: 3px 10px;
+  border-radius: 9999px;
+}
+
+.bonus-card-title {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+
+.bonus-card-desc {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Grille Tarifs Pizza */
+.pizza-pricing-section {
+  margin: 36px 0;
+  width: 100%;
+}
+
+.pizza-pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .pizza-pricing-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.pizza-tier-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-card);
+  transition: all 0.2s ease;
+}
+
+.pizza-tier-card.tier-highlighted {
+  border-color: #16A34A;
+  box-shadow: 0 8px 30px rgba(22, 163, 74, 0.12);
+}
+
+.pizza-popular-ribbon {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #16A34A;
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 5px 18px;
+  border-radius: 9999px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.pizza-tier-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+
+.pizza-tier-subtitle {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0 0 16px;
+  min-height: 38px;
+  line-height: 1.45;
+}
+
+.pizza-price-box {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #E2E8F0;
+  padding: 10px 0 18px;
+  margin-bottom: 22px;
+  text-align: center;
+}
+
+.pizza-price-crossed {
+  font-size: 0.84rem;
+  color: #94A3B8;
+  text-decoration: line-through;
+  letter-spacing: 0.02em;
+}
+
+.pizza-price-current {
+  font-size: 2.7rem;
+  font-weight: 900;
+  color: var(--ink);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin: 6px 0;
+}
+
+.pizza-tier-card.tier-highlighted .pizza-price-current {
+  color: #15803D;
+}
+
+.pizza-price-installments {
+  font-size: 0.78rem;
+  color: #64748B;
+  font-weight: 500;
+}
+
+.pizza-features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.pizza-features-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: var(--body);
+  line-height: 1.4;
+}
+
+.pizza-features-list li .svg-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.pizza-features-list li.missing-feature {
+  color: var(--muted-light);
+  text-decoration: line-through;
+}
+
+.pizza-features-list li.missing-feature .svg-icon {
+  stroke: var(--muted-light);
+}
+
+.btn-pizza-cta {
+  width: 100%;
+  padding: 16px 14px;
+  border-radius: 6px;
+  font-size: clamp(0.84rem, 3.2vw, 0.98rem);
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.btn-pizza-primary {
+  background: #16A34A;
+  color: #FFFFFF;
+  border: none;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.35);
+}
+
+.btn-pizza-primary:hover {
+  background: #15803D;
+  box-shadow: 0 6px 20px rgba(22, 163, 74, 0.45);
+}
+
+.btn-pizza-secondary {
+  background: #F8FAFC;
+  color: var(--ink);
+  border: 1.5px solid var(--border-strong);
+}
+
+.btn-pizza-secondary:hover {
+  background: #F1F5F9;
+  border-color: var(--ink);
+}
+
+/* Garantie Sérénité 60 Jours */
+.swiss-guarantee-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 24px;
+  margin-top: 32px;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04);
+}
+
+.swiss-guarantee-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #16A34A;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.swiss-guarantee-content h4 {
+  font-size: 1.08rem;
+  font-weight: 800;
+  color: #15803D;
+  margin: 0 0 6px;
+}
+
+.swiss-guarantee-content p {
+  font-size: 0.9rem;
+  color: var(--body);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* FAQ Accordion */
+.mypattern-faq-section {
+  text-align: left;
+}
+
+.faq-main-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--ink);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.faq-accordion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-subtle);
+  transition: all 0.2s ease;
+}
+
+.faq-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.faq-arrow-icon {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 2.5;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+
+.faq-card.open .faq-arrow-icon {
+  transform: rotate(180deg);
+}
+
+.faq-panel-content {
+  display: none;
+  padding: 0 20px 18px;
+  font-size: 0.9rem;
+  color: var(--body);
+  line-height: 1.6;
+}
+
+.faq-card.open .faq-panel-content {
+  display: block;
+}
+
+/* Checkout Footer Panel */
+.checkout-footer-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.checkout-price-callout {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.checkout-price-callout .price-big {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.checkout-price-callout .price-sub {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+
+/* ==========================================================================
+   SÉVÉRITÉ 1-10: RÉGUE ÉDITORIALE & INFOGRAPHIE DE COMMUNAUTÉ
+   ========================================================================== */
+.severity-histogram-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.severity-distrib-tag {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+.severity-distrib-legend {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.severity-selector-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 18px 0 20px;
+  justify-content: space-between;
+}
+
+.severity-num-btn {
+  flex: 1;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  background-color: #FFFFFF;
+  color: var(--ink);
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.severity-num-btn:hover {
+  border-color: #94A3B8;
+  background-color: #F8FAFC;
+}
+
+.severity-num-btn.selected {
+  background-color: #0F284E;
+  border-color: #0F284E;
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(15, 40, 78, 0.25);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   IMAGES & VIDÉOS PROPORTIONNELLES NATURELLES (ZÉRO ROGNAGE)
+   ========================================================================== */
+.visual-editorial-card img,
+.peak-time-visual-card img {
+  width: 100%;
+  height: auto;
+  max-height: 380px;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  display: block;
+  margin: 0 auto;
+}
+
+.science-video-box video,
+.science-media-card video,
+#vsl-video-player {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background-color: #000000;
+  display: block;
+  border-radius: var(--radius-md);
+}
+
+/* ==========================================================================
+   VOUCHER MINIMALISTE HAUTE AUTORITÉ & DOUBLE CLIC
+   ========================================================================== */
+.voucher-interactive-panel {
+  max-width: 620px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.voucher-main-card {
+  background: #FFFFFF;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px 24px;
+  margin: 20px 0 28px;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.voucher-tag-top {
+  display: inline-block;
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #0F284E;
+  background: #F1F5F9;
+  padding: 4px 14px;
+  border-radius: 9999px;
+  margin-bottom: 12px;
+}
+
+.voucher-stamp-unlocked {
+  display: inline-block;
+  border: 2.5px solid #16A34A;
+  color: #15803D;
+  background: #F0FDF4;
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 8px 20px;
+  border-radius: 8px;
+  margin: 12px auto;
+  transform: rotate(-2deg);
+}
+
+@keyframes stampPop {
+  0% {
+    transform: scale(1.6) rotate(-10deg);
+    opacity: 0;
+  }
+
+  70% {
+    transform: scale(0.96) rotate(-1deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1) rotate(-2deg);
+    opacity: 1;
+  }
+}
+
+.voucher-stamp-unlocked.animate-stamp {
+  animation: stampPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* ==========================================================================
+   BANDE DE CONFIANCE PAIEMENT MONOCHROMATIQUE (STRIPE / APPLE STYLE)
+   ========================================================================== */
+.payment-trust-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px 24px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 9999px;
+  padding: 12px 24px;
+  margin: 24px auto 0;
+  max-width: 680px;
+}
+
+.payment-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.payment-trust-item svg {
+  color: #1E293B;
+  flex-shrink: 0;
+}
+
+.payment-trust-logos {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  border-left: 1px solid #CBD5E1;
+  padding-left: 16px;
+}
+
+@media (max-width: 640px) {
+  .payment-trust-bar {
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+  }
+
+  .payment-trust-logos {
+    border-left: none;
+    padding-left: 0;
+  }
+}
+
+
+/* ==========================================================================
+   NOVO TESTE A vs B (MYPATTERN STYLE)
+   ========================================================================== */
+.round-tracker-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.round-pill-indicator {
+  display: inline-block;
+  background-color: #0F284E;
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 5px 14px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+}
+
+.ab-compare-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.ab-sound-box {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 28px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.ab-sound-box:hover {
+  border-color: #0F284E;
+  box-shadow: var(--shadow-card);
+}
+
+.ab-sound-box.playing {
+  border-color: #0F284E;
+  background-color: #F8FAFC;
+  box-shadow: 0 0 0 3px rgba(15, 40, 78, 0.15);
+}
+
+.ab-box-letter {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.ab-box-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.ab-choice-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.btn-ab-choice {
+  padding: 15px 14px;
+  background: #0F284E;
+  color: #FFFFFF;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-ab-choice:hover {
+  background: #0A1B36;
+  transform: translateY(-1px);
+}
+
+.btn-ab-same {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 8px;
+}
+
+.btn-ab-same:hover {
+  color: var(--ink);
+}
+
+/* ==========================================================================
+   ANIMATED TRAJECTORY SVG PATHS
+   ========================================================================== */
+.animated-traj-path {
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  animation: drawTrajectory 1.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes drawTrajectory {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ==========================================================================
+   DIAGNOSTIC SPLIT-VIEW (VSL HEADER CARD)
+   ========================================================================== */
+.vsl-diagnostic-header-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 24px 20px;
+  margin-bottom: 24px;
+  text-align: left;
+  box-shadow: var(--shadow-subtle);
+}
+
+.vsl-diag-top-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #0F284E;
+  background: #F1F5F9;
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+
+.vsl-diag-headline {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+
+.vsl-diag-headline span {
+  color: #0F284E;
+  background: #F1F5F9;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.vsl-diag-sub {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0 0 16px;
+  line-height: 1.45;
+}
+
+.split-cortex-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .split-cortex-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.split-cortex-col {
+  background: #F8FAFC;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.split-col-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.split-col-status {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #16A34A;
+  margin-bottom: 6px;
+}
+
+.split-col-desc {
+  font-size: 0.82rem;
+  color: var(--body);
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* ==========================================================================
+   VOUCHER CARD ÚNICO (DESIGN RETO & SÓLIDO)
+   ========================================================================== */
+.voucher-single-card {
+  background: #FFFFFF;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 32px 24px;
+  margin: 18px 0 24px;
+  box-shadow: var(--shadow-card);
+  text-align: center;
+}
+
+.voucher-badge-sub {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #0F284E;
+  background: #F1F5F9;
+  padding: 4px 12px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.voucher-price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 14px;
+  margin: 12px 0 10px;
+}
+
+.voucher-price-crossed {
+  font-size: 1.25rem;
+  color: var(--muted);
+  text-decoration: line-through;
+  font-weight: 600;
+}
+
+.voucher-price-big {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #0F284E;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.voucher-terms-p {
+  font-size: 0.92rem;
+  color: var(--body);
+  margin: 0 0 14px;
+  line-height: 1.5;
+}
+
+.voucher-security-line {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: #F8FAFC;
+  padding: 8px 14px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+/* ==========================================================================
+   PÁGINA DE VENDAS: TIMER AMÂMBAR SÓLIDO & CARDS SEM LINHAS FINAS COLORIDAS
+   ========================================================================== */
+.mypattern-timer-banner-solid {
+  position: sticky;
+  top: 10px;
+  z-index: 1000;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #F59E0B;
+  border: none;
+  color: #451A03;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin: 0 auto 20px;
+  max-width: 95%;
+  width: fit-content;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.28);
+}
+
+.sales-subvention-card {
+  background: #F8FAFC;
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  margin: 0 auto 24px;
+  max-width: 680px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+}
+
+.subvention-check-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: #16A34A;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.subvention-tag {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #16A34A;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.subvention-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* PROVAS SOCIAIS ÉDITORIALES FRANÇAISES */
+.social-proof-editorial-section {
+  margin: 32px 0 28px;
+  text-align: left;
+}
+
+.social-proof-main-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.social-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 768px) {
+  .social-proof-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.social-proof-card {
+  background: #F8FAFC;
+  border-radius: var(--radius-sm);
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sp-stars {
+  color: #F59E0B;
+  font-size: 0.95rem;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.sp-quote {
+  font-size: 0.88rem;
+  color: var(--body);
+  line-height: 1.5;
+  margin: 0 0 12px;
+  font-style: italic;
+}
+
+.sp-author {
+  font-size: 0.82rem;
+  color: var(--muted);
+  border-top: 1px solid #E2E8F0;
+  padding-top: 8px;
+}
+
+.sp-author strong {
+  color: var(--ink);
+}
+
+/* BÔNUS EM CASCATA MINIMALISTA */
+.bonuses-cascade-section {
+  margin: 36px 0;
+  text-align: left;
+}
+
+.bonuses-cascade-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.bonus-cascade-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  transition: all 0.15s ease;
+}
+
+.bonus-cascade-row:hover {
+  border-color: #0F284E;
+}
+
+.b-casc-num {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0F284E;
+  line-height: 1;
+  padding-top: 2px;
+}
+
+.b-casc-body {
+  flex: 1;
+}
+
+.b-casc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.b-casc-title {
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.b-casc-price-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 4px;
+  padding: 4px 10px;
+}
+
+.b-price-old {
+  font-size: 0.8rem;
+  color: #94A3B8;
+  text-decoration: line-through;
+  font-weight: 500;
+}
+
+.b-price-free {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #16A34A;
+  letter-spacing: 0.04em;
+}
+
+.b-casc-desc {
+  font-size: 0.88rem;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* BANDEIRAS DE PAGAMENTO COLORIDAS */
+.payment-trust-bar-color {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 20px auto 0;
+  flex-wrap: wrap;
+}
+
+.payment-brand-item {
+  display: flex;
+  align-items: center;
+}
+
+/* GARANTIA DE 60 DIAS SÓLIDA */
+.swiss-guarantee-card-solid {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: #F8FAFC;
+  border-radius: var(--radius-sm);
+  padding: 22px 20px;
+  margin-top: 28px;
+  text-align: left;
+}
+
+.swiss-guarantee-icon-solid {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #16A34A;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* BOTÃO DE CHECKOUT RETANGULAR RETO ELEGANTE */
+.btn-unlock-program {
+  width: 100%;
+  max-width: 480px;
+  padding: 18px 24px;
+  border-radius: var(--radius-sm);
+  background: #16A34A;
+  color: #FFFFFF;
+  font-size: 1.08rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.35);
+  transition: all 0.15s ease;
+  box-sizing: border-box;
+}
+
+.btn-unlock-program:hover {
+  background: #15803D;
+  box-shadow: 0 6px 18px rgba(22, 163, 74, 0.45);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   CARTE DIAGNOSTIC CLINIQUE AU SOMMET DE LA VSL (SPLIT CORTEX)
+   ========================================================================== */
+.vsl-diagnostic-container {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin-bottom: 24px;
+  text-align: center;
+  box-shadow: none;
+}
+
+/* Badge Disclaimer Clinique Haute Autorité (Sans Puce Animée, Contraste & Destaque Élevé) */
+.vsl-diag-top-badge,
+.profile-card-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #0A1B36;
+  color: #FFFFFF;
+  border: 1.5px solid #1E3A8A;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 18px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 14px rgba(10, 27, 54, 0.16);
+  text-align: center;
+}
+
+.diag-headline-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+/* Pilule Statut Surcharge - Contraste Maximal Garanti (Texte Blanc sur Fond Rouge) */
+.diag-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #DC2626;
+  color: #FFFFFF !important;
+  border: 1px solid #B91C1C;
+  font-weight: 800;
+  font-size: 0.76rem;
+  padding: 6px 14px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.25);
+}
+
+.vsl-diag-headline {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.02em;
+}
+
+.vsl-diag-headline span {
+  color: #0F172A;
+  background: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.vsl-diag-sub {
+  font-size: 0.88rem;
+  color: #64748B;
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* Tableau Linéaire des Paramètres Patient (Sans cartes dans cartes) */
+.patient-params-flat-table {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 22px;
+}
+
+@media (max-width: 600px) {
+  .patient-params-flat-table {
+    grid-template-columns: 1fr;
+  }
+}
+
+.patient-param-line {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.patient-param-line.full-width-line {
+  grid-column: 1 / -1;
+  border-top: 1px solid #E2E8F0;
+  padding-top: 10px;
+  margin-top: 4px;
+}
+
+.p-param-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.p-param-val {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.35;
+}
+
+.p-param-subnote {
+  font-size: 0.78rem;
+  color: #64748B;
+  margin-top: 3px;
+  line-height: 1.35;
+}
+
+/* Liste Minimaliste de Bénéfices (Sans cartes) */
+.vsl-benefits-list-flat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  padding: 14px 16px;
+  margin-top: 18px;
+}
+
+.fp-bullet-flat {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: #1E293B;
+  line-height: 1.45;
+}
+
+.fp-bullet-flat svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Colonnes Comparatives Split Cortex (Avant vs Après) */
+.split-cortex-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 640px) {
+  .split-cortex-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.split-cortex-col {
+  padding: 16px 18px;
+  border-radius: 6px;
+  border: 1px solid #E2E8F0;
+  background: #FFFFFF;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.split-cortex-col.col-healthy {
+  border-top: 4px solid #16A34A;
+}
+
+.split-cortex-col.col-overload {
+  border-top: 4px solid #DC2626;
+}
+
+.split-cortex-visual {
+  width: 100%;
+  height: 140px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 10px 0 12px;
+  border: 1px solid #E2E8F0;
+  background: #000000;
+}
+
+.split-cortex-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.split-col-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.split-col-status {
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.split-col-desc {
+  font-size: 0.84rem;
+  color: #475569;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Mockup Bundle Multi-Dispositifs */
+.bundle-mockup-section {
+  text-align: center;
+  background: transparent;
+}
+
+.bundle-mockup-wrapper {
+  max-width: 820px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.bundle-mockup-frame {
+  width: 100%;
+  margin: 18px 0 24px;
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+}
+
+@keyframes floatingMockup {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.bundle-mockup-image {
+  width: 100%;
+  max-width: 820px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  background: transparent;
+  filter: drop-shadow(0 14px 28px rgba(15, 23, 42, 0.10));
+  animation: floatingMockup 5.5s ease-in-out infinite;
+  transition: transform 0.3s ease;
+}
+
+.bundle-features-strip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-top: 12px;
+  margin-bottom: 20px;
+  border-top: none;
+  padding: 0 4px;
+}
+
+.bundle-feat-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #475569;
+  background: transparent;
+  border: none;
+  padding: 2px 4px;
+  white-space: nowrap;
+}
+
+.bundle-feat-inline svg {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+
+@media (max-width: 600px) {
+  .bundle-features-strip {
+    gap: 8px;
+    margin-top: 8px;
+    justify-content: space-between;
+    padding: 0 4px;
+  }
+
+  .bundle-feat-inline {
+    font-size: 0.68rem;
+    gap: 3px;
+  }
+
+  .bundle-feat-inline svg {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+/* Icônes Minimalistes */
+.minimal-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   LECTEUR VIDÉO VSL AVEC BANNIÈRE AUTOPLAY & CLIC POUR DÉMUTER
+   ========================================================================== */
+.vsl-video-container {
+  position: relative;
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto 28px;
+  border-radius: var(--radius-sm, 6px);
+  overflow: hidden;
+  background: #000000;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.2);
+}
+
+.vsl-video-container video {
+  width: 100%;
+  height: auto;
+  display: block;
+  cursor: pointer;
+}
+
+.vsl-unmute-overlay {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.vsl-unmute-banner {
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-sm, 6px);
+  padding: 10px 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #FFFFFF;
+  font-size: 0.92rem;
+  font-weight: 600;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.vsl-unmute-banner:hover {
+  transform: translateY(-1px);
+  background: rgba(15, 23, 42, 0.98);
+}
+
+.vsl-unmute-text {
+  letter-spacing: -0.01em;
+}
+
+.vsl-unmute-pill {
+  background: #16A34A;
+  color: #FFFFFF;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  animation: pulseUnmute 1.8s infinite;
+}
+
+@keyframes pulseUnmute {
+
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
+  }
+
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 8px rgba(22, 163, 74, 0);
+  }
+}
+
+@media (max-width: 640px) {
+  .vsl-unmute-banner {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    gap: 8px;
+  }
+
+  .vsl-unmute-pill {
+    padding: 4px 8px;
+    font-size: 0.74rem;
+  }
+}
+
+
+/* ==========================================================================
+   NOUVEAUX STYLES ÉDITORIAUX SUISSES (REGRA 60-30-10 & MYPATTERN)
+   ========================================================================== */
+
+/* 1. Badge Carré Hero */
+.hero-square-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1E3A8A;
+  color: #FFFFFF;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid #2563EB;
+  box-shadow: 0 2px 8px rgba(30, 58, 138, 0.2);
+  margin-bottom: 16px;
+}
+
+.hero-square-badge .pulse-dot {
+  background: #60A5FA;
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.4);
+}
+
+/* 2. Tags Solides et Titres Split VSL */
+.solid-col-tag {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tag-danger {
+  background: #DC2626;
+  color: #FFFFFF;
+}
+
+.tag-success {
+  background: #16A34A;
+  color: #FFFFFF;
+}
+
+.split-col-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 8px 0 6px;
+}
+
+/* 3. Future Pacing & Bénéfices sur la VSL */
+.vsl-future-pacing-section {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #E2E8F0;
+  text-align: left;
+}
+
+.fp-header-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.fp-bullets-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fp-bullet-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 4px;
+  padding: 12px 14px;
+  font-size: 0.88rem;
+  color: #334155;
+  line-height: 1.45;
+}
+
+.fp-bullet-card svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* 4. Légende Imagerie Harvard FMRI */
+.science-image-caption {
+  font-size: 0.82rem;
+  color: #64748B;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 4px;
+  padding: 10px 14px;
+  margin: -10px auto 18px;
+  max-width: 680px;
+  line-height: 1.45;
+  text-align: left;
+}
+
+/* 5. Carte Unique Solide Voucher 85% */
+.voucher-single-card {
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  padding: 36px 28px;
+  max-width: 520px;
+  margin: 0 auto;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+  text-align: center;
+}
+
+.voucher-subvention-tag {
+  display: inline-block;
+  background: #16A34A;
+  color: #FFFFFF;
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+}
+
+.voucher-discount-hero {
+  font-size: clamp(1.25rem, 4.2vw, 1.65rem);
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.voucher-subtext {
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.btn-voucher-action {
+  width: 100%;
+  padding: 18px 24px;
+  border-radius: 6px;
+  background: #0F172A;
+  color: #FFFFFF;
+  font-size: 1.05rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
+  transition: all 0.2s ease;
+}
+
+.btn-voucher-action:hover {
+  background: #1E293B;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   POP-UP MODAL QUADRADO, SÓLIDO ESCURO DO VOUCHER ACTIVÉ (-85%)
+   ========================================================================== */
+.voucher-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 15, 30, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: vPopFadeIn 0.25s ease forwards;
+}
+
+@keyframes vPopFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.voucher-popup-square-card {
+  position: relative;
+  background: #0A1B36;
+  border: 2px solid #10B981;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 520px;
+  min-height: 520px;
+  padding: 36px 30px 30px;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.75), 0 0 45px rgba(16, 185, 129, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  color: #FFFFFF;
+  animation: vPopScaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes vPopScaleUp {
+  from {
+    transform: scale(0.92) translateY(12px);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.v-pop-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94A3B8;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.v-pop-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+}
+
+.v-pop-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+}
+
+.v-pop-pill-green {
+  background: #10B981;
+  color: #FFFFFF;
+  font-size: 0.74rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.v-pop-code {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #94A3B8;
+  letter-spacing: 0.06em;
+  font-family: monospace;
+}
+
+.v-pop-stamp-activated {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1.5px solid #10B981;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #34D399;
+  font-weight: 800;
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  margin: 16px 0 10px;
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.25);
+}
+
+.v-pop-title {
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+
+.v-pop-desc {
+  font-size: 0.88rem;
+  color: #CBD5E1;
+  line-height: 1.45;
+  margin-bottom: 14px;
+  max-width: 440px;
+}
+
+.v-pop-price-block {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 14px;
+}
+
+.v-pop-price-crossed {
+  font-size: 0.85rem;
+  color: #94A3B8;
+  text-decoration: line-through;
+  margin-bottom: 4px;
+}
+
+.v-pop-price-huge {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #34D399;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 4px;
+}
+
+.v-pop-price-sub {
+  font-size: 0.8rem;
+  color: #94A3B8;
+  font-weight: 600;
+}
+
+.v-pop-timer-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.84rem;
+  color: #FCD34D;
+  margin-bottom: 18px;
+  font-weight: 600;
+}
+
+.btn-pop-voucher-proceed {
+  width: 100%;
+  padding: 18px 24px;
+  background: #10B981;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 9999px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.45);
+  transition: all 0.2s ease;
+}
+
+.btn-pop-voucher-proceed:hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 26px rgba(16, 185, 129, 0.6);
+}
+
+/* 6. Landing Page MyPattern Elements */
+.mypattern-profile-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  padding: 24px 20px;
+  margin-bottom: 24px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.profile-card-hz {
+  font-size: 2.6rem;
+  font-weight: 900;
+  color: #0F172A;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.profile-card-type {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #475569;
+  margin-bottom: 14px;
+}
+
+.profile-waveform-bars {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  height: 28px;
+  margin-bottom: 14px;
+}
+
+.p-bar {
+  width: 4px;
+  background: #0284C7;
+  border-radius: 2px;
+}
+
+.p-bar.b1 {
+  height: 10px;
+}
+
+.p-bar.b2 {
+  height: 18px;
+}
+
+.p-bar.b3 {
+  height: 26px;
+}
+
+.p-bar.b4 {
+  height: 20px;
+}
+
+.p-bar.b5 {
+  height: 24px;
+}
+
+.p-bar.b6 {
+  height: 16px;
+}
+
+.p-bar.b7 {
+  height: 22px;
+}
+
+.p-bar.b8 {
+  height: 12px;
+}
+
+.profile-card-note {
+  font-size: 0.88rem;
+  color: #64748B;
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* 7. Carte Voucher Subvention Sombre (Design Noble & Haute Autorité Médicale) */
+.sales-subvention-dark-card {
+  background: #0A1B36;
+  border: 1px solid #1E293B;
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  box-shadow: 0 6px 20px rgba(10, 27, 54, 0.14);
+  text-align: left;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sub-dark-icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #10B981;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+  margin-top: 2px;
+}
+
+.sub-dark-content {
+  flex: 1;
+}
+
+.sub-dark-badge-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.sub-dark-tag {
+  display: inline-flex;
+  align-items: center;
+  background: #10B981;
+  color: #FFFFFF;
+  border: none;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 4px;
+}
+
+.sub-dark-text {
+  font-size: 0.92rem;
+  color: #E2E8F0;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.sub-dark-text strong {
+  color: #FFFFFF;
+  font-weight: 800;
+}
+
+.sub-dark-old-price {
+  color: #94A3B8;
+  text-decoration: line-through;
+  margin: 0 4px;
+}
+
+.pizza-tier-card.tier-solo-card {
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.pizza-features-list li.solo-feature-included {
+  color: #0F172A;
+  font-weight: 600;
+}
+
+.pizza-features-list li.missing-feature {
+  color: #94A3B8;
+}
+
+.pizza-features-list li.missing-feature span {
+  text-decoration: line-through;
+  color: #94A3B8;
+}
+
+.pizza-features-list li.missing-feature svg {
+  stroke: #94A3B8;
+  opacity: 0.8;
+}
+
+/* 8. Séparateurs de Sections */
+.sales-section-box {
+  margin: 36px 0;
+  text-align: left;
+}
+
+.sales-section-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+
+.sales-section-sub {
+  font-size: 0.92rem;
+  color: #475569;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* 9. Cascade Timeline 3 Piliers (MyPattern Card 2) */
+.method-cascade-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.method-cascade-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  padding: 18px 20px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+.method-step-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  background: #0F172A;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.method-step-content h4 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0 0 4px;
+}
+
+.method-step-content p {
+  font-size: 0.88rem;
+  color: #475569;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* 10. Avis Clients en Cascade (Style MyPattern) */
+.sp-stars-center {
+  font-size: 1.3rem;
+  color: #F59E0B;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.sp-social-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.sp-social-sub {
+  font-size: 0.9rem;
+  color: #64748B;
+  margin-bottom: 22px;
+  text-align: center;
+}
+
+.mypattern-reviews-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mypattern-review-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  padding: 20px 22px;
+  text-align: left;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+}
+
+.review-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.review-stars-gold {
+  color: #F59E0B;
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+
+.review-date-verified {
+  font-size: 0.78rem;
+  color: #94A3B8;
+  font-weight: 500;
+}
+
+.review-headline {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0 0 6px;
+}
+
+.review-body-text {
+  font-size: 0.88rem;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0 0 10px;
+}
+
+.review-author-tag {
+  font-size: 0.82rem;
+  color: #64748B;
+}
+
+/* 11. Sceau Officiel de Garantie */
+.official-seal-wrapper {
+  flex-shrink: 0;
+}
+
+/* 12. Barre Unique de Paiement */
+.payment-trust-bar-single {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin: 22px 0 32px;
+  flex-wrap: wrap;
+}
+
+.price-sub-note {
+  font-size: 0.85rem;
+  color: #64748B;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   13. FILTRE D'EXCELLENCE : ERGONOMIE MOBILE & RETOUR TACTILE
+   ========================================================================== */
+.btn-primary-pill:active,
+.btn-voucher-action:active,
+.btn-pizza-cta:active,
+.sound-card-item:active,
+.choice-tile-btn:active,
+.btn-play-sound:active {
+  transform: scale(0.982);
+  transition: transform 0.08s ease;
+}
+
+/* 14. PREUVE AU POINT DE DOUTE (PROOF AT POINT OF DOUBT) */
+.vsl-btn-subnote {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-size: 0.82rem;
+  color: #475569;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.voucher-subnote-trust {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-size: 0.82rem;
+  color: #475569;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.cta-trust-badges-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.trust-badge-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.cta-trust-badges-solo .trust-badge-item {
+  color: #64748B;
+  font-size: 0.76rem;
+}
+
+/* 11. Bandeiras & Meios de Pagamento Stripe / CartPanda */
+.pizza-payment-methods-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  margin-top: 14px;
+  max-width: 100%;
+}
+
+.pay-badge-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  cursor: default;
+}
+
+.pay-badge-item:hover {
+  transform: translateY(-1px);
+}
+
+.pay-svg {
+  display: block;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+/* 12. Pied de Page Minimaliste Haute Confiance */
+.landing-minimal-footer {
+  margin-top: 56px;
+  padding: 32px 16px 48px;
+  border-top: 1px solid #E2E8F0;
+  text-align: center;
+  background: transparent;
+}
+
+.footer-trust-copy-note {
+  display: block;
+  font-size: 0.76rem;
+  font-weight: 400;
+  color: #94A3B8;
+  line-height: 1.5;
+  max-width: 660px;
+  margin: 0 auto 10px;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+
+.footer-copyright {
+  font-size: 0.72rem;
+  color: #CBD5E1;
+  font-weight: 400;
+  margin: 0;
+}
+
+/* ==========================================================================
+   TSL EDITORIAL DOSSIER (REMPLACEMENT VSL ÉDITORIAL - 9 BLOCOS GUILHERME)
+   ========================================================================== */
+.vsl-tsl-editorial-wrapper {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 10px 0 36px;
+  margin: 0 auto 36px;
+  max-width: 680px;
+  box-shadow: none;
+}
+
+@media (max-width: 640px) {
+  .vsl-tsl-editorial-wrapper {
+    padding: 24px 18px;
+    border-radius: 12px;
+  }
+}
+
+.tsl-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #0A1B36;
+  color: #FFFFFF;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.tsl-main-title {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.3;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 640px) {
+  .tsl-main-title {
+    font-size: 1.35rem;
+  }
+}
+
+.tsl-sub-title {
+  font-size: 1.02rem;
+  color: #475569;
+  line-height: 1.5;
+  margin-bottom: 22px;
+}
+
+.tsl-author-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  margin-bottom: 28px;
+}
+
+.tsl-author-img {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #0D9488;
+  flex-shrink: 0;
+}
+
+.tsl-author-meta strong {
+  display: block;
+  font-size: 0.94rem;
+  color: #0F172A;
+  font-weight: 800;
+}
+
+.tsl-author-meta span {
+  display: block;
+  font-size: 0.78rem;
+  color: #64748B;
+  line-height: 1.4;
+}
+
+.tsl-lead-paragraph {
+  font-size: 1.05rem;
+  color: #0F172A;
+  font-weight: 500;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.tsl-h2 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 32px 0 12px;
+  letter-spacing: -0.01em;
+  border-bottom: 2px solid #CCFBF1;
+  padding-bottom: 6px;
+  display: inline-block;
+}
+
+.tsl-callout-box {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-left: 3px solid #0F284E;
+  padding: 18px 20px;
+  border-radius: 6px;
+  margin: 22px 0;
+  font-size: 0.95rem;
+  color: #334155;
+  line-height: 1.6;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+
+.tsl-quote-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-left: 3px solid #0066CC;
+  padding: 16px 20px;
+  border-radius: 6px;
+  margin: 18px 0;
+  font-size: 0.92rem;
+  color: #334155;
+  font-style: italic;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+
+.tsl-quote-author {
+  display: block;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: #2563EB;
+  margin-top: 8px;
+}
+
+.tsl-bullet-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tsl-bullet-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.92rem;
+  color: #334155;
+}
+
+.tsl-bullet-item svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.tsl-guarantee-box {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 22px;
+  margin: 24px 0;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04);
+}
+
+.tsl-guarantee-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.tsl-guarantee-header h4 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #166534;
+  margin: 0;
+}
+
+.tsl-offer-summary-card {
+  background: #F8FAFC;
+  border: 2px solid #0D9488;
+  border-radius: 14px;
+  padding: 26px 22px;
+  margin: 28px 0;
+  text-align: center;
+}
+
+.tsl-pricing-strike {
+  font-size: 1.05rem;
+  color: #94A3B8;
+  text-decoration: line-through;
+  margin-bottom: 4px;
+}
+
+.tsl-pricing-hero-num {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #0D9488;
+  line-height: 1;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+
+.tsl-pricing-sub {
+  font-size: 0.84rem;
+  color: #64748B;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+/* Grid responsivo de Prova Social e Credibilidade Brasileira */
+.celebrity-proof-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+@media (max-width: 640px) {
+  .celebrity-proof-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* TSL Story Prose Paragraph Rhythm */
+.tsl-story-prose p {
+  margin-bottom: 1.15rem;
+  line-height: 1.65;
+  color: #334155;
+  font-size: 1rem;
+}
+
+
+/* Mobile Alignment & Margins Fix (Audio 10) */
+@media (max-width: 520px) {
+  .pizza-tier-card {
+    padding: 22px 16px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    border-radius: 6px !important;
+  }
+  .pizza-pricing-section {
+    padding: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .pizza-pricing-grid {
+    gap: 16px !important;
+    width: 100% !important;
+  }
+  .sales-section-box {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .bundle-mockup-wrapper {
+    padding: 0 !important;
+  }
+}
+
+/* Yellow Marker Highlight (Inspirado em copy10x.com.br/projeto-vsl) */
+.mark-yellow {
+  background: linear-gradient(transparent 65%, #FEF08A 65%);
+  padding: 0 2px;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+
+
+/* WhatsApp Full-Bleed Native App Simulation (Audio 7) */
+#screen-chat-vicente {
+  padding: 0 !important;
+  max-width: 600px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+#screen-chat-vicente .wa-fullscreen-container {
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  width: 100% !important;
+  min-height: calc(100vh - 20px) !important;
+}
+
+@media (max-width: 600px) {
+  #screen-chat-vicente {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  #screen-chat-vicente .wa-fullscreen-container {
+    min-height: 100vh !important;
+  }
+}
+
+
+.hero-eyebrow-trust-row {
+  white-space: nowrap !important;
+  max-width: 100% !important;
+}
+.hero-trust-text {
+  white-space: nowrap !important;
+}
+@media (max-width: 420px) {
+  .hero-eyebrow-trust-row {
+    font-size: 0.74rem !important;
+    padding: 5px 10px !important;
+    gap: 5px !important;
+  }
+  .hero-trust-stars {
+    font-size: 0.85rem !important;
+  }
+}
+
+
+/* Mobile Sticky Timer & Non-overflowing Buttons (Audio 9) */
+.mypattern-timer-banner,
+.mypattern-timer-banner-solid {
+  position: sticky !important;
+  top: 8px !important;
+  z-index: 1000 !important;
+  box-sizing: border-box !important;
+  max-width: 100% !important;
+  width: fit-content !important;
+  margin: 0 auto 20px !important;
+  padding: 8px 16px !important;
+  border-radius: 6px !important;
+}
+
+@media (max-width: 480px) {
+  .mypattern-timer-banner,
+  .mypattern-timer-banner-solid {
+    width: 100% !important;
+    padding: 8px 10px !important;
+    font-size: 0.78rem !important;
+    gap: 6px !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+}
+
+/* Force buttons to wrap text on small screens instead of overflowing */
+.btn-unlock-program,
+.btn-primary-pill,
+.btn-pizza-cta {
+  white-space: normal !important;
+  text-align: center !important;
+  line-height: 1.25 !important;
+  height: auto !important;
+  min-height: 52px !important;
+  padding: 14px 16px !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.checkout-footer-panel {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 0 12px !important;
+  margin: 48px auto 0 !important;
+}
+
+.pizza-pricing-section {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 0 !important;
+  margin: 28px 0 !important;
+}
+
+.pizza-pricing-grid {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.pizza-tier-card {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+@media (max-width: 520px) {
+  .pizza-tier-card {
+    padding: 22px 14px !important;
+    margin: 0 auto !important;
+  }
+  .pizza-features-list li {
+    font-size: 0.85rem !important;
+  }
+}
+
+
+
+/* ==========================================================================
+   WHATSAPP NATIVE DOCKING & FULL SCREEN FIX (AUDIO 1)
+   ========================================================================== */
+#screen-chat-vicente:not(.active) {
+  display: none !important;
+  height: 0 !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+#screen-chat-vicente.active {
+  height: 100vh !important;
+  max-height: 100vh !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 0 !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+  max-width: 540px !important;
+  background-color: #EFEAE2 !important;
+}
+
+#screen-chat-vicente .wa-fullscreen-container {
+  height: 100% !important;
+  max-height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+  overflow: hidden !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  width: 100% !important;
+}
+
+#screen-chat-vicente .wa-header-bar {
+  flex-shrink: 0 !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100 !important;
+}
+
+#screen-chat-vicente .wa-chat-scroll {
+  flex: 1 1 auto !important;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  padding: 16px 14px 24px !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+#screen-chat-vicente .wa-footer-interactive-area {
+  flex-shrink: 0 !important;
+  position: sticky !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  z-index: 100 !important;
+  background-color: #F0F2F5 !important;
+  border-top: 1px solid #D1D7DB !important;
+  padding: 10px 14px 14px !important;
+}
+
+/* ==========================================================================
+   MINIMALIST EDITORIAL DIAGNOSTIC & TSL STYLING (AUDIO 5 & 6)
+   ========================================================================== */
+.vsl-diagnostic-container {
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 10px !important;
+  padding: 24px 20px !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+  margin-bottom: 24px !important;
+}
+
+.patient-params-flat-table {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 12px 20px !important;
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 8px !important;
+  padding: 16px 18px !important;
+  margin: 18px 0 22px !important;
+}
+
+@media (max-width: 540px) {
+  .patient-params-flat-table {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+}
+
+.patient-param-line {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 3px !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+  padding-bottom: 8px !important;
+}
+
+.p-param-label {
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
+  color: #64748B !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+}
+
+.p-param-val {
+  font-size: 0.88rem !important;
+  font-weight: 600 !important;
+  color: #1E293B !important;
+  line-height: 1.35 !important;
+}
+
+/* Minimalist Before/After Oscilloscopes (Audio 5) */
+.split-cortex-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 16px !important;
+  margin-top: 18px !important;
+}
+
+@media (max-width: 640px) {
+  .split-cortex-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+}
+
+.split-cortex-col {
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 8px !important;
+  padding: 14px !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03) !important;
+}
+
+.split-cortex-col.col-overload {
+  border-top: 3px solid #EF4444 !important;
+}
+
+.split-cortex-col.col-healthy {
+  border-top: 3px solid #10B981 !important;
+}
+
+/* TSL Headlines in CAIXA ALTA & Thin Grey Dividers (Audio 6) */
+.tsl-h2 {
+  font-size: 1.12rem !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+  margin: 32px 0 12px !important;
+  letter-spacing: 0.03em !important;
+  text-transform: uppercase !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+  padding-bottom: 8px !important;
+  display: block !important;
+}
+
+.tsl-callout-box {
+  border-color: #E2E8F0 !important;
+  border-left: 3px solid #0F284E !important;
+}
+
+.tsl-quote-card {
+  border-color: #E2E8F0 !important;
+  border-left: 3px solid #64748B !important;
+}
+
+/* ==========================================================================
+   IDENTICAL GREEN HOVER FOR BOTTOM CTA BUTTON (AUDIO 8)
+   ========================================================================== */
+#btn-main-unlock,
+.btn-unlock-program {
+  background-color: #16A34A !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.25) !important;
+}
+
+#btn-main-unlock:hover,
+.btn-unlock-program:hover {
+  background-color: #15803D !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 6px 20px rgba(22, 163, 74, 0.4) !important;
+  transform: translateY(-1px) !important;
+}
+

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <!-- Fundo suave de calibração -->
+  <circle cx="100" cy="100" r="88" fill="#F0FDF4" opacity="0.6"/>
+  
+  <!-- Círculos concêntricos de calibração tonotópica (Azul-marinho profundo e nítido) -->
+  <circle cx="100" cy="100" r="76" fill="none" stroke="#0F284E" stroke-width="2.5"/>
+  <circle cx="100" cy="100" r="56" fill="none" stroke="#0F284E" stroke-width="2.2" stroke-dasharray="4,4"/>
+  <circle cx="100" cy="100" r="38" fill="none" stroke="#0F284E" stroke-width="2.5"/>
+  <circle cx="100" cy="100" r="22" fill="#E0F2FE" stroke="#0A1B36" stroke-width="2.5"/>
+  
+  <!-- Centro de mira cirúrgica (Bullseye verde esmeralda com fenda de silêncio) -->
+  <circle cx="100" cy="100" r="8" fill="#16A34A" stroke="#0F284E" stroke-width="2"/>
+  <circle cx="100" cy="100" r="3" fill="#FFFFFF"/>
+
+  <!-- Eixos de mira acústica cirúrgica -->
+  <g stroke="#0F284E" stroke-width="2" stroke-linecap="round">
+    <line x1="100" y1="14" x2="100" y2="30"/>
+    <line x1="100" y1="170" x2="100" y2="186"/>
+    <line x1="14" y1="100" x2="30" y2="100"/>
+    <line x1="170" y1="100" x2="186" y2="100"/>
+  </g>
+
+  <!-- Flecha cirúrgica de precisão acústica atingindo o centro exato -->
+  <g stroke="#0A1B36" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- Haste da flecha vindo na diagonal superior direita -->
+    <line x1="100" y1="100" x2="162" y2="38" stroke="#0A1B36" stroke-width="3.2"/>
+    <!-- Penas da flecha -->
+    <path d="M144 42 L162 38 L158 56" fill="#0F284E"/>
+    <path d="M152 34 L170 30 L166 48" fill="#0F284E"/>
+    <path d="M136 50 L154 46 L150 64" fill="#0F284E"/>
+  </g>
+</svg>

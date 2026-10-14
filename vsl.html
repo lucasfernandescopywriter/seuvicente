@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Présentation Spéciale — Le Protocole du Silence (Vincent Mercier)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0B0F19;
+      --card-bg: rgba(22, 30, 49, 0.8);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text: #F1F5F9;
+      --text-muted: #94A3B8;
+      --coral: #FF6B4A;
+      --teal: #14B8A6;
+      --emerald: #10B981;
+      --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(20, 184, 166, 0.1) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(255, 107, 74, 0.08) 0px, transparent 50%);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.6;
+      padding-bottom: 80px;
+    }
+
+    /* Bandeau d'avertissement son */
+    .audio-notice-bar {
+      background: rgba(20, 184, 166, 0.15);
+      border-bottom: 1px solid rgba(20, 184, 166, 0.3);
+      color: var(--teal);
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 24px 16px;
+    }
+
+    /* En-tête */
+    .vsl-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .vsl-tag {
+      color: var(--coral);
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: 1.95rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #FFFFFF;
+    }
+
+    .vsl-sub {
+      color: var(--text-muted);
+      font-size: 1.02rem;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* Cadre Vidéo Cinéma */
+    .video-frame-wrap {
+      background: #000000;
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      margin-bottom: 24px;
+      position: relative;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-poster {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.75;
+      transition: opacity 0.3s;
+    }
+
+    .video-play-btn {
+      position: relative;
+      z-index: 10;
+      width: 80px;
+      height: 80px;
+      background: var(--coral);
+      border: none;
+      border-radius: 50%;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 0 35px rgba(255, 107, 74, 0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .video-play-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 45px rgba(255, 107, 74, 0.7);
+    }
+
+    /* Badges de Référence Scientifique */
+    .authority-badges-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+      opacity: 0.85;
+    }
+
+    .badge-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* Section Pitch avec Révélation Automatique */
+    .pitch-section-delay {
+      display: none; /* Révélé à la fin de la VSL */
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .offer-card {
+      background: linear-gradient(180deg, rgba(22, 30, 49, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
+      border: 2px solid var(--teal);
+      border-radius: 24px;
+      padding: 32px 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(20, 184, 166, 0.2);
+      text-align: center;
+    }
+
+    .offer-tag {
+      background: rgba(20, 184, 166, 0.15);
+      color: var(--teal);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: inline-block;
+      margin-bottom: 14px;
+    }
+
+    .offer-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .offer-sub {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+    }
+
+    .pricing-box {
+      margin-bottom: 24px;
+    }
+
+    .crossed-price {
+      text-decoration: line-through;
+      color: var(--text-muted);
+      font-size: 1.15rem;
+    }
+
+    .live-price {
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: #10B981;
+      letter-spacing: -0.03em;
+    }
+
+    .installments-text {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    .btn-cta-vsl {
+      display: block;
+      width: 100%;
+      background: linear-gradient(135deg, #10B981, #059669);
+      color: #FFFFFF;
+      font-size: 1.25rem;
+      font-weight: 800;
+      padding: 20px;
+      border-radius: 16px;
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-bottom: 16px;
+    }
+
+    .btn-cta-vsl:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(16, 185, 129, 0.6);
+    }
+
+    .guarantee-notice {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Bouton d'aperçu rapide pour tests */
+    .dev-toggle-btn {
+      display: block;
+      margin: 20px auto 0;
+      background: none;
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Notice audio -->
+  <div class="audio-notice-bar">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+    Assurez-vous que le son de votre appareil est activé pour entendre les démonstrations de fréquences.
+  </div>
+
+  <div class="container">
+
+    <!-- En-tête VSL -->
+    <div class="vsl-header">
+      <span class="vsl-tag">Dossier Neuro-Acoustique Spécial</span>
+      <h1>L'Erreur à 4 000 € que commettent 9 personnes sur 10 souffrant d'acouphènes</h1>
+      <p class="vsl-sub">
+        Pourquoi vos oreilles ne sont pas malades (et comment désactiver l'amplificateur interne du cerveau en 15 minutes par jour sans médicaments).
+      </p>
+    </div>
+
+    <!-- Lecteur Vidéo VSL -->
+    <div class="video-frame-wrap" id="vsl-player-container">
+      <img src="assets/vicente_diapasao.jpg" alt="Vincent Mercier" class="video-poster" id="vsl-poster">
+      <button class="video-play-btn" id="btn-vsl-play" aria-label="Lancer la vidéo">
+        <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </button>
+    </div>
+
+    <!-- Badges Scientifiques -->
+    <div class="authority-badges-row">
+      <span class="badge-pill">🏛️ Modèle Neuro-Acoustique de Jastreboff</span>
+      <span class="badge-pill">🔬 Études INSERM / Harvard Medical</span>
+      <span class="badge-pill">🎹 44 Ans d'Acoustique Appliquée</span>
+    </div>
+
+    <!-- SECTION PITCH DÉROULÉE PAR LE DÉLAI -->
+    <div class="pitch-section-delay" id="pitch-container">
+      <div class="offer-card">
+        <span class="offer-tag">Offre de Lancement Réservée</span>
+        <h2 class="offer-title">Le Protocole Complet du Silence</h2>
+        <p class="offer-sub">Accès à vie à la méthode de 14 jours + 4 Bonus exclusifs + Mises à jour permanentes</p>
+
+        <div class="pricing-box">
+          <div class="crossed-price">Valeur totale : 255,00 €</div>
+          <div class="live-price">47,00 €</div>
+          <div class="installments-text">Paiement unique sans abonnement · Ou 3x 17,00 € sans frais</div>
+        </div>
+
+        <a href="https://checkout.cartpanda.com/protocole-du-silence-complet" class="btn-cta-vsl" id="btn-vsl-checkout" target="_blank" rel="noopener noreferrer">
+          Débloquer Mon Accès Immédiat pour 47 €
+        </a>
+
+        <div class="guarantee-notice">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#10B981" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Garantie Inconditionnelle de 60 Jours : 100% Remboursé en un simple courriel.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bouton secret de test développeur pour afficher le pitch sans attendre -->
+    <button class="dev-toggle-btn" id="btn-dev-toggle">
+      [Afficher l'offre de vente]
+    </button>
+
+  </div>
+
+  <script>
+    const btnPlay = document.getElementById('btn-vsl-play');
+    const pitchContainer = document.getElementById('pitch-container');
+    const btnDevToggle = document.getElementById('btn-dev-toggle');
+
+    // Déclenchement du délai (ex : pitch à 18 min 30s = 1110s)
+    const PITCH_DELAY_SECONDS = 1110;
+
+    btnPlay.addEventListener('click', () => {
+      btnPlay.style.display = 'none';
+      // Déclenche le compte à rebours de pitch
+      setTimeout(() => {
+        pitchContainer.style.display = 'block';
+      }, PITCH_DELAY_SECONDS * 1000);
+    });
+
+    btnDevToggle.addEventListener('click', () => {
+      pitchContainer.style.display = 'block';
+      pitchContainer.scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,3263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Protocole Neuro-Silence — Espace Thérapeutique Médical</title>
+  <meta name="description" content="Plateforme clinique du Protocole Neuro-Silence : thérapie par encoche spectrale, routine somatosensorielle, micronutrition myélinique et suivi analytique d'habituation.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#F8FAFC">
+  <style>
+    :root {
+      --bg: #F8FAFC;
+      --bg-surface: #FFFFFF;
+      --navy-dark: #0B192C;
+      --navy-subtle: #1E293B;
+      --card-bg: #FFFFFF;
+      --card-border: #E2E8F0;
+      --card-border-subtle: #F1F5F9;
+      --text-main: #0F172A;
+      --text-muted: #64748B;
+      --text-light: #94A3B8;
+      --teal-primary: #0D9488;
+      --teal-subtle: #CCFBF1;
+      --teal-glow: rgba(13, 148, 136, 0.16);
+      --emerald-accent: #10B981;
+      --emerald-subtle: #D1FAE5;
+      --blue-accent: #2563EB;
+      --blue-subtle: #DBEAFE;
+      --amber-accent: #F59E0B;
+      --amber-subtle: #FEF3C7;
+      --font-main: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+      --radius-sm: 12px;
+      --radius-md: 18px;
+      --radius-lg: 26px;
+      --radius-pill: 9999px;
+      --shadow-soft: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+      --shadow-card: 0 10px 25px -4px rgba(15, 23, 42, 0.06);
+      --shadow-nav: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Conteneur Mobile / Centré Desktop */
+    .app-viewport {
+      max-width: 520px;
+      width: 100%;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background: var(--bg);
+      padding: 16px 18px 110px;
+    }
+
+    /* En-tête Médical Épuré */
+    .top-header-clean {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 4px 18px;
+    }
+
+    .user-profile-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .user-avatar-circle {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #FFFFFF;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      background: var(--teal-subtle);
+    }
+
+    .user-greeting-texts {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-salutation {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .user-full-name {
+      font-size: 1.12rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .user-badge-verified {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--teal-primary);
+      background: var(--teal-subtle);
+      padding: 1px 6px;
+      border-radius: 6px;
+    }
+
+    .bell-icon-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .bell-icon-btn:hover {
+      background: #F1F5F9;
+    }
+
+    .bell-badge-count {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      min-width: 18px;
+      height: 18px;
+      border-radius: 9px;
+      background: #EF4444;
+      border: 2px solid #FFFFFF;
+      color: #FFFFFF;
+      font-size: 0.64rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+    }
+
+    /* Vues d'écran */
+    .screen-view {
+      display: none;
+      animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .screen-view.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =========================================================
+       1. DASHBOARD PRINCIPAL (HOME)
+       ========================================================= */
+
+    /* Card Sombre Héro */
+    .dark-hero-card {
+      background: var(--navy-dark);
+      color: #FFFFFF;
+      border-radius: var(--radius-lg);
+      padding: 22px 20px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 28px -6px rgba(11, 25, 44, 0.35);
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+
+    .dark-hero-card:active {
+      transform: scale(0.99);
+    }
+
+    .dark-hero-card::after {
+      content: '';
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 140px;
+      height: 140px;
+      background: radial-gradient(circle, rgba(13, 148, 136, 0.4) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .dark-card-label {
+      font-size: 0.74rem;
+      color: #94A3B8;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .dark-card-header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .dark-card-day-num {
+      font-size: 2.3rem;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .dark-card-badge-diag {
+      background: rgba(20, 184, 166, 0.18);
+      border: 1px solid rgba(20, 184, 166, 0.35);
+      color: #5EEAD4;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dark-card-details {
+      font-size: 0.84rem;
+      color: #CBD5E1;
+      line-height: 1.45;
+      margin-bottom: 14px;
+    }
+
+    .dark-card-action-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 12px;
+    }
+
+    .dark-card-action-text {
+      font-size: 0.8rem;
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+
+    .circle-arrow-white {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      color: var(--navy-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+
+    /* Card Bilan Thérapeutique */
+    .health-overview-card {
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .overview-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .overview-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .overview-select-filter {
+      background: #F8FAFC;
+      border: 1px solid var(--card-border);
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .overview-grid-columns {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .overview-col {
+      background: #F8FAFC;
+      border-radius: var(--radius-md);
+      padding: 14px 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid var(--card-border-subtle);
+    }
+
+    .col-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .col-value {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 8px;
+      line-height: 1;
+    }
+
+    .col-icon-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .metric-unit {
+      font-size: 0.68rem;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+
+    /* Icônes Minimalistes Lignes Épurées (Sans Fond Coloré) */
+    .metric-icon-minimal {
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent !important;
+      padding: 0;
+      border-radius: 0;
+    }
+
+    .metric-icon-minimal svg {
+      width: 17px;
+      height: 17px;
+      stroke: var(--text-muted);
+    }
+
+    /* Section Titres */
+    .section-headline-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 22px 0 14px;
+    }
+
+    .section-headline {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+    }
+
+    .carousel-nav-arrows {
+      display: flex;
+      gap: 6px;
+    }
+
+    .arrow-nav-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main);
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    /* Carrousel 1 : Protocoles Pratiques Exclusifs */
+    .carousel-slider-track {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 8px;
+      margin: 0 -18px 24px;
+      padding-left: 18px;
+      padding-right: 18px;
+      scrollbar-width: none;
+    }
+
+    .carousel-slider-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .treatment-card-clean {
+      flex: 0 0 250px;
+      scroll-snap-align: start;
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .treatment-card-clean:active {
+      transform: scale(0.98);
+    }
+
+    .treatment-card-media {
+      width: 100%;
+      height: 130px;
+      background: #E2E8F0;
+      position: relative;
+    }
+
+    .treatment-card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .tag-duration-bubble {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(8px);
+      color: #FFFFFF;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 12px;
+    }
+
+    .treatment-card-content {
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 1;
+    }
+
+    .treatment-card-content h4 {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .treatment-card-content p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+
+    .treatment-footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--card-border-subtle);
+      padding-top: 10px;
+    }
+
+    .treatment-timing-tag {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--teal-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .circle-arrow-black {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--navy-dark);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+    }
+
+    /* Carrousel 2 : Options Thérapeutiques Avancées */
+    .locked-carousel-track {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 8px;
+      margin: 0 -18px 24px;
+      padding-left: 18px;
+      padding-right: 18px;
+      scrollbar-width: none;
+    }
+
+    .locked-carousel-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .locked-card-box {
+      flex: 0 0 250px;
+      scroll-snap-align: start;
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .locked-card-box:active {
+      transform: scale(0.98);
+    }
+
+    .locked-card-media {
+      width: 100%;
+      height: 125px;
+      background: #E2E8F0;
+      position: relative;
+    }
+
+    .locked-card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .locked-price-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      color: #FBBF24;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 12px;
+      border: 1px solid rgba(251, 191, 36, 0.3);
+    }
+
+    .locked-card-content {
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 1;
+    }
+
+    .locked-card-title {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .locked-card-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+
+    .locked-cta-btn {
+      background: #F8FAFC;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-pill);
+      padding: 7px 12px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--navy-dark);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.15s;
+    }
+
+    .locked-cta-btn:hover {
+      background: #F1F5F9;
+    }
+
+    /* =========================================================
+       2. ÉCRAN SÉANCE AUDIO (15 MIN NOTCHED NOISE & OBSERVANCE)
+       ========================================================= */
+    .session-prep-guide {
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .session-prep-step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      font-size: 0.85rem;
+      line-height: 1.45;
+    }
+
+    .session-prep-step:last-child {
+      margin-bottom: 0;
+    }
+
+    .step-index-badge {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--teal-subtle);
+      color: var(--teal-primary);
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.78rem;
+    }
+
+    .player-clean-card {
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 24px 20px;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 20px;
+    }
+
+    .player-badge-pill {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--teal-primary);
+      background: var(--teal-subtle);
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .player-clean-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .player-clean-freq {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .wave-bars-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      height: 60px;
+      margin-bottom: 16px;
+    }
+
+    .wave-bar-unit {
+      width: 5px;
+      height: 10px;
+      background: rgba(13, 148, 136, 0.25);
+      border-radius: 4px;
+      transition: height 0.15s;
+    }
+
+    .wave-bars-box.playing .wave-bar-unit {
+      animation: waveBeatClean 1s ease-in-out infinite alternate;
+    }
+
+    .playing .wave-bar-unit:nth-child(1) { animation-delay: 0.0s; }
+    .playing .wave-bar-unit:nth-child(2) { animation-delay: 0.1s; }
+    .playing .wave-bar-unit:nth-child(3) { animation-delay: 0.2s; }
+    .playing .wave-bar-unit:nth-child(4) { animation-delay: 0.3s; }
+    .playing .wave-bar-unit:nth-child(5) { animation-delay: 0.4s; }
+    .playing .wave-bar-unit:nth-child(6) { animation-delay: 0.5s; }
+    .playing .wave-bar-unit:nth-child(7) { animation-delay: 0.6s; }
+    .playing .wave-bar-unit:nth-child(8) { animation-delay: 0.7s; }
+    .playing .wave-bar-unit:nth-child(9) { animation-delay: 0.8s; }
+    .playing .wave-bar-unit:nth-child(10) { animation-delay: 0.9s; }
+
+    @keyframes waveBeatClean {
+      0%, 100% { height: 8px; background: rgba(13, 148, 136, 0.3); }
+      50% { height: 50px; background: var(--teal-primary); }
+    }
+
+    .timer-text-display {
+      font-size: 2.6rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 18px;
+      color: var(--text-main);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .btn-play-pill-hero {
+      width: 72px;
+      height: 72px;
+      background: var(--navy-dark);
+      border: none;
+      border-radius: 50%;
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(11, 25, 44, 0.25);
+      transition: transform 0.2s;
+    }
+
+    .btn-play-pill-hero:active {
+      transform: scale(0.95);
+    }
+
+    .freq-selector-bar {
+      margin-top: 18px;
+      background: #F8FAFC;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .freq-select-styled {
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      font-size: 0.84rem;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 10px;
+      outline: none;
+      flex: 1;
+    }
+
+    /* Bouton interactif pour tester le son pur de chaque fréquence */
+    .btn-test-freq-tone {
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      color: var(--navy-dark);
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+
+    .btn-test-freq-tone:hover {
+      background: #F1F5F9;
+    }
+
+    .btn-test-freq-tone.active {
+      background: #FEF3C7;
+      border-color: #F59E0B;
+      color: #B45309;
+    }
+
+    /* Statut Quotidien de Séance & Validation Immédiate */
+    .session-status-card {
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .session-status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.84rem;
+    }
+
+    .btn-validate-session-action {
+      width: 100%;
+      background: var(--navy-dark);
+      color: #FFFFFF;
+      border: none;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 0.86rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    /* =========================================================
+       3. ÉCRAN SUIVI & ANALYTICS (GRAPHIQUES & HISTORIQUE DE PRATIQUE)
+       ========================================================= */
+    .analytics-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .kpi-stat-box {
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 14px 12px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .kpi-stat-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .kpi-stat-num {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .chart-container-card {
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 20px;
+    }
+
+    /* Tableau de Bord Dédié à la Pratique des Séances */
+    .practice-analytics-card {
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 22px 20px;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 20px;
+    }
+
+    .practice-matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      margin: 14px 0 16px;
+    }
+
+    .matrix-day-cell {
+      background: #F8FAFC;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 6px 2px;
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .matrix-day-cell.completed {
+      background: var(--emerald-subtle);
+      border-color: var(--emerald-accent);
+      color: #065F46;
+    }
+
+    .matrix-day-cell.active-today {
+      border: 2px solid var(--teal-primary);
+      color: var(--teal-primary);
+    }
+
+    .daily-entry-form-card {
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 22px 20px;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 20px;
+    }
+
+    .slider-score-banner {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--teal-primary);
+      text-align: center;
+      margin: 10px 0 4px;
+    }
+
+    .symptom-tags-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 14px 0 16px;
+    }
+
+    .symptom-tag-btn {
+      background: #F1F5F9;
+      border: 1px solid transparent;
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .symptom-tag-btn.selected {
+      background: var(--teal-subtle);
+      border-color: var(--teal-primary);
+      color: var(--teal-primary);
+    }
+
+    .patient-notes-input {
+      width: 100%;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      resize: vertical;
+      min-height: 70px;
+      margin-bottom: 16px;
+      outline: none;
+    }
+
+    .patient-notes-input:focus {
+      border-color: var(--teal-primary);
+    }
+
+    .btn-submit-main {
+      width: 100%;
+      background: var(--navy-dark);
+      border: none;
+      color: #FFFFFF;
+      font-weight: 700;
+      padding: 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+
+    /* =========================================================
+       4. ÉCRAN BIBLIOTHÈQUE & GUIDES (3 E-BOOKS DE 20-30 PAGES)
+       ========================================================= */
+    .guide-doc-card {
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .guide-doc-header {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+
+    .guide-doc-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--teal-subtle);
+      color: var(--teal-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .guide-doc-title h4 {
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .guide-doc-title p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .guide-doc-actions {
+      display: flex;
+      gap: 10px;
+      border-top: 1px solid var(--card-border-subtle);
+      padding-top: 12px;
+    }
+
+    .btn-read-modal {
+      flex: 1;
+      background: var(--navy-dark);
+      color: #FFFFFF;
+      border: none;
+      padding: 10px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-pdf-print {
+      flex: 1;
+      background: #F8FAFC;
+      color: var(--text-main);
+      border: 1px solid var(--card-border);
+      padding: 10px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    /* Modal Lecteur de Livre & Visualiseur PDF Intégré */
+    .book-reader-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 250;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+    }
+
+    .book-reader-modal.open {
+      display: flex;
+    }
+
+    .book-reader-content {
+      background: #FFFFFF;
+      border-radius: var(--radius-lg);
+      max-width: 820px;
+      width: 100%;
+      max-height: 92vh;
+      overflow-y: auto;
+      padding: 22px;
+      box-shadow: var(--shadow-nav);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Cadre de visualisation PDF dans le lecteur */
+    .pdf-viewer-embed-frame {
+      width: 100%;
+      height: 520px;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      background: #F1F5F9;
+      margin: 14px 0 20px;
+    }
+
+    /* Section Pratique en dessous du PDF */
+    .clinical-practice-guide-box {
+      background: #F8FAFC;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      margin-top: 14px;
+    }
+
+    .clinical-practice-guide-box h4 {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--navy-dark);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* =========================================================
+       5. ÉCRANS DE DÉTAIL DES ROUTINES
+       ========================================================= */
+    .detail-nav-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .btn-back-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .detail-big-image {
+      width: 100%;
+      height: 200px;
+      border-radius: var(--radius-lg);
+      object-fit: cover;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .video-clean-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+      background: #000;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .video-clean-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .clean-table-grid {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      font-size: 0.82rem;
+    }
+
+    .clean-table-grid th, .clean-table-grid td {
+      border: 1px solid var(--card-border);
+      padding: 8px 10px;
+      text-align: left;
+    }
+
+    .clean-table-grid th {
+      background: #F8FAFC;
+      font-weight: 800;
+    }
+
+    /* =========================================================
+       6. NAVIGATION DU BAS & MODALS FLOTTANTS
+       ========================================================= */
+    .bottom-floating-pill {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 480px;
+      width: calc(100% - 32px);
+      background: var(--navy-dark);
+      border-radius: 35px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 14px;
+      box-shadow: 0 16px 36px rgba(11, 25, 44, 0.35);
+      z-index: 100;
+    }
+
+    .nav-btn-pill {
+      background: none;
+      border: none;
+      color: #94A3B8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 4px 12px;
+      border-radius: 20px;
+      transition: all 0.15s;
+    }
+
+    .nav-btn-pill.active {
+      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .nav-btn-pill svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+    }
+
+    /* Modals Généraux */
+    .modal-backdrop-clean {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(8px);
+      z-index: 220;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-backdrop-clean.open {
+      display: flex;
+    }
+
+    .modal-card-box {
+      background: #FFFFFF;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: var(--shadow-nav);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .input-clean-field {
+      width: 100%;
+      background: #F8FAFC;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      font-size: 0.86rem;
+      font-family: inherit;
+      color: var(--text-main);
+      margin-bottom: 12px;
+      outline: none;
+    }
+
+    .input-clean-field:focus {
+      border-color: var(--teal-primary);
+    }
+
+    /* Impression PDF */
+    @media print {
+      body {
+        background: #FFFFFF !important;
+      }
+      .top-header-clean, .bottom-floating-pill, .dark-hero-card, .health-overview-card, .carousel-slider-track, .locked-carousel-track, .guide-doc-actions {
+        display: none !important;
+      }
+      .book-reader-content {
+        max-height: none !important;
+        overflow: visible !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Écran de Sécurité Magic Link (CartPanda Token) -->
+  <div id="gatekeeper-screen" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg); z-index: 300; align-items: center; justify-content: center; padding: 24px;">
+    <div style="background: #FFFFFF; border: 1px solid var(--card-border); border-radius: var(--radius-lg); padding: 32px 24px; max-width: 420px; width: 100%; text-align: center; box-shadow: var(--shadow-card);">
+      <div style="width: 52px; height: 52px; border-radius: 50%; background: var(--teal-subtle); color: var(--teal-primary); display: inline-flex; align-items: center; justify-content: center;">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <h2 style="font-size: 1.3rem; font-weight: 800; margin: 14px 0 6px;">Protocole Neuro-Silence</h2>
+      <p style="font-size: 0.86rem; color: var(--text-muted); margin-bottom: 20px;">Entrez votre clé d'accès fournie dans votre confirmation CartPanda pour accéder à votre espace clinique.</p>
+      <input type="text" id="token-input" style="width: 100%; background: #F8FAFC; border: 1px solid var(--card-border); padding: 12px; border-radius: var(--radius-sm); font-size: 0.92rem; font-weight: 700; text-align: center; margin-bottom: 12px; outline: none;" placeholder="Ex : SILENCE2026">
+      <button class="btn-submit-main" id="btn-unlock-gate">Activer mon Accès</button>
+      <p id="gate-error" style="color: #DC2626; font-size: 0.78rem; margin-top: 10px; display: none;">Clé d'activation invalide. Veuillez vérifier vos emails.</p>
+    </div>
+  </div>
+
+  <div class="app-viewport">
+
+    <!-- En-tête Médical Épuré (Avatar + Bonjour [Nom Réel] + Cloche Fonctionnelle) -->
+    <header class="top-header-clean">
+      <div class="user-profile-meta" onclick="openPatientProfileModal()" title="Consulter votre Fiche Patient">
+        <img src="assets/elodie_morning_relief.jpg" alt="Patient" class="user-avatar-circle" id="user-avatar-img">
+        <div class="user-greeting-texts">
+          <span class="user-salutation">Bonjour,</span>
+          <div class="user-full-name">
+            <span id="user-name-display">Sara Wilson</span>
+            <span class="user-badge-verified">Patient</span>
+          </div>
+        </div>
+      </div>
+      <div class="bell-icon-btn" onclick="openNotificationsModal()" title="Centre d'alertes thérapeutiques">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="bell-badge-count" id="bell-badge-count">2</span>
+      </div>
+    </header>
+
+    <!-- =========================================================
+         1. ÉCRAN ACCUEIL (DASHBOARD + BILAN + CARROUSELS SANS REDONDANCE)
+         ========================================================= -->
+    <section class="screen-view active" id="view-accueil">
+
+      <!-- Card Sombre Héro (Protocole Actif) -->
+      <div class="dark-hero-card" onclick="switchTab('nav-seance')">
+        <div class="dark-card-label">Votre Séance Quotidienne</div>
+        <div class="dark-card-header-flex">
+          <div>
+            <div class="dark-card-day-num" id="hero-day-counter">Jour 1</div>
+            <div style="font-size: 0.85rem; color: #94A3B8; font-weight: 600; margin-top: 2px;" id="hero-protocol-duration">Sur 14 jours d'habituation active</div>
+          </div>
+          <div class="dark-card-badge-diag">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 12h3l3-9 4 18 3-9h7"/></svg>
+            <span id="hero-freq-badge">4 000 Hz</span>
+          </div>
+        </div>
+        <p class="dark-card-details">Encoche spectrale calculée pour désactiver le gain central du cortex auditif ce soir.</p>
+        <div class="dark-card-action-bar">
+          <span class="dark-card-action-text">Démarrer ma séance (15 min)</span>
+          <div class="circle-arrow-white">→</div>
+        </div>
+      </div>
+
+      <!-- Card Bilan Thérapeutique (Health Overview avec Icônes Minimalistes et Filtre Complet) -->
+      <div class="health-overview-card">
+        <div class="overview-header-row">
+          <h3 class="overview-title">Bilan Thérapeutique</h3>
+          <select class="overview-select-filter" id="overview-filter-select" onchange="updateOverviewPeriod(this.value)">
+            <option value="semaine" selected>Cette Semaine</option>
+            <option value="mois">Ce Mois</option>
+            <option value="total">Tout le Protocole</option>
+          </select>
+        </div>
+        <div class="overview-grid-columns">
+          <!-- Col 1 : Intensité Sonore Moyenne (Échelle EVA) -->
+          <div class="overview-col">
+            <span class="col-label">Intensité Moyenne</span>
+            <div class="col-value" id="overview-score-val">3.8 / 10</div>
+            <div class="col-icon-wrap">
+              <span class="metric-unit">Échelle EVA</span>
+              <div class="metric-icon-minimal">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2"><path d="M2 12h3l3-9 4 18 3-9h7"/></svg>
+              </div>
+            </div>
+          </div>
+          <!-- Col 2 : Observance Séances -->
+          <div class="overview-col">
+            <span class="col-label">Observance</span>
+            <div class="col-value" id="overview-streak-val">6 / 7</div>
+            <div class="col-icon-wrap">
+              <span class="metric-unit">15 min terminées</span>
+              <div class="metric-icon-minimal">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+            </div>
+          </div>
+          <!-- Col 3 : Sommeil Réparateur -->
+          <div class="overview-col">
+            <span class="col-label">Sommeil</span>
+            <div class="col-value" id="overview-sleep-val">7.8 / 10</div>
+            <div class="col-icon-wrap">
+              <span class="metric-unit">Indice de repos</span>
+              <div class="metric-icon-minimal">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Carrousel 1 : Protocoles Pratiques Quotidiens (UNIQUEMENT routines exclusives sans redondance avec le menu) -->
+      <div class="section-headline-row">
+        <h3 class="section-headline">Protocoles Pratiques Quotidiens</h3>
+        <div class="carousel-nav-arrows">
+          <button class="arrow-nav-btn" onclick="scrollCarousel('carousel-track-practices', -1)">‹</button>
+          <button class="arrow-nav-btn" onclick="scrollCarousel('carousel-track-practices', 1)">›</button>
+        </div>
+      </div>
+
+      <div class="carousel-slider-track" id="carousel-track-practices">
+        <!-- Carte 1 : Décompression ATM -->
+        <div class="treatment-card-clean" onclick="openDetailScreen('screen-detail-rituel')">
+          <div class="treatment-card-media">
+            <img src="assets/decompression_atm.jpg" alt="Décompression Mâchoire">
+            <span class="tag-duration-bubble">7 min</span>
+          </div>
+          <div class="treatment-card-content">
+            <div>
+              <h4>Décompression ATM & Nuque</h4>
+              <p>Relâchement des muscles masséters et du nerf d'Arnold sous-occipital (vidéo intégrée).</p>
+            </div>
+            <div class="treatment-footer-row">
+              <span class="treatment-timing-tag">Au coucher</span>
+              <div class="circle-arrow-black">→</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carte 2 : La Cuillère Matinale -->
+        <div class="treatment-card-clean" onclick="openDetailScreen('screen-detail-cuillere')">
+          <div class="treatment-card-media">
+            <img src="assets/cuillere_myeline.jpg" alt="La Cuillère Matinale">
+            <span class="tag-duration-bubble">Matin</span>
+          </div>
+          <div class="treatment-card-content">
+            <div>
+              <h4>La Cuillère de Myélinisation</h4>
+              <p>Formulation lipidique matinale pour réparer la gaine du nerf auditif à jeun.</p>
+            </div>
+            <div class="treatment-footer-row">
+              <span class="treatment-timing-tag">À jeun</span>
+              <div class="circle-arrow-black">→</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carte 3 : Guide Alimentaire Anti-Bruit -->
+        <div class="treatment-card-clean" onclick="openDetailScreen('screen-detail-alimentation')">
+          <div class="treatment-card-media">
+            <img src="assets/estudo_fmri_cerebro.jpg" alt="Guide Nutritionnel">
+            <span class="tag-duration-bubble">Cuisine</span>
+          </div>
+          <div class="treatment-card-content">
+            <div>
+              <h4>Filtre Alimentaire Anti-Bruit</h4>
+              <p>Liste des 4 composés industriels qui excitent les récepteurs NMDA auditifs.</p>
+            </div>
+            <div class="treatment-footer-row">
+              <span class="treatment-timing-tag">Nutrition</span>
+              <div class="circle-arrow-black">→</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Carrousel 2 : Options Thérapeutiques Avancées (Order Bumps & Upsell avec Images Réelles) -->
+      <div class="section-headline-row">
+        <h3 class="section-headline">Options Avancées du Protocole</h3>
+        <div class="carousel-nav-arrows">
+          <button class="arrow-nav-btn" onclick="scrollCarousel('carousel-track-upsells', -1)">‹</button>
+          <button class="arrow-nav-btn" onclick="scrollCarousel('carousel-track-upsells', 1)">›</button>
+        </div>
+      </div>
+
+      <div class="locked-carousel-track" id="carousel-track-upsells">
+        <!-- Order Bump 1 : Ondes Delta -->
+        <div class="locked-card-box" onclick="openAdvancedProductModal('delta')">
+          <div class="locked-card-media">
+            <img src="assets/ondes_delta_sleep.jpg" alt="Ondes Delta Sommeil Profond">
+            <span class="locked-price-badge">+19 €</span>
+          </div>
+          <div class="locked-card-content">
+            <div class="locked-card-title">Ondes Delta Sommeil Profond</div>
+            <p class="locked-card-desc">4 fréquences binaurales d'induction (0,5 à 4 Hz) pour s'endormir en 7 minutes.</p>
+            <button class="locked-cta-btn">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Découvrir l'Option (+19 €)
+            </button>
+          </div>
+        </div>
+
+        <!-- Order Bump 2 : L'Élixir Auriculaire -->
+        <div class="locked-card-box" onclick="openAdvancedProductModal('elixir')">
+          <div class="locked-card-media">
+            <img src="assets/elixir_auriculaire.jpg" alt="L'Élixir Auriculaire Botanique">
+            <span class="locked-price-badge">+14 €</span>
+          </div>
+          <div class="locked-card-content">
+            <div class="locked-card-title">L'Élixir Auriculaire & Compresses</div>
+            <p class="locked-card-desc">Manuel de 22 pages : formule à l'astragale et glycérine pour assouplir le tympan.</p>
+            <button class="locked-cta-btn">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Découvrir l'Option (+14 €)
+            </button>
+          </div>
+        </div>
+
+        <!-- Upsell 1 : Photobiomodulation 650nm -->
+        <div class="locked-card-box" onclick="openAdvancedProductModal('photobio')">
+          <div class="locked-card-media">
+            <img src="assets/photobiomodulation_650nm.jpg" alt="Photobiomodulation 650nm">
+            <span class="locked-price-badge">+37 €</span>
+          </div>
+          <div class="locked-card-content">
+            <div class="locked-card-title">Protocole Photolumineux 650nm</div>
+            <p class="locked-card-desc">Masterclass 35 min + Guide Amazon &lt;20 € pour réactiver le cytochrome C oxydase.</p>
+            <button class="locked-cta-btn">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Découvrir l'Option (+37 €)
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- =========================================================
+         2. ÉCRAN SÉANCE AUDIO (15 MIN NOTCHED NOISE & OBSERVANCE)
+         ========================================================= -->
+    <section class="screen-view" id="view-seance">
+      
+      <!-- Guide Préparatoire de la Séance en 3 Étapes de Lecture Simple -->
+      <div class="session-prep-guide">
+        <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin-bottom: 12px;">Guide Préparatoire Thérapeutique</h4>
+        <div class="session-prep-step">
+          <span class="step-index-badge">1</span>
+          <div><strong>Position au calme :</strong> Allongez-vous au lit ou dans un fauteuil confortable, nuque soutenue et lumières tamisées.</div>
+        </div>
+        <div class="session-prep-step">
+          <span class="step-index-badge">2</span>
+          <div><strong>Écouteurs stéréo :</strong> Ajustez le volume pour qu'il soit doux, juste en dessous du niveau de votre acouphène.</div>
+        </div>
+        <div class="session-prep-step">
+          <span class="step-index-badge">3</span>
+          <div><strong>Lâcher-prise cortical :</strong> Ne cherchez pas à écouter le bruit. Laissez l'inhibition latérale désactiver le gain central.</div>
+        </div>
+      </div>
+
+      <div class="player-clean-card">
+        <span class="player-badge-pill">Séance Quotidienne de 15 Minutes</span>
+        <h3 class="player-clean-title">Accordage Neuro-Acoustique Échancré</h3>
+        <div class="player-clean-freq" id="player-freq-display">Fréquence Calibrée : 4 000 Hz (Encoche Spectrale)</div>
+
+        <div class="wave-bars-box" id="sound-wave-box">
+          <span class="wave-bar-unit"></span>
+          <span class="wave-bar-unit"></span>
+          <span class="wave-bar-unit"></span>
+          <span class="wave-bar-unit"></span>
+          <span class="wave-bar-unit"></span>
+          <span class="wave-bar-unit"></span>
+          <span class="wave-bar-unit"></span>
+          <span class="wave-bar-unit"></span>
+          <span class="wave-bar-unit"></span>
+          <span class="wave-bar-unit"></span>
+        </div>
+
+        <div class="timer-text-display" id="player-timer-readout">15:00</div>
+
+        <button class="btn-play-pill-hero" id="btn-toggle-sound" aria-label="Lancer la session">
+          <svg id="svg-play-icon" viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <svg id="svg-pause-icon" viewBox="0 0 24 24" width="30" height="30" fill="currentColor" style="display: none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        </button>
+
+        <!-- Barre de Sélection de Fréquence & Test de Son Pur Interactif -->
+        <div class="freq-selector-bar">
+          <select class="freq-select-styled" id="freq-select-dropdown" title="Changer la fréquence de l'encoche">
+            <option value="3000">3 000 Hz (Bourdonnement médium)</option>
+            <option value="4000" selected>4 000 Hz (Tonalité standard)</option>
+            <option value="5800">5 800 Hz (Sifflement aigu strident)</option>
+            <option value="7500">7 500 Hz (Grésillement métallique)</option>
+            <option value="9000">9 000 Hz (Très aigu pénétrant)</option>
+            <option value="11000">11 000 Hz (Sifflement fin ultrason)</option>
+          </select>
+          <button type="button" class="btn-test-freq-tone" id="btn-test-tone" onclick="toggleTestTone()" title="Écouter le bip pur pour calibrer votre acouphène">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" style="margin-right: 4px; vertical-align: middle;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+            Bip Test (Hz)
+          </button>
+        </div>
+      </div>
+
+      <!-- Statut Quotidien de Séance & Validation Manuelle/Automatique -->
+      <div class="session-status-card">
+        <div class="session-status-row">
+          <span style="color: var(--text-muted); font-weight: 600;">Statut pour aujourd'hui :</span>
+          <strong id="session-completed-status" style="color: var(--teal-primary);">En attente de réalisation</strong>
+        </div>
+        <button class="btn-validate-session-action" id="btn-manual-session-validate" onclick="manuallyValidateSession()">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          Valider ma Séance de 15 min Réalisée Aujourd'hui
+        </button>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         3. ÉCRAN SUIVI & ANALYTICS (TABLEAU DE BORD DÉDIÉ AUX SÉANCES & GRAPHIQUE)
+         ========================================================= -->
+    <section class="screen-view" id="view-suivi">
+      
+      <!-- 3 KPIs en tête -->
+      <div class="analytics-kpi-grid">
+        <div class="kpi-stat-box">
+          <div class="kpi-stat-label">Intensité</div>
+          <div class="kpi-stat-num" id="kpi-score-val">3.8 / 10</div>
+          <div style="font-size: 0.72rem; color: var(--emerald-accent); font-weight: 700; margin-top: 2px;">-35% vs J-1</div>
+        </div>
+        <div class="kpi-stat-box">
+          <div class="kpi-stat-label">Observance</div>
+          <div class="kpi-stat-num" id="kpi-sessions-count">6 / 7 Jours</div>
+          <div style="font-size: 0.72rem; color: var(--blue-accent); font-weight: 700; margin-top: 2px;">86% d'assiduité</div>
+        </div>
+        <div class="kpi-stat-box">
+          <div class="kpi-stat-label">Habituation</div>
+          <div class="kpi-stat-num">78 %</div>
+          <div style="font-size: 0.72rem; color: var(--teal-primary); font-weight: 700; margin-top: 2px;">Cortex Auditif</div>
+        </div>
+      </div>
+
+      <!-- Graphique d'Évolution Dynamique SVG -->
+      <div class="chart-container-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+          <h3 style="font-size: 0.98rem; font-weight: 800;">Courbe d'Atténuation Clinique</h3>
+          <span style="font-size: 0.72rem; background: var(--teal-subtle); color: var(--teal-primary); padding: 3px 8px; border-radius: 10px; font-weight: 700;">Historique Réel</span>
+        </div>
+        <div style="width: 100%; height: 140px;" id="svg-chart-wrapper">
+          <svg viewBox="0 0 500 140" width="100%" height="100%" style="overflow: visible;">
+            <line x1="0" y1="35" x2="500" y2="35" stroke="#F1F5F9" stroke-width="1"/>
+            <line x1="0" y1="70" x2="500" y2="70" stroke="#F1F5F9" stroke-width="1"/>
+            <line x1="0" y1="105" x2="500" y2="105" stroke="#F1F5F9" stroke-width="1"/>
+            <defs>
+              <linearGradient id="curveGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#0D9488" stop-opacity="0.22"/>
+                <stop offset="100%" stop-color="#0D9488" stop-opacity="0.0"/>
+              </linearGradient>
+            </defs>
+            <polygon points="20,20 120,40 220,55 340,75 480,105 480,130 20,130" fill="url(#curveGradient)"/>
+            <path d="M 20 20 Q 120 40, 220 55 T 480 105" fill="none" stroke="#0D9488" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="20" cy="20" r="4" fill="#FFFFFF" stroke="#0D9488" stroke-width="2.5"/>
+            <circle cx="220" cy="55" r="4" fill="#FFFFFF" stroke="#0D9488" stroke-width="2.5"/>
+            <circle cx="480" cy="105" r="5" fill="#0D9488" stroke="#FFFFFF" stroke-width="2.5"/>
+            <text x="20" y="14" fill="#94A3B8" font-size="10" font-weight="700" text-anchor="middle">J-1 (8/10)</text>
+            <text x="480" y="125" fill="#0D9488" font-size="11" font-weight="800" text-anchor="middle">Ce soir (3.8/10)</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Tableau de Bord Dédié à la Pratique des Séances Acoustiques -->
+      <div class="practice-analytics-card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h4 style="font-size: 0.98rem; font-weight: 800; color: var(--text-main);">Observance des Séances Acoustiques</h4>
+          <span style="font-size: 0.72rem; color: var(--teal-primary); font-weight: 700;" id="practice-streak-badge">Série : 6 jours consécutifs</span>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin: 4px 0 12px;">Grille d'assiduité du programme d'habituation sur 14 jours :</p>
+        
+        <!-- Matrice visuelle de 14 jours -->
+        <div class="practice-matrix-grid" id="practice-matrix-grid">
+          <!-- Généré dynamiquement en JS -->
+        </div>
+
+        <div style="border-top: 1px solid var(--card-border-subtle); padding-top: 12px; margin-top: 12px;">
+          <div style="font-size: 0.8rem; font-weight: 800; color: var(--text-main); margin-bottom: 8px;">Historique Récent des Séances :</div>
+          <div id="practice-history-log-box" style="font-size: 0.82rem; color: var(--text-muted);">
+            <!-- Rempli en JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulaire d'Enregistrement Quotidien Réel (1 par jour) -->
+      <div class="daily-entry-form-card">
+        <h4 style="font-size: 0.98rem; font-weight: 800; color: var(--text-main); margin-bottom: 2px;">Enregistrement de la Nuit</h4>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px;">1 mesure enregistrée par jour pour alimenter votre courbe clinique.</p>
+
+        <div style="margin: 14px 0;">
+          <input type="range" min="0" max="10" value="4" id="suivi-range-slider" style="width: 100%;">
+          <div class="slider-score-banner" id="suivi-score-display">4 / 10</div>
+          <div style="text-align: center; font-size: 0.8rem; color: var(--text-muted); font-weight: 600;" id="suivi-score-desc">Gêne sensible mais en cours d'atténuation</div>
+        </div>
+
+        <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px;">Symptômes perçus ce soir :</div>
+        <div class="symptom-tags-cloud">
+          <button type="button" class="symptom-tag-btn selected" onclick="toggleSymptomTag(this)">Sifflement aigu</button>
+          <button type="button" class="symptom-tag-btn" onclick="toggleSymptomTag(this)">Pression oreille</button>
+          <button type="button" class="symptom-tag-btn" onclick="toggleSymptomTag(this)">Tension mâchoire</button>
+          <button type="button" class="symptom-tag-btn" onclick="toggleSymptomTag(this)">Calme relatif</button>
+          <button type="button" class="symptom-tag-btn selected" onclick="toggleSymptomTag(this)">Sommeil réparateur</button>
+        </div>
+
+        <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px;">Notes cliniques personnelles :</div>
+        <textarea class="patient-notes-input" id="patient-daily-notes" placeholder="Ex : Séance de 15 min bien tolérée, apaisement net avant de m'endormir..."></textarea>
+
+        <button class="btn-submit-main" id="btn-save-daily-record">Enregistrer ma Mesure du Soir</button>
+        <div id="suivi-save-alert" style="display: none; color: var(--emerald-accent); font-size: 0.84rem; font-weight: 700; text-align: center; margin-top: 10px;">
+          ✓ Mesure validée et enregistrée pour aujourd'hui !
+        </div>
+
+        <div style="margin-top: 18px; border-top: 1px solid var(--card-border-subtle); padding-top: 12px;">
+          <div style="font-size: 0.78rem; font-weight: 800; color: var(--text-main); margin-bottom: 6px;">Historique des Mesures :</div>
+          <div id="suivi-history-items-box"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         4. ÉCRAN BIBLIOTHÈQUE & GUIDES (3 E-BOOKS DE 20-30 PAGES)
+         ========================================================= -->
+    <section class="screen-view" id="view-guides">
+      <div style="margin-bottom: 16px;">
+        <h3 class="section-headline">Bibliothèque Médicale Intégrale</h3>
+        <p style="font-size: 0.82rem; color: var(--text-muted);">Consultez en ligne les 3 ouvrages cliniques complets (20 à 30 pages) avec visualiseur PDF officiel, bibliographie internationale et guide d'application pratique.</p>
+      </div>
+
+      <!-- Livre 1 -->
+      <div class="guide-doc-card">
+        <div class="guide-doc-header">
+          <div class="guide-doc-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <div class="guide-doc-title">
+            <h4>Livre 1 : Traité Clinique de Réhabilitation Neuro-Acoustique</h4>
+            <p>Ouvrage de référence (28 pages) : modèle TRT de Jastreboff, théorie du gain central, mécanismes d'inhibition latérale corticale et essais contrôlés randomisés.</p>
+          </div>
+        </div>
+        <div class="guide-doc-actions">
+          <button class="btn-read-modal" onclick="openBookReader(1)">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            Visualiser le PDF Officiel
+          </button>
+          <a href="assets/guides/guide_1_rehabilitation_neuro_acoustique.pdf" target="_blank" download class="btn-pdf-print">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Télécharger le PDF
+          </a>
+        </div>
+      </div>
+
+      <!-- Livre 2 -->
+      <div class="guide-doc-card">
+        <div class="guide-doc-header">
+          <div class="guide-doc-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          </div>
+          <div class="guide-doc-title">
+            <h4>Livre 2 : Manuel Thérapeutique Maxillo-Facial & Voies Cervicales</h4>
+            <p>Manuel clinique illustré (22 pages) : chaîne myofasciale, articulation temporo-mandibulaire, nerf d'Arnold et protocole de décompression en 4 manœuvres.</p>
+          </div>
+        </div>
+        <div class="guide-doc-actions">
+          <button class="btn-read-modal" onclick="openBookReader(2)">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            Visualiser le PDF Officiel
+          </button>
+          <a href="assets/guides/guide_2_reeducation_maxillo_faciale.pdf" target="_blank" download class="btn-pdf-print">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Télécharger le PDF
+          </a>
+        </div>
+      </div>
+
+      <!-- Livre 3 -->
+      <div class="guide-doc-card">
+        <div class="guide-doc-header">
+          <div class="guide-doc-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <div class="guide-doc-title">
+            <h4>Livre 3 : Précis de Micronutrition & Régénération Myélinique</h4>
+            <p>Traité thérapeutique (24 pages) du Dr Thierry Hertoghe : biochimie de la myéline, strie vasculaire, la Cuillère Matinale et carte des supermarchés français.</p>
+          </div>
+        </div>
+        <div class="guide-doc-actions">
+          <button class="btn-read-modal" onclick="openBookReader(3)">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            Visualiser le PDF Officiel
+          </button>
+          <a href="assets/guides/guide_3_micronutrition_myeline.pdf" target="_blank" download class="btn-pdf-print">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Télécharger le PDF
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         5. ÉCRANS DE DÉTAIL DES ROUTINES (ATM, CUILLÈRE, ALIMENTATION)
+         ========================================================= -->
+    <!-- Détail : Rituel ATM -->
+    <section class="screen-view" id="screen-detail-rituel">
+      <div class="detail-nav-top">
+        <button class="btn-back-circle" onclick="switchTab('nav-accueil')">←</button>
+        <span style="font-weight: 800; font-size: 0.95rem;">Décompression ATM & Nuque</span>
+        <div style="width: 40px;"></div>
+      </div>
+
+      <img src="assets/decompression_atm.jpg" alt="Décompression Mâchoire" class="detail-big-image">
+
+      <!-- Vidéo intégrée YouTube de Décompression Maxillo-Faciale -->
+      <div class="video-clean-wrapper">
+        <iframe src="https://www.youtube-nocookie.com/embed/5-bIe1g_X5s?rel=0&modestbranding=1" title="Exercices Décompression Mâchoire et Cervicales Acouphènes" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; font-size: 0.78rem; color: var(--text-muted);">
+        <span>Démonstration clinique maxillo-faciale</span>
+        <a href="https://www.youtube.com/watch?v=5-bIe1g_X5s" target="_blank" rel="noopener" style="color: var(--navy-dark); text-decoration: underline; font-weight: 700;">Ouvrir sur YouTube ↗</a>
+      </div>
+
+      <div class="session-prep-guide" style="margin-top: 0;">
+        <h4 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 12px;">Protocole en 4 Étapes</h4>
+        <div style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.55;">
+          <p style="margin-bottom: 10px;"><strong>1. Mâchoire (2 min) :</strong> Posez le bout des index devant le conduit auditif. Ouvrez la bouche sans forcer et effectuez des micro-rotations douces pour détendre le nerf auriculotemporal.</p>
+          <p style="margin-bottom: 10px;"><strong>2. Cervicales C1-C3 (2 min) :</strong> Inclinez la tête doucement vers l'épaule droite 15 sec, puis vers la gauche pour décompresser le nerf d'Arnold.</p>
+          <p style="margin-bottom: 10px;"><strong>3. Posture Linguale (1 min) :</strong> Plaquez la pointe de la langue au palais derrière les incisives sans serrer les dents.</p>
+          <p><strong>4. Respiration 4-7-8 (2 min) :</strong> 4 sec inspire, 7 sec rétention, 8 sec expire par la bouche.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Détail : Cuillère Matinale -->
+    <section class="screen-view" id="screen-detail-cuillere">
+      <div class="detail-nav-top">
+        <button class="btn-back-circle" onclick="switchTab('nav-accueil')">←</button>
+        <span style="font-weight: 800; font-size: 0.95rem;">La Cuillère Matinale</span>
+        <div style="width: 40px;"></div>
+      </div>
+
+      <img src="assets/cuillere_myeline.jpg" alt="Ingrédients de la Cuillère" class="detail-big-image">
+
+      <div class="session-prep-guide" style="margin-top: 0;">
+        <h4 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 8px;">La Formule Quotidienne de Myélinisation</h4>
+        <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;">À consommer chaque matin à jeun. Gardez 30 secondes en bouche avant d'avaler pour une diffusion transmuqueuse rapide des lipides essentiels.</p>
+
+        <table class="clean-table-grid">
+          <thead>
+            <tr>
+              <th>Ingrédient</th>
+              <th>Action Biologique</th>
+              <th>Dosage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Huile de Lin Vierge</strong></td>
+              <td>Oméga-3 ALA pour régénérer la gaine de myéline</td>
+              <td>1 cuillère à café (5 ml)</td>
+            </tr>
+            <tr>
+              <td><strong>Lécithine de Tournesol</strong></td>
+              <td>Phosphatidylcholine pour les cellules de Schwann</td>
+              <td>1/2 cuillère ou 1 jaune bio</td>
+            </tr>
+            <tr>
+              <td><strong>Huile d'Olive Extra-Vierge</strong></td>
+              <td>Acide oléique protecteur des membranes</td>
+              <td>3 gouttes</td>
+            </tr>
+            <tr>
+              <td><strong>Curcuma Naturel</strong></td>
+              <td>Curcumine antioxydante cochléaire</td>
+              <td>1 pincée fine</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top: 14px; font-size: 0.82rem; color: var(--text-muted); background: #F8FAFC; padding: 12px; border-radius: var(--radius-sm); border-left: 3px solid var(--teal-primary);">
+          <strong>Où trouver les ingrédients ?</strong> Huile de lin vierge au rayon huiles de Carrefour ou Leclerc (conservez au frais). Lécithine de tournesol en magasin bio (Biocoop, La Vie Claire) ou remplacez par 1 jaune d'œuf cru bio Bleu-Blanc-Cœur.
+        </div>
+      </div>
+    </section>
+
+    <!-- Détail : Alimentation Anti-Bruit -->
+    <section class="screen-view" id="screen-detail-alimentation">
+      <div class="detail-nav-top">
+        <button class="btn-back-circle" onclick="switchTab('nav-accueil')">←</button>
+        <span style="font-weight: 800; font-size: 0.95rem;">Filtre Alimentaire Anti-Bruit</span>
+        <div style="width: 40px;"></div>
+      </div>
+
+      <div class="session-prep-guide" style="margin-top: 0;">
+        <h4 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 8px;">Aliments Excitotoxiques à Proscrire</h4>
+        <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;">Ces composés franchissent la barrière hémato-labyrinthique et suractivent les récepteurs glutamatergiques :</p>
+        <ul style="margin-left: 18px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+          <li><strong>Glutamate monosodique (E621) :</strong> Plats préparés, bouillons cubes, snacks salés industriels.</li>
+          <li><strong>Aspartame (E951) :</strong> Boissons gazeuses sans sucre et gommes à mâcher.</li>
+          <li><strong>Excès de sodium raffiné :</strong> Augmente la pression hydraulique de l'endolymphe cochléaire.</li>
+          <li><strong>Alcool fort & caféine après 16h :</strong> Perturbe le sommeil paradoxal et accentue le bruit matinal.</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Barre de Navigation Inférieure (Cápsula Flutuante Escura Fiel ao Mockup) -->
+  <nav class="bottom-floating-pill">
+    <button class="nav-btn-pill active" id="btn-nav-accueil" onclick="switchTab('nav-accueil')">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Accueil</span>
+    </button>
+    <button class="nav-btn-pill" id="btn-nav-seance" onclick="switchTab('nav-seance')">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+      <span>Séance</span>
+    </button>
+    <button class="nav-btn-pill" id="btn-nav-suivi" onclick="switchTab('nav-suivi')">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      <span>Suivi</span>
+    </button>
+    <button class="nav-btn-pill" id="btn-nav-guides" onclick="switchTab('nav-guides')">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      <span>Guides</span>
+    </button>
+  </nav>
+
+  <!-- MODAL ONBOARDING : PREMIÈRE CONNEXION DU PATIENT -->
+  <div class="modal-backdrop-clean" id="modal-onboarding-welcome">
+    <div class="modal-card-box">
+      <div style="text-align: center; margin-bottom: 16px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: var(--teal-subtle); color: var(--teal-primary); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--navy-dark);">Bienvenue sur votre Espace Médical</h3>
+        <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Finalisez votre dossier pour personnaliser votre protocole d'habituation :</p>
+      </div>
+
+      <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 4px;">Votre Prénom et Nom :</label>
+      <input type="text" id="onboarding-input-name" class="input-clean-field" placeholder="Ex : Sara Wilson">
+
+      <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 4px;">Votre Email :</label>
+      <input type="email" id="onboarding-input-email" class="input-clean-field" placeholder="sara.wilson@exemple.com">
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div>
+          <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 4px;">Date de début :</label>
+          <input type="date" id="onboarding-input-date" class="input-clean-field">
+        </div>
+        <div>
+          <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 4px;">Fréquence du test :</label>
+          <select id="onboarding-input-freq" class="input-clean-field">
+            <option value="3000">3 000 Hz</option>
+            <option value="4000" selected>4 000 Hz</option>
+            <option value="5800">5 800 Hz</option>
+            <option value="7500">7 500 Hz</option>
+            <option value="9000">9 000 Hz</option>
+            <option value="11000">11 000 Hz</option>
+          </select>
+        </div>
+      </div>
+
+      <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 4px;">Profil d'Acouphène (Quiz) :</label>
+      <select id="onboarding-input-profile" class="input-clean-field">
+        <option value="nocturne" selected>Compensation Nocturne (pic avant d'éteindre)</option>
+        <option value="continue">Compensation Continue (sans heure fixe)</option>
+        <option value="matinale">Activation Matinale (dès le réveil)</option>
+        <option value="persistante">Compensation Persistante (omniprésent)</option>
+      </select>
+
+      <button class="btn-submit-main" onclick="submitOnboardingProfile()">Valider mon Dossier & Commencer le Protocole</button>
+    </div>
+  </div>
+
+  <!-- MODAL 1 : FICHE PATIENT & PROFIL SÉCURISÉ (DONNÉES RÉELLES CARTPANDA) -->
+  <div class="modal-backdrop-clean" id="modal-patient-profile">
+    <div class="modal-card-box">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid var(--card-border); padding-bottom: 10px;">
+        <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--navy-dark);">Fiche Médicale du Patient</h3>
+        <button onclick="closePatientProfileModal()" style="background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text-muted);">&times;</button>
+      </div>
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px;">Données sécurisées du protocole personnalisées à partir de votre commande CartPanda et de votre test clinique.</p>
+
+      <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 4px;">Nom et Prénom :</label>
+      <input type="text" id="patient-input-name" class="input-clean-field" placeholder="Ex : Sara Wilson">
+
+      <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 4px;">Email associé au compte :</label>
+      <input type="email" id="patient-input-email" class="input-clean-field" placeholder="patient@exemple.com">
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div>
+          <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 4px;">Date d'entrée :</label>
+          <input type="date" id="patient-input-startdate" class="input-clean-field">
+        </div>
+        <div>
+          <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 4px;">Fréquence calibrée :</label>
+          <select id="patient-input-freq" class="input-clean-field">
+            <option value="3000">3 000 Hz</option>
+            <option value="4000">4 000 Hz</option>
+            <option value="5800">5 800 Hz</option>
+            <option value="7500">7 500 Hz</option>
+            <option value="9000">9 000 Hz</option>
+            <option value="11000">11 000 Hz</option>
+          </select>
+        </div>
+      </div>
+
+      <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 4px;">Profil d'acouphène (Diagnostic Quiz) :</label>
+      <select id="patient-input-profile" class="input-clean-field">
+        <option value="nocturne">Compensation Nocturne (pic avant d'éteindre)</option>
+        <option value="continue">Compensation Continue (sans heure fixe)</option>
+        <option value="matinale">Activation Matinale (dès le réveil)</option>
+        <option value="persistante">Compensation Persistante (omniprésent)</option>
+      </select>
+
+      <div style="background: #F8FAFC; border: 1px solid var(--card-border); border-radius: var(--radius-sm); padding: 10px 12px; margin-bottom: 16px; font-size: 0.8rem;">
+        <span style="color: var(--text-muted);">Jour d'avancement calculé :</span>
+        <strong id="patient-calculated-day" style="color: var(--navy-dark); display: block; margin-top: 2px;">Jour 1 sur 14 jours</strong>
+      </div>
+
+      <div style="display: flex; gap: 8px;">
+        <button class="btn-submit-main" onclick="savePatientProfile()" style="padding: 12px;">Enregistrer les Modifications</button>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; margin-top: 14px; border-top: 1px solid var(--card-border-subtle); padding-top: 12px;">
+        <button onclick="exportHealthDataJSON()" style="background: none; border: none; font-size: 0.76rem; color: var(--teal-primary); font-weight: 700; cursor: pointer;">Exporter mes Données (.json)</button>
+        <button onclick="simulateNextDay()" style="background: none; border: none; font-size: 0.76rem; color: var(--blue-accent); font-weight: 700; cursor: pointer;">Simuler Jour Suivant (Test)</button>
+        <button onclick="resetTestData()" style="background: none; border: none; font-size: 0.76rem; color: #EF4444; font-weight: 700; cursor: pointer;">Réinitialiser</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2 : CENTRE DE NOTIFICATIONS FONCTIONNEL -->
+  <div class="modal-backdrop-clean" id="modal-notif-dialog">
+    <div class="modal-card-box">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid var(--card-border); padding-bottom: 10px;">
+        <h3 style="font-size: 1.05rem; font-weight: 800; color: var(--navy-dark);">Notifications Médicales</h3>
+        <button onclick="closeNotificationsModal()" style="background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--text-muted);">&times;</button>
+      </div>
+
+      <button id="btn-request-web-push" onclick="requestBrowserPushNotifications()" style="width: 100%; background: #F8FAFC; border: 1px solid var(--card-border); border-radius: var(--radius-sm); padding: 10px; font-size: 0.8rem; font-weight: 700; color: var(--navy-dark); cursor: pointer; margin-bottom: 14px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span id="push-btn-label">Activer les Alertes Sonores sur cet Appareil</span>
+      </button>
+
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="padding: 12px; background: #F8FAFC; border-radius: 12px; border-left: 3px solid var(--teal-primary); cursor: pointer;" onclick="closeNotificationsModal(); switchTab('nav-seance');">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <strong style="color: var(--text-main); font-size: 0.85rem;">Rappel Séance de 15 min</strong>
+            <span style="font-size: 0.7rem; color: var(--text-light);">20h30</span>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">Votre session acoustique par encoche spectrale est prête pour ce soir.</p>
+        </div>
+
+        <div style="padding: 12px; background: #F8FAFC; border-radius: 12px; border-left: 3px solid var(--amber-accent); cursor: pointer;" onclick="closeNotificationsModal(); openDetailScreen('screen-detail-cuillere');">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <strong style="color: var(--text-main); font-size: 0.85rem;">Conseil Clinique du Jour</strong>
+            <span style="font-size: 0.7rem; color: var(--text-light);">Matin</span>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">Prenez votre cuillère matinale 15 min avant le petit-déjeuner pour une assimilation lipidique maximale.</p>
+        </div>
+
+        <div style="padding: 12px; background: #F8FAFC; border-radius: 12px; border-left: 3px solid var(--blue-accent); cursor: pointer;" onclick="closeNotificationsModal(); switchTab('nav-suivi');">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <strong style="color: var(--text-main); font-size: 0.85rem;">Bilan Journalier d'Intensité</strong>
+            <span style="font-size: 0.7rem; color: var(--text-light);">Soir</span>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">N'oubliez pas d'enregistrer votre échelle de gêne sonore pour alimenter votre courbe.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 16px; border-top: 1px solid var(--card-border-subtle); padding-top: 12px; display: flex; justify-content: flex-end;">
+        <button onclick="markAllNotificationsRead()" style="background: none; border: none; font-size: 0.78rem; font-weight: 700; color: var(--text-muted); cursor: pointer;">Tout marquer comme lu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3 : PRÉSENTATION DES OPTIONS THÉRAPEUTIQUES AVANCÉES (ORDER BUMPS & UPSELL) -->
+  <div class="modal-backdrop-clean" id="modal-advanced-product">
+    <div class="modal-card-box">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <span class="user-badge-verified" id="adv-modal-badge">Option Thérapeutique</span>
+        <button onclick="closeAdvancedProductModal()" style="background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text-muted);">&times;</button>
+      </div>
+
+      <img src="assets/ondes_delta_sleep.jpg" alt="Option Avancée" id="adv-modal-image" style="width: 100%; height: 160px; object-fit: cover; border-radius: 12px; margin-bottom: 14px;">
+
+      <h3 id="adv-modal-title" style="font-size: 1.15rem; font-weight: 800; color: var(--navy-dark); margin-bottom: 6px;">Ondes Delta Sommeil Profond</h3>
+      <div id="adv-modal-price" style="font-size: 0.95rem; font-weight: 800; color: #D97706; margin-bottom: 12px;">+19 € (Paiement unique)</div>
+      
+      <p id="adv-modal-desc" style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">Description clinique du module complémentaire.</p>
+
+      <div style="background: #F8FAFC; border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; margin-bottom: 18px; font-size: 0.8rem; color: var(--text-muted);" id="adv-modal-features">
+        <!-- Inclusions détaillées -->
+      </div>
+
+      <button class="btn-submit-main" id="adv-modal-cta" onclick="simulateProductUnlock()">Débloquer cet Accès Instantanément</button>
+    </div>
+  </div>
+
+  <!-- MODAL 4 : VISUALISEUR PDF OFFICIEL & GUIDE DE MISE EN PRATIQUE CLINIQUE -->
+  <div class="book-reader-modal" id="book-reader-modal">
+    <div class="book-reader-content">
+      <!-- En-tête épuré sans bug -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--card-border); padding-bottom: 14px; margin-bottom: 16px;">
+        <div>
+          <span class="user-badge-verified" id="book-reader-badge">Édition Médicale Intégrale</span>
+          <h3 id="book-modal-title" style="font-size: 1.12rem; font-weight: 800; color: var(--navy-dark); margin-top: 4px;">Titre de l'Ouvrage</h3>
+          <p id="book-modal-subtitle" style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">Document PDF complet avec bibliographie scientifique</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <a id="book-fullscreen-link" href="#" target="_blank" style="font-size: 0.78rem; color: var(--teal-primary); font-weight: 700; text-decoration: none; padding: 6px 10px; border-radius: 8px; background: var(--teal-subtle);">Plein Écran ↗</a>
+          <button onclick="closeBookReader()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); line-height: 1;">&times;</button>
+        </div>
+      </div>
+
+      <!-- Cadre d'intégration du véritable document PDF -->
+      <iframe id="book-pdf-iframe" class="pdf-viewer-embed-frame" src="" title="Visualiseur PDF"></iframe>
+
+      <!-- Section Explicite : Comment Mettre en Pratique Clinique -->
+      <div class="clinical-practice-guide-box" id="book-practice-content">
+        <!-- Rempli dynamiquement en JS avec le plan d'action de chaque livre -->
+      </div>
+
+      <div style="margin-top: 20px; border-top: 1px solid var(--card-border); padding-top: 14px; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 0.75rem; color: var(--text-muted);">Protocole Neuro-Silence — Département Médical</span>
+        <a id="book-download-pdf-btn" href="#" download class="btn-submit-main" style="padding: 10px 18px; width: auto; font-size: 0.82rem; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+          Télécharger le Fichier PDF
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logique Web Audio API & JavaScript de l'Application -->
+  <script>
+    // -------------------------------------------------------------
+    // 1. GESTION DU PROFIL PATIENT & ONBOARDING CARTPANDA
+    // -------------------------------------------------------------
+    const gatekeeperScreen = document.getElementById('gatekeeper-screen');
+    const tokenInput = document.getElementById('token-input');
+    const btnUnlockGate = document.getElementById('btn-unlock-gate');
+    const gateError = document.getElementById('gate-error');
+
+    const userNameDisplay = document.getElementById('user-name-display');
+    const heroDayCounter = document.getElementById('hero-day-counter');
+    const heroFreqBadge = document.getElementById('hero-freq-badge');
+    const playerFreqDisplay = document.getElementById('player-freq-display');
+    const freqSelectDropdown = document.getElementById('freq-select-dropdown');
+    const bellBadgeCount = document.getElementById('bell-badge-count');
+
+    // Modals
+    const modalOnboardingWelcome = document.getElementById('modal-onboarding-welcome');
+    const modalPatientProfile = document.getElementById('modal-patient-profile');
+    const patientInputName = document.getElementById('patient-input-name');
+    const patientInputEmail = document.getElementById('patient-input-email');
+    const patientInputStartDate = document.getElementById('patient-input-startdate');
+    const patientInputFreq = document.getElementById('patient-input-freq');
+    const patientInputProfile = document.getElementById('patient-input-profile');
+    const patientCalculatedDay = document.getElementById('patient-calculated-day');
+
+    function getTodayKey() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
+
+    function calculateProtocolDay(startDateStr) {
+      if (!startDateStr) return 1;
+      const start = new Date(startDateStr);
+      const today = new Date(getTodayKey());
+      const diffTime = today - start;
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+      return Math.max(1, diffDays);
+    }
+
+    function initPatientState() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlToken = urlParams.get('token') || urlParams.get('auth');
+      const urlName = urlParams.get('name') || urlParams.get('prenom');
+      const urlEmail = urlParams.get('email');
+      const urlFreq = urlParams.get('freq');
+      const urlDate = urlParams.get('date') || urlParams.get('start_date');
+      const urlProfile = urlParams.get('profile') || urlParams.get('severity');
+
+      let profile = JSON.parse(localStorage.getItem('neuro_patient_profile') || 'null');
+      const onboardingDone = localStorage.getItem('neuro_onboarding_completed') === 'true';
+
+      if (!profile) {
+        profile = {
+          name: urlName || 'Sara Wilson',
+          email: urlEmail || 'sara.wilson@exemple.com',
+          startDate: urlDate || getTodayKey(),
+          freq: parseInt(urlFreq, 10) || 4000,
+          profileType: urlProfile || 'nocturne',
+          token: urlToken || 'SILENCE2026',
+          authorized: true
+        };
+        localStorage.setItem('neuro_patient_profile', JSON.stringify(profile));
+
+        // Afficher l'onboarding au premier accès si non encore validé par le patient
+        if (!onboardingDone) {
+          document.getElementById('onboarding-input-name').value = urlName || '';
+          document.getElementById('onboarding-input-email').value = urlEmail || '';
+          document.getElementById('onboarding-input-date').value = urlDate || getTodayKey();
+          document.getElementById('onboarding-input-freq').value = String(profile.freq);
+          document.getElementById('onboarding-input-profile').value = profile.profileType;
+          modalOnboardingWelcome.classList.add('open');
+        }
+      } else {
+        if (urlName) profile.name = urlName;
+        if (urlEmail) profile.email = urlEmail;
+        if (urlFreq) profile.freq = parseInt(urlFreq, 10);
+        if (urlDate) profile.startDate = urlDate;
+        if (urlProfile) profile.profileType = urlProfile;
+        if (urlToken) {
+          profile.token = urlToken;
+          profile.authorized = true;
+        }
+        localStorage.setItem('neuro_patient_profile', JSON.stringify(profile));
+      }
+
+      localStorage.setItem('neuro_silence_auth', profile.authorized ? 'active' : 'inactive');
+
+      // Mise à jour de l'interface
+      userNameDisplay.textContent = profile.name;
+      const dayNum = calculateProtocolDay(profile.startDate);
+      heroDayCounter.textContent = `Jour ${dayNum}`;
+      const dParts = (profile.startDate || '').split('-');
+      const formattedDate = dParts.length === 3 ? `${dParts[2]}/${dParts[1]}/${dParts[0]}` : (profile.startDate || '');
+      document.getElementById('hero-protocol-duration').textContent = `Sur 14 jours d'habituation active (Début : ${formattedDate})`;
+
+      const formattedHz = (profile.freq || 4000).toLocaleString('fr-FR') + ' Hz';
+      heroFreqBadge.textContent = formattedHz;
+      playerFreqDisplay.textContent = `Fréquence Calibrée : ${formattedHz} (Encoche Spectrale)`;
+      freqSelectDropdown.value = String(profile.freq || 4000);
+
+      // Contrôle de l'accès
+      if (profile.authorized || localStorage.getItem('neuro_silence_auth') === 'active') {
+        gatekeeperScreen.style.display = 'none';
+      } else {
+        gatekeeperScreen.style.display = 'flex';
+      }
+
+      // Nettoyer l'URL
+      if (urlToken || urlName || urlFreq) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    }
+
+    function submitOnboardingProfile() {
+      const name = document.getElementById('onboarding-input-name').value.trim() || 'Patient Neuro-Silence';
+      const email = document.getElementById('onboarding-input-email').value.trim() || 'patient@exemple.com';
+      const date = document.getElementById('onboarding-input-date').value || getTodayKey();
+      const freq = parseInt(document.getElementById('onboarding-input-freq').value, 10);
+      const profileType = document.getElementById('onboarding-input-profile').value;
+
+      const profile = {
+        name: name,
+        email: email,
+        startDate: date,
+        freq: freq,
+        profileType: profileType,
+        token: 'SILENCE2026',
+        authorized: true
+      };
+
+      localStorage.setItem('neuro_patient_profile', JSON.stringify(profile));
+      localStorage.setItem('neuro_onboarding_completed', 'true');
+      modalOnboardingWelcome.classList.remove('open');
+      initPatientState();
+    }
+
+    btnUnlockGate.addEventListener('click', () => {
+      const v = tokenInput.value.trim();
+      if (v.length >= 3) {
+        let profile = JSON.parse(localStorage.getItem('neuro_patient_profile') || '{}');
+        profile.token = v;
+        profile.authorized = true;
+        localStorage.setItem('neuro_patient_profile', JSON.stringify(profile));
+        localStorage.setItem('neuro_silence_auth', 'active');
+        gatekeeperScreen.style.display = 'none';
+      } else {
+        gateError.style.display = 'block';
+      }
+    });
+
+    tokenInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') btnUnlockGate.click();
+    });
+
+    function openPatientProfileModal() {
+      const profile = JSON.parse(localStorage.getItem('neuro_patient_profile') || '{}');
+      patientInputName.value = profile.name || '';
+      patientInputEmail.value = profile.email || '';
+      patientInputStartDate.value = profile.startDate || getTodayKey();
+      patientInputFreq.value = String(profile.freq || 4000);
+      patientInputProfile.value = profile.profileType || 'nocturne';
+
+      const day = calculateProtocolDay(profile.startDate);
+      patientCalculatedDay.textContent = `Jour ${day} sur 14 jours (Début le ${profile.startDate || getTodayKey()})`;
+
+      modalPatientProfile.classList.add('open');
+    }
+
+    function closePatientProfileModal() {
+      modalPatientProfile.classList.remove('open');
+    }
+
+    function savePatientProfile() {
+      let profile = JSON.parse(localStorage.getItem('neuro_patient_profile') || '{}');
+      profile.name = patientInputName.value.trim() || 'Sara Wilson';
+      profile.email = patientInputEmail.value.trim();
+      profile.startDate = patientInputStartDate.value || getTodayKey();
+      profile.freq = parseInt(patientInputFreq.value, 10);
+      profile.profileType = patientInputProfile.value;
+
+      localStorage.setItem('neuro_patient_profile', JSON.stringify(profile));
+      initPatientState();
+      closePatientProfileModal();
+      alert("Votre dossier patient a été mis à jour avec succès !");
+    }
+
+    function simulateNextDay() {
+      const todayKey = getTodayKey();
+      let records = JSON.parse(localStorage.getItem('neuro_daily_records') || '{}');
+      if (!records[todayKey]) {
+        records[todayKey] = {
+          date: todayKey,
+          score: 6,
+          notes: "Séance d'habituation réalisée, bonne tolérance acoustique.",
+          symptoms: ["Sifflement aigu", "Calme relatif"],
+          timestamp: Date.now()
+        };
+        localStorage.setItem('neuro_daily_records', JSON.stringify(records));
+      }
+
+      let sessions = JSON.parse(localStorage.getItem('neuro_audio_sessions') || '{}');
+      if (!sessions[todayKey]) {
+        sessions[todayKey] = {
+          count: 1,
+          lastTime: "21h15",
+          freq: "4000",
+          durationMinutes: 15
+        };
+        localStorage.setItem('neuro_audio_sessions', JSON.stringify(sessions));
+      }
+
+      // Décaler les enregistrements d'un jour dans le passé pour libérer la date d'aujourd'hui
+      const shiftedRecords = {};
+      Object.keys(records).forEach(k => {
+        const d = new Date(k + 'T12:00:00');
+        d.setDate(d.getDate() - 1);
+        const newKey = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        shiftedRecords[newKey] = { ...records[k], date: newKey };
+      });
+      localStorage.setItem('neuro_daily_records', JSON.stringify(shiftedRecords));
+
+      const shiftedSessions = {};
+      Object.keys(sessions).forEach(k => {
+        const d = new Date(k + 'T12:00:00');
+        d.setDate(d.getDate() - 1);
+        const newKey = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        shiftedSessions[newKey] = sessions[k];
+      });
+      localStorage.setItem('neuro_audio_sessions', JSON.stringify(shiftedSessions));
+
+      let profile = JSON.parse(localStorage.getItem('neuro_patient_profile') || '{}');
+      const currentStart = new Date((profile.startDate || todayKey) + 'T12:00:00');
+      currentStart.setDate(currentStart.getDate() - 1);
+      profile.startDate = `${currentStart.getFullYear()}-${String(currentStart.getMonth()+1).padStart(2,'0')}-${String(currentStart.getDate()).padStart(2,'0')}`;
+      localStorage.setItem('neuro_patient_profile', JSON.stringify(profile));
+
+      initPatientState();
+      loadSuiviHistory();
+      refreshObservanceAnalytics();
+      closePatientProfileModal();
+      alert(`Simulation Jour Suivant réussie !\n\nVous êtes désormais au Jour ${calculateProtocolDay(profile.startDate)} sur 14.\n- La mesure précédente a été conservée dans votre historique et sur la courbe.\n- Le formulaire de ce soir est vierge et prêt pour une nouvelle saisie.`);
+    }
+
+    function exportHealthDataJSON() {
+      const data = {
+        profile: JSON.parse(localStorage.getItem('neuro_patient_profile') || '{}'),
+        records: JSON.parse(localStorage.getItem('neuro_daily_records') || '{}'),
+        audioSessions: JSON.parse(localStorage.getItem('neuro_audio_sessions') || '{}'),
+        exportDate: new Date().toISOString()
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `bilan_clinique_neuro_silence_${getTodayKey()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function resetTestData() {
+      if (confirm("Réinitialiser les données de test ? Vos données seront remises à zéro.")) {
+        localStorage.clear();
+        location.reload();
+      }
+    }
+
+    initPatientState();
+
+    // -------------------------------------------------------------
+    // 2. CENTRE DE NOTIFICATIONS MÉDICALES & WEB PUSH NATIVES
+    // -------------------------------------------------------------
+    const modalNotifDialog = document.getElementById('modal-notif-dialog');
+
+    function openNotificationsModal() {
+      modalNotifDialog.classList.add('open');
+    }
+
+    function closeNotificationsModal() {
+      modalNotifDialog.classList.remove('open');
+    }
+
+    function markAllNotificationsRead() {
+      bellBadgeCount.style.display = 'none';
+      localStorage.setItem('neuro_notifications_read', 'true');
+      closeNotificationsModal();
+    }
+
+    function requestBrowserPushNotifications() {
+      if (!("Notification" in window)) {
+        alert("Les notifications ne sont pas supportées par votre navigateur.");
+        return;
+      }
+      Notification.requestPermission().then(permission => {
+        if (permission === "granted") {
+          document.getElementById('push-btn-label').textContent = "Alertes Actives sur cet Appareil";
+          new Notification("Protocole Neuro-Silence", {
+            body: "Rappels programmés : votre séance quotidienne de 15 minutes vous sera notifiée.",
+            icon: "assets/cible_frequence.png"
+          });
+        } else {
+          alert("Vous pouvez réactiver les alertes dans les paramètres de votre navigateur.");
+        }
+      });
+    }
+
+    // -------------------------------------------------------------
+    // 3. NAVIGATION ENTRE ÉCRANS (BOTTOM PILL BAR SANS REDONDANCE)
+    // -------------------------------------------------------------
+    const screens = {
+      'nav-accueil': document.getElementById('view-accueil'),
+      'nav-seance': document.getElementById('view-seance'),
+      'nav-suivi': document.getElementById('view-suivi'),
+      'nav-guides': document.getElementById('view-guides')
+    };
+
+    const navButtons = {
+      'nav-accueil': document.getElementById('btn-nav-accueil'),
+      'nav-seance': document.getElementById('btn-nav-seance'),
+      'nav-suivi': document.getElementById('btn-nav-suivi'),
+      'nav-guides': document.getElementById('btn-nav-guides')
+    };
+
+    function switchTab(navId) {
+      document.querySelectorAll('.screen-view').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-btn-pill').forEach(b => b.classList.remove('active'));
+
+      const targetBtn = navButtons[navId];
+      if (targetBtn) targetBtn.classList.add('active');
+
+      const targetScreen = screens[navId];
+      if (targetScreen) targetScreen.classList.add('active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openDetailScreen(screenId) {
+      document.querySelectorAll('.screen-view').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-btn-pill').forEach(b => b.classList.remove('active'));
+
+      const detailScreen = document.getElementById(screenId);
+      if (detailScreen) detailScreen.classList.add('active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function scrollCarousel(trackId, direction) {
+      const track = document.getElementById(trackId);
+      if (track) {
+        track.scrollBy({ left: direction * 250, behavior: 'smooth' });
+      }
+    }
+
+    // -------------------------------------------------------------
+    // 4. MOTEUR WEB AUDIO API AUTHENTIQUE (BRUIT ROSE + FILTRE NOTCH PROFOND + OSCILLATEUR PUR)
+    // -------------------------------------------------------------
+    let audioCtx = null;
+    let isPlayingAudio = false;
+    let countdownInterval = null;
+    let audioSecondsLeft = 15 * 60;
+
+    const btnToggleSound = document.getElementById('btn-toggle-sound');
+    const svgPlayIcon = document.getElementById('svg-play-icon');
+    const svgPauseIcon = document.getElementById('svg-pause-icon');
+    const soundWaveBox = document.getElementById('sound-wave-box');
+    const playerTimerReadout = document.getElementById('player-timer-readout');
+    const sessionCompletedStatus = document.getElementById('session-completed-status');
+
+    let noiseSource = null;
+    let masterGain = null;
+    let notchFilter1 = null;
+    let notchFilter2 = null;
+    let lowerBoost = null;
+    let upperBoost = null;
+
+    // Test de son pur
+    let testOscillator = null;
+    let testGain = null;
+    let isPlayingTestTone = false;
+
+    function initAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    // Fonction de test interactif de la fréquence pure (Sinus)
+    function toggleTestTone() {
+      initAudioContext();
+      const freq = parseFloat(freqSelectDropdown.value) || 4000;
+      const btn = document.getElementById('btn-test-tone');
+
+      if (isPlayingTestTone) {
+        if (testGain && audioCtx) {
+          testGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+          setTimeout(() => {
+            if (testOscillator) {
+              testOscillator.stop();
+              testOscillator.disconnect();
+              testOscillator = null;
+            }
+          }, 100);
+        }
+        isPlayingTestTone = false;
+        btn.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" style="margin-right: 4px; vertical-align: middle;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg> Bip Test (Hz)`;
+        btn.classList.remove('active');
+      } else {
+        testOscillator = audioCtx.createOscillator();
+        testGain = audioCtx.createGain();
+        testOscillator.type = 'sine';
+        testOscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+        testGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+        testGain.gain.exponentialRampToValueAtTime(0.07, audioCtx.currentTime + 0.05);
+
+        testOscillator.connect(testGain);
+        testGain.connect(audioCtx.destination);
+        testOscillator.start();
+        isPlayingTestTone = true;
+        btn.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" style="margin-right: 4px; vertical-align: middle;"><rect x="6" y="6" width="12" height="12"/></svg> Arrêter Bip`;
+        btn.classList.add('active');
+      }
+    }
+
+    function playQuickFrequencyChime(freq) {
+      initAudioContext();
+      try {
+        const osc = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        g.gain.setValueAtTime(0.001, audioCtx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.05, audioCtx.currentTime + 0.03);
+        g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+        osc.connect(g);
+        g.connect(audioCtx.destination);
+        osc.start();
+        setTimeout(() => { osc.stop(); osc.disconnect(); }, 450);
+      } catch (e) {}
+    }
+
+    freqSelectDropdown.addEventListener('change', (e) => {
+      const hz = parseFloat(e.target.value);
+      let profile = JSON.parse(localStorage.getItem('neuro_patient_profile') || '{}');
+      profile.freq = hz;
+      localStorage.setItem('neuro_patient_profile', JSON.stringify(profile));
+
+      const formatted = hz.toLocaleString('fr-FR') + ' Hz';
+      heroFreqBadge.textContent = formatted;
+      playerFreqDisplay.textContent = `Fréquence Calibrée : ${formatted} (Encoche Spectrale)`;
+
+      // Aperçu sonore immédiat
+      playQuickFrequencyChime(hz);
+
+      // Si le son thérapeutique est en cours, mettre à jour immédiatement les filtres
+      if (audioCtx && notchFilter1 && notchFilter2) {
+        notchFilter1.frequency.setValueAtTime(hz, audioCtx.currentTime);
+        notchFilter2.frequency.setValueAtTime(hz, audioCtx.currentTime);
+        if (lowerBoost) lowerBoost.frequency.setValueAtTime(hz * 0.75, audioCtx.currentTime);
+        if (upperBoost) upperBoost.frequency.setValueAtTime(hz * 1.35, audioCtx.currentTime);
+      }
+
+      // Si le test pur est actif, changer sa fréquence
+      if (testOscillator && audioCtx) {
+        testOscillator.frequency.setValueAtTime(hz, audioCtx.currentTime);
+      }
+    });
+
+    function startNeuroNotchAudio() {
+      initAudioContext();
+      const targetFreq = parseFloat(freqSelectDropdown.value) || 4000;
+
+      // 1. Synthèse de Bruit Rose Médical (Pink Noise - Voss-McCartney Algorithm)
+      // Énergie équilibrée sur tout le spectre (100 Hz à 12 000 Hz)
+      const bufferSize = audioCtx.sampleRate * 2;
+      const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const outData = noiseBuffer.getChannelData(0);
+      let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+      for (let i = 0; i < bufferSize; i++) {
+        const white = Math.random() * 2 - 1;
+        b0 = 0.99886 * b0 + white * 0.0555179;
+        b1 = 0.99332 * b1 + white * 0.0750759;
+        b2 = 0.96900 * b2 + white * 0.1538520;
+        b3 = 0.86650 * b3 + white * 0.3104856;
+        b4 = 0.55000 * b4 + white * 0.5329522;
+        b5 = -0.7616 * b5 - white * 0.0168980;
+        outData[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.12;
+        b6 = white * 0.115926;
+      }
+
+      noiseSource = audioCtx.createBufferSource();
+      noiseSource.buffer = noiseBuffer;
+      noiseSource.loop = true;
+
+      // 2. Double filtre Notch en cascade pour une encoche profonde et auditivement distincte
+      notchFilter1 = audioCtx.createBiquadFilter();
+      notchFilter1.type = 'notch';
+      notchFilter1.frequency.setValueAtTime(targetFreq, audioCtx.currentTime);
+      notchFilter1.Q.setValueAtTime(3.2, audioCtx.currentTime);
+
+      notchFilter2 = audioCtx.createBiquadFilter();
+      notchFilter2.type = 'notch';
+      notchFilter2.frequency.setValueAtTime(targetFreq, audioCtx.currentTime);
+      notchFilter2.Q.setValueAtTime(3.0, audioCtx.currentTime);
+
+      // 3. Renforcement d'inhibition latérale (bandes adjacentes surélevées de +2.5 dB)
+      lowerBoost = audioCtx.createBiquadFilter();
+      lowerBoost.type = 'peaking';
+      lowerBoost.frequency.setValueAtTime(targetFreq * 0.75, audioCtx.currentTime);
+      lowerBoost.Q.setValueAtTime(2.0, audioCtx.currentTime);
+      lowerBoost.gain.setValueAtTime(2.5, audioCtx.currentTime);
+
+      upperBoost = audioCtx.createBiquadFilter();
+      upperBoost.type = 'peaking';
+      upperBoost.frequency.setValueAtTime(targetFreq * 1.35, audioCtx.currentTime);
+      upperBoost.Q.setValueAtTime(2.0, audioCtx.currentTime);
+      upperBoost.gain.setValueAtTime(2.5, audioCtx.currentTime);
+
+      // 4. Gain général avec rampe progressive douce
+      masterGain = audioCtx.createGain();
+      masterGain.gain.setValueAtTime(0.01, audioCtx.currentTime);
+      masterGain.gain.exponentialRampToValueAtTime(0.22, audioCtx.currentTime + 1.5);
+
+      noiseSource.connect(notchFilter1);
+      notchFilter1.connect(notchFilter2);
+      notchFilter2.connect(lowerBoost);
+      lowerBoost.connect(upperBoost);
+      upperBoost.connect(masterGain);
+      masterGain.connect(audioCtx.destination);
+
+      noiseSource.start();
+      isPlayingAudio = true;
+
+      svgPlayIcon.style.display = 'none';
+      svgPauseIcon.style.display = 'block';
+      soundWaveBox.classList.add('playing');
+
+      countdownInterval = setInterval(() => {
+        audioSecondsLeft--;
+        if (audioSecondsLeft <= 0) {
+          stopNeuroNotchAudio();
+          audioSecondsLeft = 15 * 60;
+          registerCompletedSession();
+          alert("Votre séance de 15 minutes est terminée. Votre cortex auditif est stabilisé pour la nuit !");
+        }
+        const m = Math.floor(audioSecondsLeft / 60);
+        const s = audioSecondsLeft % 60;
+        playerTimerReadout.textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+      }, 1000);
+    }
+
+    function stopNeuroNotchAudio() {
+      if (masterGain && audioCtx) {
+        masterGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
+        setTimeout(() => {
+          if (noiseSource) {
+            noiseSource.stop();
+            noiseSource.disconnect();
+          }
+        }, 600);
+      }
+      isPlayingAudio = false;
+      clearInterval(countdownInterval);
+
+      svgPlayIcon.style.display = 'block';
+      svgPauseIcon.style.display = 'none';
+      soundWaveBox.classList.remove('playing');
+    }
+
+    function registerCompletedSession() {
+      const todayKey = getTodayKey();
+      let sessions = JSON.parse(localStorage.getItem('neuro_audio_sessions') || '{}');
+      const currentHz = freqSelectDropdown.value || '4000';
+      const now = new Date();
+      const timeStr = `${String(now.getHours()).padStart(2,'0')}h${String(now.getMinutes()).padStart(2,'0')}`;
+
+      sessions[todayKey] = {
+        count: ((sessions[todayKey] && sessions[todayKey].count) || 0) + 1,
+        lastTime: timeStr,
+        freq: currentHz,
+        durationMinutes: 15
+      };
+      localStorage.setItem('neuro_audio_sessions', JSON.stringify(sessions));
+
+      sessionCompletedStatus.textContent = `Validée aujourd'hui (${timeStr}) ✓`;
+      sessionCompletedStatus.style.color = "var(--emerald-accent)";
+
+      refreshObservanceAnalytics();
+    }
+
+    function manuallyValidateSession() {
+      registerCompletedSession();
+      alert("Séance quotidienne de 15 minutes validée avec succès ! Votre historique d'observance a été mis à jour.");
+    }
+
+    btnToggleSound.addEventListener('click', () => {
+      if (isPlayingAudio) {
+        stopNeuroNotchAudio();
+      } else {
+        startNeuroNotchAudio();
+      }
+    });
+
+    // -------------------------------------------------------------
+    // 5. ANALYTICS & BILAN THÉRAPEUTIQUE (FILTRE COMPLET & OBSERVANCE)
+    // -------------------------------------------------------------
+    const overviewScoreVal = document.getElementById('overview-score-val');
+    const overviewStreakVal = document.getElementById('overview-streak-val');
+    const overviewSleepVal = document.getElementById('overview-sleep-val');
+    const practiceMatrixGrid = document.getElementById('practice-matrix-grid');
+    const practiceHistoryLogBox = document.getElementById('practice-history-log-box');
+
+    function refreshObservanceAnalytics() {
+      const sessions = JSON.parse(localStorage.getItem('neuro_audio_sessions') || '{}');
+      const todayKey = getTodayKey();
+      const sessionKeys = Object.keys(sessions);
+
+      if (sessions[todayKey]) {
+        sessionCompletedStatus.textContent = `Validée aujourd'hui (${sessions[todayKey].lastTime || '15 min'}) ✓`;
+        sessionCompletedStatus.style.color = "var(--emerald-accent)";
+      } else {
+        sessionCompletedStatus.textContent = "En attente de réalisation";
+        sessionCompletedStatus.style.color = "var(--text-muted)";
+      }
+
+      let matrixHTML = '';
+      const profile = JSON.parse(localStorage.getItem('neuro_patient_profile') || '{}');
+      const currentDay = calculateProtocolDay(profile.startDate);
+
+      for (let i = 1; i <= 14; i++) {
+        const isDone = i < currentDay || (i === currentDay && sessions[todayKey]);
+        const isToday = (i === currentDay);
+        let cellClass = 'matrix-day-cell';
+        if (isDone) cellClass += ' completed';
+        if (isToday) cellClass += ' active-today';
+
+        matrixHTML += `
+          <div class="${cellClass}">
+            <span>J${i}</span>
+            <span>${isDone ? '✓' : (isToday ? '•' : '○')}</span>
+          </div>
+        `;
+      }
+      practiceMatrixGrid.innerHTML = matrixHTML;
+
+      if (sessionKeys.length > 0) {
+        practiceHistoryLogBox.innerHTML = sessionKeys.sort().reverse().slice(0, 4).map(k => {
+          const s = sessions[k];
+          return `
+            <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed var(--card-border-subtle);">
+              <span>${k} (${s.lastTime || 'Soir'})</span>
+              <strong style="color: var(--teal-primary);">${s.freq || 4000} Hz — 15 min ✓</strong>
+            </div>
+          `;
+        }).join('');
+      } else {
+        practiceHistoryLogBox.innerHTML = `<span style="font-style: italic;">Aucune séance enregistrée pour le moment. Votre premier enregistrement apparaîtra ici.</span>`;
+      }
+
+      updateOverviewPeriod(document.getElementById('overview-filter-select').value);
+    }
+
+    function updateOverviewPeriod(period) {
+      const records = JSON.parse(localStorage.getItem('neuro_daily_records') || '{}');
+      const sessions = JSON.parse(localStorage.getItem('neuro_audio_sessions') || '{}');
+      const recordKeys = Object.keys(records).sort();
+      const sessionKeys = Object.keys(sessions);
+
+      let daysCount = 7;
+      if (period === 'semaine') daysCount = 7;
+      else if (period === 'mois') daysCount = 30;
+      else daysCount = 90;
+
+      if (recordKeys.length > 0) {
+        const slice = recordKeys.slice(-daysCount);
+        const sum = slice.reduce((acc, k) => acc + (records[k].score || 4), 0);
+        const avg = (sum / slice.length).toFixed(1);
+        overviewScoreVal.textContent = `${avg} / 10`;
+      } else {
+        overviewScoreVal.textContent = "3.8 / 10";
+      }
+
+      const completedInPeriod = sessionKeys.length;
+      overviewStreakVal.textContent = `${completedInPeriod} / ${daysCount}`;
+      document.getElementById('kpi-sessions-count').textContent = `${completedInPeriod} / ${daysCount} Jours`;
+      overviewSleepVal.textContent = "7.8 / 10";
+    }
+
+    // -------------------------------------------------------------
+    // 6. SUIVI DU SOIR (ENREGISTREMENT CLINIQUE QUOTIDIEN)
+    // -------------------------------------------------------------
+    const suiviSlider = document.getElementById('suivi-range-slider');
+    const suiviScoreDisplay = document.getElementById('suivi-score-display');
+    const suiviScoreDesc = document.getElementById('suivi-score-desc');
+    const btnSaveDailyRecord = document.getElementById('btn-save-daily-record');
+    const suiviSaveAlert = document.getElementById('suivi-save-alert');
+    const suiviHistoryItemsBox = document.getElementById('suivi-history-items-box');
+    const patientNotesInput = document.getElementById('patient-daily-notes');
+
+    const descDictionary = {
+      0: "Silence complet et apaisement total",
+      1: "Sifflement à peine perceptible",
+      2: "Présence très légère, facilement oubliée",
+      3: "Bruit de fond doux non dérangeant",
+      4: "Gêne sensible mais en cours d'atténuation",
+      5: "Gêne modérée, perception stabilisée",
+      6: "Présence nette mais contrôlable",
+      7: "Intensité élevée, besoin du protocole",
+      8: "Sifflement aigu envahissant",
+      9: "Intensité très forte",
+      10: "Volume maximal et fatigue intense"
+    };
+
+    suiviSlider.addEventListener('input', (e) => {
+      const v = e.target.value;
+      suiviScoreDisplay.textContent = `${v} / 10`;
+      suiviScoreDesc.textContent = descDictionary[v] || "";
+    });
+
+    function toggleSymptomTag(btn) {
+      btn.classList.toggle('selected');
+    }
+
+    function getSelectedSymptoms() {
+      const tags = document.querySelectorAll('.symptom-tag-btn.selected');
+      const list = [];
+      tags.forEach(t => list.push(t.textContent.trim()));
+      return list;
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function renderDynamicSvgChart(records) {
+      const wrapper = document.getElementById('svg-chart-wrapper');
+      if (!wrapper) return;
+
+      const sortedDates = Object.keys(records || {}).sort();
+      const todayKey = getTodayKey();
+
+      if (sortedDates.length === 0) {
+        wrapper.innerHTML = `
+          <svg viewBox="0 0 500 140" width="100%" height="100%" style="overflow: visible;">
+            <line x1="0" y1="35" x2="500" y2="35" stroke="#F1F5F9" stroke-width="1"/>
+            <line x1="0" y1="70" x2="500" y2="70" stroke="#F1F5F9" stroke-width="1"/>
+            <line x1="0" y1="105" x2="500" y2="105" stroke="#F1F5F9" stroke-width="1"/>
+            <defs>
+              <linearGradient id="emptyCurveGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#0D9488" stop-opacity="0.20"/>
+                <stop offset="100%" stop-color="#0D9488" stop-opacity="0.0"/>
+              </linearGradient>
+            </defs>
+            <polygon points="30,25 250,65 470,105 470,130 30,130" fill="url(#emptyCurveGradient)"/>
+            <path d="M 30 25 Q 250 65, 470 105" fill="none" stroke="#0D9488" stroke-width="2.5" stroke-dasharray="4 4"/>
+            <circle cx="30" cy="25" r="4" fill="#FFFFFF" stroke="#0D9488" stroke-width="2.5"/>
+            <circle cx="470" cy="105" r="5" fill="#0D9488" stroke="#FFFFFF" stroke-width="2.5"/>
+            <text x="30" y="16" fill="#94A3B8" font-size="10" font-weight="700" text-anchor="start">Départ (8/10)</text>
+            <text x="470" y="125" fill="#0D9488" font-size="11" font-weight="800" text-anchor="end">Cible J14 (2/10)</text>
+            <text x="250" y="132" fill="#94A3B8" font-size="9" font-weight="600" text-anchor="middle">En attente de votre premier relevé du soir</text>
+          </svg>
+        `;
+        return;
+      }
+
+      // Calcul Y inversé : 10 = Y 20 (haut), 0 = Y 115 (bas)
+      const getY = (s) => 115 - (Math.max(0, Math.min(10, s)) / 10) * 95;
+
+      let points = [];
+      if (sortedDates.length === 1) {
+        const singleKey = sortedDates[0];
+        const singleScore = records[singleKey].score;
+        const isToday = (singleKey === todayKey);
+        const startScore = 8;
+        points = [
+          { x: 40, y: getY(startScore), label: 'Départ (8/10)', active: false },
+          { x: 460, y: getY(singleScore), label: `${isToday ? "Aujourd'hui" : singleKey} (${singleScore}/10)`, active: true }
+        ];
+      } else {
+        const count = sortedDates.length;
+        const step = 420 / (count - 1);
+        points = sortedDates.map((dKey, idx) => {
+          const s = records[dKey].score;
+          const x = Math.round(40 + idx * step);
+          const isToday = (dKey === todayKey);
+          const dParts = dKey.split('-');
+          const shortDate = dParts.length === 3 ? `${dParts[2]}/${dParts[1]}` : dKey;
+          return {
+            x: x,
+            y: getY(s),
+            label: `${isToday ? "Aujourd'hui" : shortDate} (${s}/10)`,
+            active: isToday || (idx === count - 1)
+          };
+        });
+      }
+
+      let pathD = `M ${points[0].x} ${points[0].y}`;
+      for (let i = 1; i < points.length; i++) {
+        const prev = points[i - 1];
+        const curr = points[i];
+        const cx1 = prev.x + (curr.x - prev.x) / 2;
+        const cy1 = prev.y;
+        const cx2 = prev.x + (curr.x - prev.x) / 2;
+        const cy2 = curr.y;
+        pathD += ` C ${cx1} ${cy1}, ${cx2} ${cy2}, ${curr.x} ${curr.y}`;
+      }
+
+      const polyPoints = `${points[0].x},130 ` + points.map(p => `${p.x},${p.y}`).join(' ') + ` ${points[points.length - 1].x},130`;
+
+      const circlesSvg = points.map(p => `
+        <circle cx="${p.x}" cy="${p.y}" r="${p.active ? 5.5 : 4}" fill="${p.active ? '#0D9488' : '#FFFFFF'}" stroke="${p.active ? '#FFFFFF' : '#0D9488'}" stroke-width="2.5"/>
+        <text x="${p.x}" y="${p.y < 35 ? p.y + 16 : p.y - 10}" fill="${p.active ? '#0D9488' : '#64748B'}" font-size="${p.active ? 10.5 : 9}" font-weight="${p.active ? 800 : 600}" text-anchor="${p.x < 80 ? 'start' : (p.x > 420 ? 'end' : 'middle')}">${p.label}</text>
+      `).join('');
+
+      wrapper.innerHTML = `
+        <svg viewBox="0 0 500 140" width="100%" height="100%" style="overflow: visible;">
+          <line x1="0" y1="35" x2="500" y2="35" stroke="#F1F5F9" stroke-width="1"/>
+          <line x1="0" y1="70" x2="500" y2="70" stroke="#F1F5F9" stroke-width="1"/>
+          <line x1="0" y1="105" x2="500" y2="105" stroke="#F1F5F9" stroke-width="1"/>
+          <defs>
+            <linearGradient id="dynamicCurveGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#0D9488" stop-opacity="0.22"/>
+              <stop offset="100%" stop-color="#0D9488" stop-opacity="0.0"/>
+            </linearGradient>
+          </defs>
+          <polygon points="${polyPoints}" fill="url(#dynamicCurveGradient)"/>
+          <path d="${pathD}" fill="none" stroke="#0D9488" stroke-width="3" stroke-linecap="round"/>
+          ${circlesSvg}
+        </svg>
+      `;
+    }
+
+    function loadSuiviHistory() {
+      const raw = localStorage.getItem('neuro_daily_records');
+      let records = {};
+      if (raw) {
+        try { records = JSON.parse(raw); } catch (e) { records = {}; }
+      }
+
+      const todayKey = getTodayKey();
+      if (records[todayKey]) {
+        const todayData = records[todayKey];
+        suiviSlider.value = todayData.score;
+        suiviScoreDisplay.textContent = `${todayData.score} / 10`;
+        suiviScoreDesc.textContent = descDictionary[todayData.score] || "";
+        patientNotesInput.value = todayData.notes || "";
+        
+        const savedSymptoms = todayData.symptoms || [];
+        document.querySelectorAll('.symptom-tag-btn').forEach(btn => {
+          if (savedSymptoms.includes(btn.textContent.trim())) {
+            btn.classList.add('selected');
+          } else {
+            btn.classList.remove('selected');
+          }
+        });
+
+        btnSaveDailyRecord.textContent = "Mettre à jour ma Mesure d'Aujourd'hui";
+      } else {
+        // Nouvelle journée : formulaire vierge prêt pour la saisie du soir
+        suiviSlider.value = 4;
+        suiviScoreDisplay.textContent = "4 / 10";
+        suiviScoreDesc.textContent = descDictionary[4] || "";
+        patientNotesInput.value = "";
+        document.querySelectorAll('.symptom-tag-btn').forEach(btn => btn.classList.remove('selected'));
+        btnSaveDailyRecord.textContent = "Enregistrer ma Mesure du Soir";
+      }
+
+      const keys = Object.keys(records).sort().reverse();
+      if (keys.length > 0) {
+        const lastScore = records[keys[0]].score;
+        overviewScoreVal.textContent = `${lastScore} / 10`;
+        document.getElementById('kpi-score-val').textContent = `${lastScore} / 10`;
+
+        suiviHistoryItemsBox.innerHTML = keys.slice(0, 7).map(k => {
+          const item = records[k];
+          const symptomsList = (item.symptoms || []).join(', ');
+          const noteHtml = item.notes ? `<div style="font-size: 0.74rem; color: var(--text-muted); font-style: italic; margin-top: 3px; line-height: 1.3;">« ${escapeHtml(item.notes)} »</div>` : '';
+          return `
+            <div style="padding: 10px 0; border-bottom: 1px solid #F1F5F9; font-size: 0.82rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <strong style="color: var(--navy-dark);">${k}</strong>
+                  <div style="font-size: 0.72rem; color: #94A3B8; margin-top: 1px;">${symptomsList || 'Séance effectuée'}</div>
+                </div>
+                <span style="background: var(--teal-subtle); color: var(--teal-primary); padding: 3px 10px; border-radius: 12px; font-weight: 800; font-size: 0.82rem;">${item.score} / 10</span>
+              </div>
+              ${noteHtml}
+            </div>
+          `;
+        }).join('');
+      } else {
+        suiviHistoryItemsBox.innerHTML = `<div style="color: #94A3B8; font-size: 0.8rem; font-style: italic; padding: 4px 0;">Aucune mesure enregistrée. Votre premier relevé apparaîtra ici.</div>`;
+      }
+
+      // Mettre à jour la courbe SVG dynamique
+      renderDynamicSvgChart(records);
+    }
+
+    btnSaveDailyRecord.addEventListener('click', () => {
+      const todayKey = getTodayKey();
+      const score = parseInt(suiviSlider.value, 10);
+      const notes = patientNotesInput.value.trim();
+      const symptoms = getSelectedSymptoms();
+
+      const raw = localStorage.getItem('neuro_daily_records');
+      let records = {};
+      if (raw) {
+        try { records = JSON.parse(raw); } catch (e) { records = {}; }
+      }
+
+      records[todayKey] = {
+        date: todayKey,
+        score: score,
+        notes: notes,
+        symptoms: symptoms,
+        timestamp: Date.now()
+      };
+
+      localStorage.setItem('neuro_daily_records', JSON.stringify(records));
+      suiviSaveAlert.style.display = 'block';
+      loadSuiviHistory();
+      refreshObservanceAnalytics();
+      setTimeout(() => { suiviSaveAlert.style.display = 'none'; }, 3000);
+    });
+
+    loadSuiviHistory();
+    refreshObservanceAnalytics();
+
+    // -------------------------------------------------------------
+    // 7. OPTIONS AVANCÉES DU PROTOCOLE (ORDER BUMPS & UPSELL)
+    // -------------------------------------------------------------
+    const modalAdvancedProduct = document.getElementById('modal-advanced-product');
+    const advModalBadge = document.getElementById('adv-modal-badge');
+    const advModalImage = document.getElementById('adv-modal-image');
+    const advModalTitle = document.getElementById('adv-modal-title');
+    const advModalPrice = document.getElementById('adv-modal-price');
+    const advModalDesc = document.getElementById('adv-modal-desc');
+    const advModalFeatures = document.getElementById('adv-modal-features');
+    const advModalCta = document.getElementById('adv-modal-cta');
+
+    const advancedProductsData = {
+      delta: {
+        badge: "Order Bump 1",
+        image: "assets/ondes_delta_sleep.jpg",
+        title: "Ondes Delta : L'Endormissement Profond en 7 Minutes",
+        price: "+19 € (Accès à vie)",
+        desc: "Conçues pour endormir le cortex auditif en moins de 7 minutes même si le sifflement est à son intensité maximale ce soir. 4 pistes binaurales pures (0,5 Hz à 4 Hz) combinées à un doux son d'ambiance nocturne.",
+        features: "✓ 4 fichiers audio binauraux haute fidélité sans compression<br>✓ Protocole d'écoute passive pour insomnie liée aux acouphènes<br>✓ Compatible casque audio, écouteurs ou haut-parleur de chevet",
+        ctaText: "Débloquer les Ondes Delta (+19 €)"
+      },
+      elixir: {
+        badge: "Order Bump 2",
+        image: "assets/elixir_auriculaire.jpg",
+        title: "L'Élixir Auriculaire : Guide Botanique des Compresses",
+        price: "+14 € (Guide Numérique)",
+        desc: "Manuel digital illustré de 22 pages enseignant la formule millénaire à base d'astragale et de glycérine végétale pure pour assouplir le tympan et amortir les ondes de choc sonores.",
+        features: "✓ Recette pas-à-pas de l'élixir tiède et compresses auriculaires<br>✓ Dosage millimétré et guide d'achat en pharmacie herboriste<br>✓ Protocole d'application en 5 minutes avant le coucher",
+        ctaText: "Débloquer l'Élixir Auriculaire (+14 €)"
+      },
+      photobio: {
+        badge: "Upsell Exclusif",
+        image: "assets/photobiomodulation_650nm.jpg",
+        title: "Le Protocole Photolumineux Domestique (650nm)",
+        price: "+37 € (Masterclass & Guide)",
+        desc: "Masterclass vidéo de 35 minutes + Guide d'équipements à moins de 20 € sur Amazon France. Apprenez à réactiver l'enzyme cytochrome C oxydase des cellules ciliées cochléaires par photobiomodulation douce.",
+        features: "✓ Vidéo complète de formation clinique (35 minutes)<br>✓ Liens directs vers les appareils homologués à moins de 20 €<br>✓ Posologie de stimulation lumineuse (20 min/jour)",
+        ctaText: "Débloquer le Protocole Photolumineux (+37 €)"
+      }
+    };
+
+    function openAdvancedProductModal(prodKey) {
+      const data = advancedProductsData[prodKey];
+      if (!data) return;
+      advModalBadge.textContent = data.badge;
+      advModalImage.src = data.image;
+      advModalTitle.textContent = data.title;
+      advModalPrice.textContent = data.price;
+      advModalDesc.textContent = data.desc;
+      advModalFeatures.innerHTML = data.features;
+      advModalCta.textContent = data.ctaText;
+      modalAdvancedProduct.classList.add('open');
+    }
+
+    function closeAdvancedProductModal() {
+      modalAdvancedProduct.classList.remove('open');
+    }
+
+    function simulateProductUnlock() {
+      alert("Redirection vers la confirmation CartPanda pour l'activation instantanée de votre module.");
+      closeAdvancedProductModal();
+    }
+
+    // -------------------------------------------------------------
+    // 8. VISUALISEUR PDF OFFICIEL & MISE EN PRATIQUE CLINIQUE
+    // -------------------------------------------------------------
+    const bookReaderModal = document.getElementById('book-reader-modal');
+    const bookModalTitle = document.getElementById('book-modal-title');
+    const bookModalSubtitle = document.getElementById('book-modal-subtitle');
+    const bookPdfIframe = document.getElementById('book-pdf-iframe');
+    const bookPracticeContent = document.getElementById('book-practice-content');
+    const bookFullscreenLink = document.getElementById('book-fullscreen-link');
+    const bookDownloadPdfBtn = document.getElementById('book-download-pdf-btn');
+
+    const medicalBooksDetails = {
+      1: {
+        title: "Livre 1 : Traité Clinique de Réhabilitation Neuro-Acoustique",
+        subtitle: "Édition Médicale Complète (28 Pages) — Pr Pawel Jastreboff & Dr Alain Londero",
+        pdfUrl: "assets/guides/guide_1_rehabilitation_neuro_acoustique.pdf",
+        practiceGuide: `
+          <h4>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Mise en Pratique Clinique : Application au Quotidien
+          </h4>
+          <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">Comment appliquer les enseignements du Dr Jastreboff pour désactiver le gain central :</p>
+          <div style="font-size: 0.84rem; color: var(--text-main); line-height: 1.6;">
+            <p style="margin-bottom: 8px;"><strong>1. Moment Optimal d'Écoute :</strong> Réalisez votre séance quotidienne de 15 minutes entre 20h30 et 22h00, dans une pièce calme et tamisée.</p>
+            <p style="margin-bottom: 8px;"><strong>2. Réglage du Volume Sonore :</strong> Le niveau du son blanc/encoche doit être ajusté pour être légèrement en dessous de votre sifflement (principe de mélange acoustique partiel, et non de masquage agressif).</p>
+            <p style="margin-bottom: 8px;"><strong>3. Posture d'Écoute :</strong> Utilisez des écouteurs stéréo confortables. Ne cherchez pas à analyser le son. Pratiquez une respiration abdominale lente pendant les 15 minutes.</p>
+            <p><strong>4. Chronobiologie des 14 Jours :</strong> Entre le 4e et le 10e jour, vous remarquerez le phénomène de "scintillement" (le bruit s'éteint brièvement ou change de timbre). C'est le signal clinique que le cortex commence son habituation.</p>
+          </div>
+        `
+      },
+      2: {
+        title: "Livre 2 : Manuel Thérapeutique Maxillo-Facial & Voies Cervicales",
+        subtitle: "Manuel Pratique Illustré (22 Pages) — Dr Jean-Pierre Coester & Rééducation ATM",
+        pdfUrl: "assets/guides/guide_2_reeducation_maxillo_faciale.pdf",
+        practiceGuide: `
+          <h4>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Mise en Pratique Clinique : Routine Corporelle en 7 Minutes
+          </h4>
+          <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">Protocole physique nocturne pour décompresser l'articulation temporo-mandibulaire :</p>
+          <div style="font-size: 0.84rem; color: var(--text-main); line-height: 1.6;">
+            <p style="margin-bottom: 8px;"><strong>1. Décompression des Masséters (2 min) :</strong> Posez deux doigts devant le tragus. Ouvrez légèrement la mâchoire et massez doucement de haut en bas sans forcer.</p>
+            <p style="margin-bottom: 8px;"><strong>2. Déblocage du Nerf d'Arnold (2 min) :</strong> Inclinez la tête vers l'épaule droite pendant 20 secondes, puis gauche. Soulage la tension sous-occipitale responsable de la pression intra-auriculaire.</p>
+            <p style="margin-bottom: 8px;"><strong>3. Posture Linguale au Repos (1 min) :</strong> Plaquez la pointe de la langue sur le palais derrière les incisives supérieures. Les dents du haut et du bas ne doivent jamais se toucher au repos.</p>
+            <p><strong>4. Respiration 4-7-8 (2 min) :</strong> Inspire 4 sec, rétention 7 sec, expire par la bouche 8 sec. Réduit immédiatement la tension nerveuse crânienne.</p>
+          </div>
+        `
+      },
+      3: {
+        title: "Livre 3 : Précis de Micronutrition & Régénération Myélinique",
+        subtitle: "Traité Médical Thérapeutique (24 Pages) — Dr Thierry Hertoghe & Biochimie Nerveuse",
+        pdfUrl: "assets/guides/guide_3_micronutrition_myeline.pdf",
+        practiceGuide: `
+          <h4>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Mise en Pratique Clinique : La Cuillère Matinale Pas-à-Pas
+          </h4>
+          <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">Posologie matinale pour contourner la digestion gastrique et nourrir les cellules de Schwann :</p>
+          <div style="font-size: 0.84rem; color: var(--text-main); line-height: 1.6;">
+            <p style="margin-bottom: 8px;"><strong>1. Moment de Prise :</strong> Chaque matin au réveil, impérativement à jeun, avant le premier café ou thé.</p>
+            <p style="margin-bottom: 8px;"><strong>2. Préparation Exacte :</strong> Dans une cuillère à soupe : 1 cuillère à café d'huile de lin vierge (gardée au réfrigérateur) + 1/2 cuillère de lécithine de tournesol (ou 1 jaune bio) + 3 gouttes d'huile d'olive + 1 pincée de curcuma.</p>
+            <p style="margin-bottom: 8px;"><strong>3. Absorption Sublinguale :</strong> Gardez le mélange 30 secondes sous la langue avant d'avaler. Permet une diffusion lipidique directe dans le sang sans être dégradé par l'acide gastrique.</p>
+            <p><strong>4. Où Acheter en France :</strong> Huile de lin chez Carrefour/Leclerc en bouteille en verre opaque. Lécithine de tournesol en magasin bio (Biocoop, La Vie Claire).</p>
+          </div>
+        `
+      }
+    };
+
+    function openBookReader(bookId) {
+      const data = medicalBooksDetails[bookId];
+      if (!data) return;
+
+      bookModalTitle.textContent = data.title;
+      bookModalSubtitle.textContent = data.subtitle;
+      bookPdfIframe.src = data.pdfUrl + "#toolbar=1&navpanes=0&view=FitH";
+      bookFullscreenLink.href = data.pdfUrl;
+      bookDownloadPdfBtn.href = data.pdfUrl;
+      bookPracticeContent.innerHTML = data.practiceGuide;
+
+      bookReaderModal.classList.add('open');
+    }
+
+    function closeBookReader() {
+      bookPdfIframe.src = "";
+      bookReaderModal.classList.remove('open');
+    }
+  </script>
+</body>
+</html>

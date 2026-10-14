@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Offre Spéciale Unique — Protocole Photolumineux Domestique</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0F172A;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+      --red-glow: rgba(239, 68, 68, 0.25);
+      --red: #EF4444;
+      --emerald: #10B981;
+      --amber: #F59E0B;
+      --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(239, 68, 68, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.08) 0px, transparent 50%);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    .top-urgent-bar {
+      background: linear-gradient(90deg, #991B1B, #DC2626);
+      color: #FFFFFF;
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 15px rgba(220, 38, 38, 0.35);
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px 16px;
+    }
+
+    /* Barre de progression */
+    .funnel-steps {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .step-pill {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+
+    .step-done {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .step-active {
+      background: rgba(239, 68, 68, 0.15);
+      color: #F87171;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+
+    /* Titres */
+    .headline-box {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .sub-tag {
+      color: #F87171;
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 12px;
+      color: #FFFFFF;
+    }
+
+    .sub-text {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* Boîte Vidéo / Image */
+    .media-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .media-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #FCA5A5;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 8px;
+      z-index: 2;
+    }
+
+    .media-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Boîte de Contenu Explicatif */
+    .content-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 24px 20px;
+      margin-bottom: 24px;
+    }
+
+    .content-box h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #F1F5F9;
+    }
+
+    .content-box p {
+      font-size: 0.94rem;
+      color: #CBD5E1;
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+
+    .highlight-card {
+      background: rgba(239, 68, 68, 0.08);
+      border-left: 4px solid var(--red);
+      padding: 14px 16px;
+      border-radius: 0 12px 12px 0;
+      margin: 16px 0;
+      font-size: 0.92rem;
+      color: #FEE2E2;
+    }
+
+    /* Stack de Valeur */
+    .value-stack {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid rgba(239, 68, 68, 0.35);
+      border-radius: 18px;
+      padding: 24px 20px;
+      margin-bottom: 24px;
+    }
+
+    .value-stack-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .stack-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 0.92rem;
+    }
+
+    .stack-check {
+      color: var(--emerald);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Prix */
+    .pricing-wrap {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .crossed-price {
+      text-decoration: line-through;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    .current-price {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: #10B981;
+      letter-spacing: -0.02em;
+    }
+
+    .price-note {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* Bouton d'Achat 1-Click */
+    .btn-upsell-accept {
+      display: block;
+      width: 100%;
+      background: linear-gradient(135deg, #10B981, #059669);
+      color: #FFFFFF;
+      text-align: center;
+      padding: 18px;
+      border-radius: 14px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-upsell-accept:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(16, 185, 129, 0.5);
+    }
+
+    .btn-decline {
+      display: block;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      margin-top: 16px;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .btn-decline:hover {
+      color: #F1F5F9;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bandeau Urgent Supérieur -->
+  <div class="top-urgent-bar">
+    ⚠️ ATTENDEZ ! Votre commande principale est validée, ne fermez pas cette page.
+  </div>
+
+  <div class="container">
+
+    <!-- Étapes du Tunnel -->
+    <div class="funnel-steps">
+      <span class="step-pill step-done">✓ Protocole Principal Débloqué</span>
+      <span class="step-pill step-active">Étape Finale : Accélération Ciliée</span>
+    </div>
+
+    <!-- En-tête -->
+    <div class="headline-box">
+      <span class="sub-tag">Offre Spéciale Unique d'Accompagnement</span>
+      <h1>Multipliez par 3 la vitesse de régénération de vos cellules ciliées grâce à la lumière rouge 650nm</h1>
+      <p class="sub-text">Comment réveiller les cellules auditives engourdies sans dépenser 240 € dans un dispositif médical.</p>
+    </div>
+
+    <!-- Image Démonstrative -->
+    <div class="media-card">
+      <span class="media-badge">Technologie Photobiomodulation 650nm</span>
+      <img src="assets/advertorial/Gross_Close_up_of_brain_cells_being_overloaded_and_starting_to_die.webp" alt="Photobiomodulation des cellules auditives">
+    </div>
+
+    <!-- Explication Scientifique -->
+    <div class="content-box">
+      <h3>La découverte des universités allemandes : vos cellules ne sont pas mortes, elles sont « déchargées »</h3>
+      <p>
+        Lorsque vous avez des acouphènes depuis des mois ou des années, la plupart des spécialistes supposent que vos cellules ciliées cochléaires sont définitivement perdues. C'est faux dans 80% des cas.
+      </p>
+      <p>
+        Les études de photobiologie cellulaire ont démontré que ces cellules sont simplement en état de <strong>léthargie métabolique</strong> : leurs usines énergétiques internes (les mitochondries) ont manqué d'ATP sous l'effet du bruit et du stress oxydatif.
+      </p>
+
+      <div class="highlight-card">
+        <strong>L'onde lumineuse de 650 nanomètres :</strong> C'est la seule longueur d'onde exacte capable de traverser le tympan pour stimuler l'enzyme <em>Cytochrome C Oxydase</em>, redémarrant instantanément la production d'énergie cellulaire.
+      </div>
+
+      <p>
+        Des cliniques privées en Suisse et en Allemagne facturent jusqu'à <strong>2 500 €</strong> pour des cures de photobiomodulation auriculaire. Des fabricants vendent des casques laser à <strong>240 €</strong>.
+      </p>
+      <p>
+        Dans ce guide pratique exclusif, Vincent Mercier vous révèle comment reproduire <strong>exactement le même protocole à domicile</strong> à l'aide de sources lumineuses douces accessibles pour moins de 15 € sur Amazon France.
+      </p>
+    </div>
+
+    <!-- Stack de l'offre -->
+    <div class="value-stack">
+      <div class="value-stack-title">Ce que vous débloquez immédiatement dans votre espace :</div>
+
+      <div class="stack-item">
+        <svg class="stack-check" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <div><strong>La Masterclass Vidéo de 35 Minutes :</strong> Le pas-à-pas de l'exposition auriculaire sécurisée de 20 minutes par jour.</div>
+      </div>
+
+      <div class="stack-item">
+        <svg class="stack-check" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <div><strong>Le Guide d'Équipement Économique :</strong> Les 2 modèles de lampes 650nm certifiées à moins de 20 € (liens directs sans commission).</div>
+      </div>
+
+      <div class="stack-item">
+        <svg class="stack-check" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <div><strong>Le Calendrier Combiné (Son + Lumière) :</strong> Comment synchroniser votre écoute du soir avec la séance de lumière pour diviser le délai de récupération par deux.</div>
+      </div>
+
+      <div class="pricing-wrap">
+        <div class="crossed-price">Valeur normale : 147,00 €</div>
+        <div class="current-price">37,00 €</div>
+        <div class="price-note">Tarif exclusif réservé aux nouveaux membres du Protocole du Silence</div>
+      </div>
+
+      <!-- Bouton d'Achat -->
+      <a href="app.html" class="btn-upsell-accept" id="btn-upsell-confirm">
+        OUI ! Ajouter le Protocole Photolumineux pour 37 €
+      </a>
+
+      <!-- Lien de Refus -->
+      <a href="app.html" class="btn-decline" id="btn-upsell-decline">
+        Non merci, je préfère m'en tenir uniquement à la thérapie sonore, même si la régénération prend plus de temps.
+      </a>
+    </div>
+
+  </div>
+
+</body>
+</html>
