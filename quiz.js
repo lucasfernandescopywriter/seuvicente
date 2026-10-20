@@ -11,6 +11,63 @@
   'use strict';
 
   // =========================================================================
+  // GESTÃO DE UTMs E RASTREAMENTO DO PIXEL DA META / CHECKOUT
+  // =========================================================================
+  const utmParamKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'src', 'sck'];
+  const storedUtms = {};
+
+  function initUtms() {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      utmParamKeys.forEach(param => {
+        const val = urlParams.get(param);
+        if (val) {
+          storedUtms[param] = val;
+          try { sessionStorage.setItem('ps_' + param, val); } catch (e) {}
+        } else {
+          try {
+            const cached = sessionStorage.getItem('ps_' + param);
+            if (cached) storedUtms[param] = cached;
+          } catch (e) {}
+        }
+      });
+    } catch (e) {
+      console.warn('Erro ao processar UTMs:', e);
+    }
+  }
+
+  function attachUtmsToUrl(rawUrl) {
+    if (!rawUrl) return rawUrl;
+    try {
+      const url = new URL(rawUrl, window.location.origin);
+      Object.keys(storedUtms).forEach(k => {
+        if (storedUtms[k] && !url.searchParams.has(k)) {
+          url.searchParams.set(k, storedUtms[k]);
+        }
+      });
+      return url.toString();
+    } catch (e) {
+      return rawUrl;
+    }
+  }
+
+  function trackPixelEvent(eventName, params = {}, isCustom = true) {
+    try {
+      if (typeof window.fbq === 'function') {
+        if (isCustom) {
+          window.fbq('trackCustom', eventName, params);
+        } else {
+          window.fbq('track', eventName, params);
+        }
+      }
+    } catch (e) {
+      console.warn('Erro no envio do evento Pixel:', eventName, e);
+    }
+  }
+
+  initUtms();
+
+  // =========================================================================
   // 1. FLUXO 100% LINEAR DOS 9 BLOCOS DE VENDA (21 TELAS - ZERO RETORNOS)
   // =========================================================================
   const screensOrder = [
@@ -68,7 +125,7 @@
     'roaring': 'Zumbido grave constante',
     'kettle': 'Som de panela de pressão ou chaleira',
     'electric': 'Ruído elétrico com mau contato',
-    'screeching': 'Apito metálico estridente',
+    'screeching': 'Cigarras ou grilos cantando',
     'multiple': 'Sons múltiplos ou variáveis'
   };
 
@@ -97,6 +154,7 @@
   let audioCtx = null;
   let activeSoundNodes = [];
   let activeGainNode = null;
+  let activeAbPlaying = null;
   let activePlayingType = null;
   let audioAutoStopTimer = null;
   let activeAcousticOsc = null;
@@ -168,12 +226,28 @@
     }
 
     activePlayingType = null;
+    activeAbPlaying = null;
 
     document.querySelectorAll('.btn-play-sound').forEach(btn => btn.classList.remove('playing'));
     document.querySelectorAll('.sound-card-item').forEach(card => card.classList.remove('playing'));
+    const btnA = document.getElementById('btn-play-sound-a');
+    const btnB = document.getElementById('btn-play-sound-b');
+    if (btnA) btnA.classList.remove('playing');
+    if (btnB) btnB.classList.remove('playing');
   }
 
-  // Sintetizador dos 8 Sons do MyPattern
+  // Sintetizador Unificado dos 8 Sons do MyPattern (Usado tanto na seleção inicial quanto no Teste A/B)
+  const defaultSoundFreqMap = {
+    'ringing': 4000,
+    'buzzing': 160,
+    'static': 2500,
+    'roaring': 140,
+    'kettle': 6200,
+    'electric': 4500,
+    'screeching': 4600,
+    'multiple': 3600
+  };
+
   function playSynthesizedSound(type) {
     const ctx = getAudioContext();
     if (!ctx) return;
@@ -187,39 +261,54 @@
     stopAcousticTone();
 
     activePlayingType = type;
-    activeGainNode = ctx.createGain();
-    activeGainNode.gain.setValueAtTime(0.0001, ctx.currentTime);
-    activeGainNode.connect(ctx.destination);
-
-    resetAutoStopTimer(4500);
+    const defaultHz = defaultSoundFreqMap[type] || 4000;
+    playSynthesizedSoundAtHz(type, defaultHz, false);
 
     const targetBtn = document.querySelector(`.sound-card-item[data-value="${type}"] .btn-play-sound`);
     const targetCard = document.querySelector(`.sound-card-item[data-value="${type}"]`);
     if (targetBtn) targetBtn.classList.add('playing');
     if (targetCard) targetCard.classList.add('playing');
+  }
+
+  function playSynthesizedSoundAtHz(type, hz, isAb = false) {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    if (isAb) {
+      stopCurrentAudio();
+      stopAcousticTone();
+    }
+
+    activeGainNode = ctx.createGain();
+    activeGainNode.gain.setValueAtTime(0.0001, ctx.currentTime);
+    activeGainNode.connect(ctx.destination);
+
+    resetAutoStopTimer(5000);
+
+    const safeHz = Math.max(50, Math.min(14000, Math.round(hz)));
 
     if (type === 'ringing') {
-      // Sifflement aigu pur (4 000 Hz)
+      // 1. Apito contínuo e agudo (onda senoidal pura na frequência alvo)
       const osc = ctx.createOscillator();
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(4000, ctx.currentTime);
+      osc.frequency.setValueAtTime(safeHz, ctx.currentTime);
       osc.connect(activeGainNode);
       osc.start();
       activeSoundNodes.push(osc);
       activeGainNode.gain.exponentialRampToValueAtTime(0.10, ctx.currentTime + 0.08);
 
     } else if (type === 'buzzing') {
-      // Bourdonnement électrique (120 Hz + 240 Hz + filtre passe-bas)
+      // 2. Chiado constante / zumbido elétrico (dente de serra em safeHz + senoidal safeHz*2 + filtro passa-baixa)
       const osc1 = ctx.createOscillator();
       const osc2 = ctx.createOscillator();
       osc1.type = 'sawtooth';
-      osc1.frequency.setValueAtTime(120, ctx.currentTime);
+      osc1.frequency.setValueAtTime(safeHz, ctx.currentTime);
       osc2.type = 'sine';
-      osc2.frequency.setValueAtTime(240, ctx.currentTime);
+      osc2.frequency.setValueAtTime(safeHz * 2, ctx.currentTime);
 
       const filter = ctx.createBiquadFilter();
       filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(600, ctx.currentTime);
+      filter.frequency.setValueAtTime(Math.max(450, safeHz * 2.6), ctx.currentTime);
 
       osc1.connect(filter);
       osc2.connect(filter);
@@ -231,7 +320,7 @@
       activeGainNode.gain.exponentialRampToValueAtTime(0.09, ctx.currentTime + 0.08);
 
     } else if (type === 'static') {
-      // Statique de radio / souffle (bruit blanc filtré à 2500 Hz)
+      // 3. Vapor constante / cachoeira / estática (ruído branco com filtro passa-banda sintonizado em safeHz)
       const bufferSize = ctx.sampleRate * 2;
       const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
       const output = noiseBuffer.getChannelData(0);
@@ -244,8 +333,8 @@
 
       const bandpass = ctx.createBiquadFilter();
       bandpass.type = 'bandpass';
-      bandpass.frequency.setValueAtTime(2500, ctx.currentTime);
-      bandpass.Q.setValueAtTime(1.2, ctx.currentTime);
+      bandpass.frequency.setValueAtTime(safeHz, ctx.currentTime);
+      bandpass.Q.setValueAtTime(1.8, ctx.currentTime);
 
       whiteNoise.connect(bandpass);
       bandpass.connect(activeGainNode);
@@ -254,15 +343,15 @@
       activeGainNode.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.08);
 
     } else if (type === 'roaring') {
-      // Grondement sourd / océan (triangle 180 Hz avec LFO lent)
+      // 4. Estalo pulsátil ou motor de geladeira (onda triangular em safeHz com modulação lenta LFO)
       const osc = ctx.createOscillator();
       osc.type = 'triangle';
-      osc.frequency.setValueAtTime(180, ctx.currentTime);
+      osc.frequency.setValueAtTime(safeHz, ctx.currentTime);
 
       const lfo = ctx.createOscillator();
-      lfo.frequency.setValueAtTime(0.8, ctx.currentTime);
+      lfo.frequency.setValueAtTime(0.85, ctx.currentTime);
       const lfoGain = ctx.createGain();
-      lfoGain.gain.setValueAtTime(30, ctx.currentTime);
+      lfoGain.gain.setValueAtTime(Math.min(28, Math.max(8, safeHz * 0.15)), ctx.currentTime);
       lfo.connect(osc.frequency);
       lfo.start();
 
@@ -272,15 +361,15 @@
       activeGainNode.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.08);
 
     } else if (type === 'kettle') {
-      // Bouilloire sifflante (onde pure aiguë modulée à 6 200 Hz)
+      // 5. Broca fina ou metal agudo / chaleira (onda senoidal estridente com vibrato rápido a 8.5 Hz)
       const osc = ctx.createOscillator();
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(6200, ctx.currentTime);
+      osc.frequency.setValueAtTime(safeHz, ctx.currentTime);
 
       const lfo = ctx.createOscillator();
-      lfo.frequency.setValueAtTime(9, ctx.currentTime);
+      lfo.frequency.setValueAtTime(8.5, ctx.currentTime);
       const lfoGain = ctx.createGain();
-      lfoGain.gain.setValueAtTime(20, ctx.currentTime);
+      lfoGain.gain.setValueAtTime(25, ctx.currentTime);
       lfo.connect(osc.frequency);
       lfo.start();
 
@@ -290,7 +379,7 @@
       activeGainNode.gain.exponentialRampToValueAtTime(0.08, ctx.currentTime + 0.08);
 
     } else if (type === 'electric') {
-      // Grésillement électrique saccadé (crépitements)
+      // 6. Ruído elétrico contínuo / faísca (impulsos estocásticos de ruído com filtro passa-banda em safeHz)
       const bufferSize = ctx.sampleRate * 2;
       const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
       const output = noiseBuffer.getChannelData(0);
@@ -301,41 +390,76 @@
       noise.buffer = noiseBuffer;
       noise.loop = true;
 
-      const hp = ctx.createBiquadFilter();
-      hp.type = 'highpass';
-      hp.frequency.setValueAtTime(4500, ctx.currentTime);
+      const bp = ctx.createBiquadFilter();
+      bp.type = 'bandpass';
+      bp.frequency.setValueAtTime(safeHz, ctx.currentTime);
+      bp.Q.setValueAtTime(2.2, ctx.currentTime);
 
-      noise.connect(hp);
-      hp.connect(activeGainNode);
+      noise.connect(bp);
+      bp.connect(activeGainNode);
       noise.start();
-      activeSoundNodes.push(noise, hp);
+      activeSoundNodes.push(noise, bp);
       activeGainNode.gain.exponentialRampToValueAtTime(0.10, ctx.currentTime + 0.08);
 
     } else if (type === 'screeching') {
-      // Grincement métallique aigu
-      const osc = ctx.createOscillator();
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(5200, ctx.currentTime);
+      // 7. Cigarras ou grilos cantando (duas frequências portadoras em safeHz + modulação AM a 28 Hz + atrito de asas)
+      const carrier1 = ctx.createOscillator();
+      const carrier2 = ctx.createOscillator();
+      carrier1.type = 'triangle';
+      carrier1.frequency.setValueAtTime(safeHz, ctx.currentTime);
+      carrier2.type = 'sine';
+      carrier2.frequency.setValueAtTime(Math.round(safeHz * 1.076), ctx.currentTime);
 
-      const filter = ctx.createBiquadFilter();
-      filter.type = 'bandpass';
-      filter.frequency.setValueAtTime(5200, ctx.currentTime);
-      filter.Q.setValueAtTime(4.0, ctx.currentTime);
+      const amGain = ctx.createGain();
+      amGain.gain.setValueAtTime(0.001, ctx.currentTime);
 
-      osc.connect(filter);
-      filter.connect(activeGainNode);
-      osc.start();
-      activeSoundNodes.push(osc, filter);
-      activeGainNode.gain.exponentialRampToValueAtTime(0.07, ctx.currentTime + 0.08);
+      const lfo = ctx.createOscillator();
+      lfo.type = 'square';
+      lfo.frequency.setValueAtTime(28, ctx.currentTime);
+
+      const lfoGain = ctx.createGain();
+      lfoGain.gain.setValueAtTime(0.85, ctx.currentTime);
+      lfo.connect(lfoGain);
+      lfoGain.connect(amGain.gain);
+
+      const bufferSize = ctx.sampleRate * 2;
+      const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const output = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = (Math.random() * 2 - 1) * 0.35;
+      }
+      const noiseSource = ctx.createBufferSource();
+      noiseSource.buffer = noiseBuffer;
+      noiseSource.loop = true;
+
+      const noiseFilter = ctx.createBiquadFilter();
+      noiseFilter.type = 'bandpass';
+      noiseFilter.frequency.setValueAtTime(safeHz, ctx.currentTime);
+      noiseFilter.Q.setValueAtTime(3.0, ctx.currentTime);
+
+      noiseSource.connect(noiseFilter);
+      noiseFilter.connect(amGain);
+
+      carrier1.connect(amGain);
+      carrier2.connect(amGain);
+      amGain.connect(activeGainNode);
+
+      carrier1.start();
+      carrier2.start();
+      lfo.start();
+      noiseSource.start();
+
+      activeSoundNodes.push(carrier1, carrier2, lfo, lfoGain, amGain, noiseSource, noiseFilter);
+      activeGainNode.gain.exponentialRampToValueAtTime(0.09, ctx.currentTime + 0.08);
 
     } else if (type === 'multiple') {
-      // Sons multiples (deux fréquences désaccordées : 3600 Hz + 6400 Hz)
+      // 8. Mistura de múltiplos tons (duas frequências dissonantes simultâneas em safeHz e safeHz*1.62)
       const osc1 = ctx.createOscillator();
       const osc2 = ctx.createOscillator();
       osc1.type = 'sine';
-      osc1.frequency.setValueAtTime(3600, ctx.currentTime);
+      osc1.frequency.setValueAtTime(safeHz, ctx.currentTime);
       osc2.type = 'sine';
-      osc2.frequency.setValueAtTime(6400, ctx.currentTime);
+      osc2.frequency.setValueAtTime(Math.round(safeHz * 1.62), ctx.currentTime);
 
       osc1.connect(activeGainNode);
       osc2.connect(activeGainNode);
@@ -343,30 +467,45 @@
       osc2.start();
       activeSoundNodes.push(osc1, osc2);
       activeGainNode.gain.exponentialRampToValueAtTime(0.08, ctx.currentTime + 0.08);
+
+    } else {
+      // Fallback
+      const osc = ctx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(safeHz, ctx.currentTime);
+      osc.connect(activeGainNode);
+      osc.start();
+      activeSoundNodes.push(osc);
+      activeGainNode.gain.exponentialRampToValueAtTime(0.10, ctx.currentTime + 0.08);
     }
   }
 
   // Acorde suave de confirmação (Dó-Mi-Sol harmônico a 432 Hz)
-  function playHarmonicChord() {
+    function playHarmonicChord() {
     const ctx = getAudioContext();
     if (!ctx) return;
+
+    if (ctx.state === 'suspended') {
+      ctx.resume();
+    }
 
     const chordGain = ctx.createGain();
     chordGain.gain.setValueAtTime(0.0001, ctx.currentTime);
     chordGain.connect(ctx.destination);
 
-    const freqs = [432, 540, 648]; // Proporção áurea de afinação
-    freqs.forEach(f => {
+    // Acorde tríade maior harmônica brilhante (C5, E5, G5, C6) com ataque estéreo acolhedor
+    const freqs = [523.25, 659.25, 783.99, 1046.50];
+    freqs.forEach((f, idx) => {
       const osc = ctx.createOscillator();
-      osc.type = 'sine';
+      osc.type = 'triangle';
       osc.frequency.setValueAtTime(f, ctx.currentTime);
       osc.connect(chordGain);
-      osc.start();
-      osc.stop(ctx.currentTime + 1.2);
+      osc.start(ctx.currentTime + idx * 0.04);
+      osc.stop(ctx.currentTime + 1.3);
     });
 
-    chordGain.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.05);
-    chordGain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.15);
+    chordGain.gain.exponentialRampToValueAtTime(0.22, ctx.currentTime + 0.08);
+    chordGain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.25);
   }
 
   // =========================================================================
@@ -392,6 +531,9 @@
       try { vslPlayer.pause(); } catch (e) {}
     }
   }
+
+  window.navigateTo = navigateTo;
+  window.userAnswers = userAnswers;
 
   function navigateTo(index, isBack = false) {
     if (index < 0 || index >= screensOrder.length) return;
@@ -422,6 +564,26 @@
 
     const nextScreenId = screensOrder[index];
     updateHeaderAndProgress(nextScreenId);
+
+    // Rastreamento de avanço do funil por etapa chave
+    const screenEventMap = {
+      'screen-hero': 'Quiz_Step_0_Hero',
+      'screen-sound-type': 'Quiz_Step_1_SoundType',
+      'screen-vincent-story': 'Quiz_Step_7_Story',
+      'screen-chat-vicente': 'Quiz_Step_8_WhatsApp',
+      'screen-freq-ab': 'Quiz_Step_11_AB_Calibration',
+      'screen-trajectory': 'Quiz_Step_14_Trajectory',
+      'screen-vsl-presentation': 'Quiz_Step_18_VSL_Presentation',
+      'screen-result': 'Quiz_Step_19_Sales_Page'
+    };
+
+    if (screenEventMap[nextScreenId]) {
+      trackPixelEvent(screenEventMap[nextScreenId], {
+        screen_index: index,
+        screen_id: nextScreenId,
+        sound_type: userAnswers.soundType || 'unknown'
+      });
+    }
 
     // Disparos contextuais de telas específicas
     if (nextScreenId === 'screen-chat-vicente') {
@@ -951,8 +1113,6 @@
     const waStatus = document.getElementById('wa-status-text');
     const defaultInputBar = document.getElementById('wa-default-input-bar');
     const optionsContainer = document.getElementById('wa-options-input-container');
-    const btnSend = document.getElementById('btn-wa-send');
-    const barPrefilled = document.getElementById('wa-bar-input-box');
 
     function getLiveTimeStr(offsetMinutes = 0) {
       const d = new Date(Date.now() + offsetMinutes * 60000);
@@ -974,20 +1134,12 @@
       }
     }
 
-    // Réinitialise l'affichage des bulles masquées et horodatage dynamique de msg1
+    // Reset initial visibility
+    [msg2, msgUser1, msgAudio, msg3, msgPhoto, msgAudioElodie, msg4, msg4b, msgUser2, msg5, msg6, msgUser3, typingBubble].forEach(el => {
+      if (el) el.style.display = 'none';
+    });
+    if (msg1) msg1.style.display = 'block';
     setBubbleTime(msg1, false, 0);
-    if (msg2) msg2.style.display = 'none';
-    if (msgUser1) msgUser1.style.display = 'none';
-    if (msgAudio) msgAudio.style.display = 'none';
-    if (msg3) msg3.style.display = 'none';
-    if (msgPhoto) msgPhoto.style.display = 'none';
-    if (msgAudioElodie) msgAudioElodie.style.display = 'none';
-    if (msg4) msg4.style.display = 'none';
-    if (msg4b) msg4b.style.display = 'none';
-    if (msgUser2) msgUser2.style.display = 'none';
-    if (msg5) msg5.style.display = 'none';
-    if (msg6) msg6.style.display = 'none';
-    if (msgUser3) msgUser3.style.display = 'none';
 
     function setTyping(state) {
       if (state === 'text') {
@@ -1007,6 +1159,8 @@
       if (!bubbleEl) return;
       const timeStr = getLiveTimeStr(offsetMinutes);
       bubbleEl.innerHTML = `${text} <span class="wa-time-tag">${timeStr} <span class="wa-blue-ticks">✓✓</span></span>`;
+      bubbleEl.style.display = 'block';
+      if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
     }
 
     function showWhatsAppInputOptions(options, onSelect) {
@@ -1042,10 +1196,9 @@
       if (defaultInputBar) defaultInputBar.style.display = 'flex';
     }
 
-    // État initial de la barre de message
     hideWhatsAppInputOptions();
 
-    // Étape 1 : Vincent commence à écrire msg 2
+    // Etapa 1: Seu Vicente escreve msg 2
     waTimers.push(setTimeout(() => {
       setTyping('text');
 
@@ -1055,7 +1208,7 @@
         if (msg2) msg2.style.display = 'block';
         if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
 
-        // Prépare options réponse 1
+        // INTERACAO 1 DO LEAD
         waTimers.push(setTimeout(() => {
           const opts1 = [
             'O senhor conseguiu se livrar disso completamente?',
@@ -1064,120 +1217,111 @@
           showWhatsAppInputOptions(opts1, (chosenText) => {
             handleStep1Send(chosenText);
           });
-        }, 800));
-      }, 2500));
-    }, 800));
+        }, 600));
+      }, 1600));
+    }, 500));
 
-    function handleStep1Send(chosenText) {
+        function handleStep1Send(chosenText) {
       hideWhatsAppInputOptions();
-      setUserBubbleText(msgUser1, chosenText || 'O senhor conseguiu se livrar disso completamente?');
-      if (msgUser1) msgUser1.style.display = 'block';
-      if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
+      setUserBubbleText(msgUser1, chosenText, 1);
 
-      // Vincent enregistre la note vocale nativa (~22s)
+      // Distância de 1.8s antes de Seu Vicente começar a gravar áudio
       waTimers.push(setTimeout(() => {
         setTyping('audio');
 
+        // Gravação do áudio com duração de 6.5s
         waTimers.push(setTimeout(() => {
           setTyping(false);
-          setBubbleTime(msgAudio, false, 0);
+          setBubbleTime(msgAudio, false, 1);
           if (msgAudio) {
             msgAudio.style.display = 'block';
             if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
           }
 
-          // Pause réaliste après l'envoi de la note vocale (18s pour laisser le lead écouter/assimiler)
+          // Delay de 20 segundos após o envio do áudio para acompanhar o ritmo do lead ouvindo a nota de voz
           waTimers.push(setTimeout(() => {
             setTyping('text');
 
+            // Digitando por 2.0s
             waTimers.push(setTimeout(() => {
               setTyping(false);
-              setBubbleTime(msg3, false, 1);
+              setBubbleTime(msg3, false, 2);
               if (msg3) msg3.style.display = 'block';
               if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
 
-              // Envoi de la photo selfie d'Élodie et son mari après un délai naturel (1,6s)
+              // Envio da foto da Camila com intervalo de 1.8s
               waTimers.push(setTimeout(() => {
-                setBubbleTime(msgPhoto, false, 1);
-                if (msgPhoto) msgPhoto.style.display = 'block';
-                if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
+                setBubbleTime(msgPhoto, false, 2);
+                if (msgPhoto) {
+                  msgPhoto.style.display = 'block';
+                  setTimeout(() => {
+                    msgPhoto.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                  }, 50);
+                }
 
-                // Envoi de la note vocale transférée d'Élodie (1,6s)
+                // Envio do áudio encaminhado da Camila com intervalo de 1.8s
                 waTimers.push(setTimeout(() => {
-                  setBubbleTime(msgAudioElodie, false, 1);
+                  setBubbleTime(msgAudioElodie, false, 2);
                   if (msgAudioElodie) msgAudioElodie.style.display = 'block';
                   if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
 
-                  // Pause réaliste après le vocal transféré (22s pour percevoir le message)
+                  // Distância de 2.0s antes de Seu Vicente começar a digitar msg 4
                   waTimers.push(setTimeout(() => {
                     setTyping('text');
 
+                    // Digitando por 2.0s
                     waTimers.push(setTimeout(() => {
                       setTyping(false);
-                      setBubbleTime(msg4, false, 1);
+                      setBubbleTime(msg4, false, 3);
                       if (msg4) msg4.style.display = 'block';
                       if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
 
-                      // Vincent tape le deuxième message plus court (2,0s)
+                      // Opções de resposta do lead liberadas após 1.6s
                       waTimers.push(setTimeout(() => {
-                        setTyping('text');
-
-                        waTimers.push(setTimeout(() => {
-                          setTyping(false);
-                          setBubbleTime(msg4b, false, 2);
-                          if (msg4b) msg4b.style.display = 'block';
-                          if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
-
-                          // Prépare options réponse 2
-                          waTimers.push(setTimeout(() => {
-                            const opts2 = [
-                              'À noite, quando tudo fica em silêncio e tento dormir',
-                              'Durante o dia, quando preciso focar ou me concentrar',
-                              'É constante o dia todo, não para de apitar um minuto sequer'
-                            ];
-                            showWhatsAppInputOptions(opts2, (chosenText2) => {
-                              handleStep2Send(chosenText2);
-                            });
-                          }, 800));
-                        }, 2000));
-                      }, 1000));
-                    }, 2400));
-                  }, 22000));
-                }, 1600));
-              }, 1600));
-            }, 2600));
-          }, 18000));
-        }, 3600));
-      }, 700));
+                        const opts2 = [
+                          'Sim, quero ver como desligar esse curto-circuito!',
+                          'Como funciona essa desativação do som?'
+                        ];
+                        showWhatsAppInputOptions(opts2, (chosenText2) => {
+                          handleStep2Send(chosenText2);
+                        });
+                      }, 1600));
+                    }, 2000));
+                  }, 2000));
+                }, 1800));
+              }, 1800));
+            }, 2000));
+          }, 20000)); // <-- 20 SEGUNDOS EXATOS DE ESPERA APÓS O ÁUDIO DO SEU VICENTE
+        }, 6500));
+      }, 1800));
     }
 
-    function handleStep2Send(chosenText) {
-      hideWhatsAppInputOptions();
-      setUserBubbleText(msgUser2, chosenText || "À noite, quando tudo fica em silêncio e tento dormir", 2);
-      if (msgUser2) msgUser2.style.display = 'block';
-      if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
+    
 
-      // Vincent commence à écrire msg 5
+    function handleStep2Send(chosenText2) {
+      hideWhatsAppInputOptions();
+      setUserBubbleText(msgUser2, chosenText2, 3);
+
+      // Vicente responde com a explicacao neural
       waTimers.push(setTimeout(() => {
         setTyping('text');
 
         waTimers.push(setTimeout(() => {
           setTyping(false);
-          setBubbleTime(msg5, false, 2);
+          setBubbleTime(msg5, false, 4);
           if (msg5) msg5.style.display = 'block';
           if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
 
-          // Vincent commence à écrire msg 6
           waTimers.push(setTimeout(() => {
             setTyping('text');
 
             waTimers.push(setTimeout(() => {
               setTyping(false);
-              setBubbleTime(msg6, false, 2);
+              setBubbleTime(msg6, false, 4);
               if (msg6) msg6.style.display = 'block';
               if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
 
-              // Prepara resposta 3 final
+              // INTERACAO 3 DO LEAD (sem caracter de seta no texto)
               waTimers.push(setTimeout(() => {
                 const opts3 = [
                   'Entender o diagnóstico do Seu Vicente'
@@ -1185,41 +1329,23 @@
                 showWhatsAppInputOptions(opts3, (chosenText3) => {
                   handleStep3Send(chosenText3);
                 });
-              }, 800));
-            }, 2600));
-          }, 1000));
-        }, 2600));
-      }, 800));
+              }, 700));
+            }, 1800));
+          }, 900));
+        }, 1800));
+      }, 600));
     }
 
-    function handleStep3Send(chosenText) {
+    function handleStep3Send(chosenText3) {
       hideWhatsAppInputOptions();
-      setUserBubbleText(msgUser3, chosenText || "Entender o diagnóstico do Seu Vicente", 3);
-      if (msgUser3) msgUser3.style.display = 'block';
-      if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
+      setUserBubbleText(msgUser3, chosenText3, 4);
 
       stopVincentVoiceNote();
       stopElodieVoiceNote();
 
-      // Transition automatique vers Screen 9 (Alerte de Surcharge Neuronale)
       setTimeout(() => {
         navigateTo(currentScreenIndex + 1);
-      }, 750);
-    }
-
-    let waCurrentStep = 1;
-    if (btnSend) {
-      btnSend.onclick = function () {
-        if (waCurrentStep === 1) {
-          waCurrentStep = 2;
-          handleStep1Send(barPrefilled ? barPrefilled.textContent : null);
-        } else if (waCurrentStep === 2) {
-          waCurrentStep = 3;
-          handleStep2Send(barPrefilled ? barPrefilled.textContent : null);
-        } else if (waCurrentStep === 3) {
-          handleStep3Send(barPrefilled ? barPrefilled.textContent : null);
-        }
-      };
+      }, 800);
     }
   }
 
@@ -1250,7 +1376,6 @@
   let abFreqA = 3200;
   let abFreqB = 6400;
   let abChosenFreq = 4000;
-  let activeAbPlaying = null;
 
   const btnPlaySoundA = document.getElementById('btn-play-sound-a');
   const btnPlaySoundB = document.getElementById('btn-play-sound-b');
@@ -1266,18 +1391,30 @@
     stopCurrentAudio();
 
     const soundType = userAnswers.soundType || 'ringing';
-    if (soundType === 'buzzing' || soundType === 'roaring') {
-      abFreqA = 250;
-      abFreqB = 650;
-    } else if (soundType === 'static' || soundType === 'electric') {
+    if (soundType === 'buzzing') {
+      abFreqA = 120;
+      abFreqB = 320;
+    } else if (soundType === 'roaring') {
+      abFreqA = 85;
+      abFreqB = 210;
+    } else if (soundType === 'static') {
       abFreqA = 2200;
-      abFreqB = 4800;
+      abFreqB = 5200;
+    } else if (soundType === 'electric') {
+      abFreqA = 2800;
+      abFreqB = 5600;
     } else if (soundType === 'kettle') {
-      abFreqA = 5000;
-      abFreqB = 8500;
-    } else {
+      abFreqA = 5200;
+      abFreqB = 8400;
+    } else if (soundType === 'screeching') {
+      abFreqA = 3800;
+      abFreqB = 6200;
+    } else if (soundType === 'multiple') {
       abFreqA = 3200;
-      abFreqB = 6400;
+      abFreqB = 5800;
+    } else {
+      abFreqA = 3400;
+      abFreqB = 6600;
     }
 
     updateAbUI();
@@ -1297,6 +1434,7 @@
     const targetHz = (letter === 'A') ? abFreqA : abFreqB;
     
     if (activeAbPlaying === letter) {
+      stopCurrentAudio();
       stopAcousticTone();
       activeAbPlaying = null;
       if (btnPlaySoundA) btnPlaySoundA.classList.remove('playing');
@@ -1304,13 +1442,15 @@
       return;
     }
 
+    stopCurrentAudio();
     stopAcousticTone();
     activeAbPlaying = letter;
 
     if (btnPlaySoundA) btnPlaySoundA.classList.toggle('playing', letter === 'A');
     if (btnPlaySoundB) btnPlaySoundB.classList.toggle('playing', letter === 'B');
 
-    playToneAtHz(targetHz, true);
+    const chosenSoundType = userAnswers.soundType || 'ringing';
+    playSynthesizedSoundAtHz(chosenSoundType, targetHz, true);
   }
 
   if (btnPlaySoundA) {
@@ -1326,6 +1466,7 @@
   }
 
   function handleAbSelection(choice) {
+    stopCurrentAudio();
     stopAcousticTone();
     activeAbPlaying = null;
     if (btnPlaySoundA) btnPlaySoundA.classList.remove('playing');
@@ -1343,7 +1484,7 @@
       abRound++;
       if (abRound === 2) {
         if (choice === 'A') {
-          abFreqA = Math.max(150, Math.round(abChosenFreq * 0.82));
+          abFreqA = Math.max(50, Math.round(abChosenFreq * 0.82));
           abFreqB = Math.round(abChosenFreq * 1.22);
         } else if (choice === 'B') {
           abFreqA = Math.round(abChosenFreq * 0.85);
@@ -1354,7 +1495,7 @@
         }
       } else if (abRound === 3) {
         if (choice === 'A') {
-          abFreqA = Math.max(150, Math.round(abChosenFreq * 0.94));
+          abFreqA = Math.max(50, Math.round(abChosenFreq * 0.94));
           abFreqB = Math.round(abChosenFreq * 1.08);
         } else if (choice === 'B') {
           abFreqA = Math.round(abChosenFreq * 0.93);
@@ -1367,8 +1508,7 @@
       updateAbUI();
     } else {
       userAnswers.frequencyHz = abChosenFreq;
-      // Audio 5: Avancer immédiatement sans popup vert de confirmation
-      navigateTo(currentScreenIndex + 1); // Passe immédiatement à screen-freq-coarse
+      navigateTo(currentScreenIndex + 1); // Passa para screen-notch-visualizer
     }
   }
 
@@ -1761,37 +1901,83 @@
   // =========================================================================
   // 22. TELA 22: BON D'ACCÈS EXCLUSIF (VALIDATION AVEC CARIMBO & ACCÈS DIRECT)
   // =========================================================================
+      // Navegacao oficial dos botoes da TSL direto para a Pagina de Vendas (#screen-result)
+  const btnTsl1 = document.getElementById('btn-tsl-checkout-1');
+  const btnTsl2 = document.getElementById('btn-tsl-checkout-2');
+
+  function handleGoToSalesPage(e) {
+    if (e) e.preventDefault();
+    navigateTo(screensOrder.indexOf('screen-result'));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  if (btnTsl1) {
+    btnTsl1.addEventListener('click', handleGoToSalesPage);
+  }
+  if (btnTsl2) {
+    btnTsl2.addEventListener('click', handleGoToSalesPage);
+  }
+
+      // =========================================================================
+  // BOTAO DE RESGATE DO VOUCHER DE 80% (COM SOM DE ATIVACAO E CARIMBO POP)
+  // =========================================================================
   const btnClaimVoucher = document.getElementById('btn-claim-voucher');
   const voucherUnlockedStamp = document.getElementById('voucher-unlocked-stamp');
 
   if (btnClaimVoucher) {
     btnClaimVoucher.addEventListener('click', function () {
-      if (userAnswers.voucherClaimed) {
-        navigateTo(screensOrder.indexOf('screen-result'));
-        return;
+      userAnswers.voucherClaimed = true;
+
+      // Rastreamento: NÃO é InitiateCheckout! É apenas o evento customizado de ativação do voucher
+      trackPixelEvent('Quiz_Voucher_Claimed', {
+        discount: '80%',
+        sound_type: userAnswers.soundType || 'ringing',
+        frequency: userAnswers.frequencyHz || 4000
+      });
+
+      // 1. Toca som harmônico de ativação
+      try {
+        const ctx = getAudioContext();
+        if (ctx) {
+          if (ctx.state === 'suspended') {
+            ctx.resume();
+          }
+          playHarmonicChord();
+        }
+      } catch (e) {
+        console.error('Audio chord error:', e);
       }
 
-      userAnswers.voucherClaimed = true;
-      playHarmonicChord(); // Accord de résonance
-
+      // 2. Animação de carimbo (Stamp Pop)
       if (voucherUnlockedStamp) {
         voucherUnlockedStamp.style.display = 'inline-block';
+        voucherUnlockedStamp.classList.remove('animate-stamp');
+        void voucherUnlockedStamp.offsetWidth; // Force reflow
         voucherUnlockedStamp.classList.add('animate-stamp');
       }
 
+      // 3. Atualiza estado visual do botão
       btnClaimVoucher.innerHTML = `
-        Liberando sua oferta especial (-80%)...
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>✓ Voucher Aplicado! Abrindo sua condição especial...</span>
       `;
       btnClaimVoucher.style.backgroundColor = '#16A34A';
       btnClaimVoucher.style.borderColor = '#16A34A';
       btnClaimVoucher.style.boxShadow = '0 6px 20px rgba(22, 163, 74, 0.35)';
 
+      // 4. Delay realista de 1.4s para o lead ver o carimbo e ouvir o som antes de ir para a Pagina de Vendas
       setTimeout(() => {
         navigateTo(screensOrder.indexOf('screen-result'));
-      }, 850);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 1400);
     });
   }
+
+
+
+
+
+
 
   // =========================================================================
   // 21. TELA 23: PAGE DE VENTE OFFICIELLE V5 (STYLE ÉPURÉ APPLE & TARIF PIZZA)
@@ -1854,7 +2040,7 @@
     if (salesHzDisplay) salesHzDisplay.textContent = formattedHz;
     if (salesSoundDisplay) salesSoundDisplay.textContent = soundNameDictionary[userAnswers.soundType] || 'Apito contínuo agudo';
 
-    // Propagation des paramètres UTM sur tous les liens de paiement
+    // Configuração oficial de checkout: propagação de UTMs e disparo de InitiateCheckout
     const checkoutButtons = [
       document.getElementById('btn-pizza-complete'),
       document.getElementById('btn-pizza-basic'),
@@ -1862,15 +2048,35 @@
       document.getElementById('btn-sales-checkout')
     ];
 
-    const urlParams = window.location.search;
-    if (urlParams) {
-      checkoutButtons.forEach(btn => {
-        if (btn && btn.href) {
-          const sep = btn.href.includes('?') ? '&' : '?';
-          btn.href = btn.href + sep + urlParams.replace(/^\?/, '');
+    checkoutButtons.forEach(btn => {
+      if (!btn) return;
+
+      // Anexa todas as UTMs capturadas do Instagram (Bio / DM)
+      const originalHref = btn.getAttribute('data-original-href') || btn.getAttribute('href');
+      if (originalHref) {
+        if (!btn.getAttribute('data-original-href')) {
+          btn.setAttribute('data-original-href', originalHref);
         }
-      });
-    }
+        btn.href = attachUtmsToUrl(originalHref);
+      }
+
+      // O InitiateCheckout é disparado ESTRITAMENTE aqui, nos botões que levam à Greenn
+      if (!btn.getAttribute('data-track-initiate-checkout')) {
+        btn.setAttribute('data-track-initiate-checkout', 'true');
+        btn.addEventListener('click', function () {
+          const isBasic = btn.id === 'btn-pizza-basic' || (btn.href && btn.href.includes('basico'));
+          const price = isBasic ? 67.00 : 97.00;
+          const planName = isBasic ? 'Protocolo do Silêncio - Essencial' : 'Protocolo do Silêncio - Completo';
+
+          trackPixelEvent('InitiateCheckout', {
+            content_name: planName,
+            content_category: 'Infoproduto / Terapia Neuroacústica',
+            currency: 'BRL',
+            value: price
+          }, false); // false = evento oficial padrão da Meta
+        });
+      }
+    });
 
     // Géolocalisation dynamique sécurisée des preuves sociales
     initGeoLocationSocialProof();
@@ -1990,7 +2196,9 @@
         const socLoc = document.getElementById('social-proof-location');
         if (heroLoc) heroLoc.textContent = locationStr;
         if (socLoc) socLoc.textContent = locationStr;
+
       });
+
   }
 
   // Initialisation à l'ouverture
@@ -2007,10 +2215,15 @@
 
   const initialUrlParams = new URLSearchParams(window.location.search);
   const requestedScreen = initialUrlParams.get('screen');
-  if (requestedScreen) {
+  const hashScreen = window.location.hash ? window.location.hash.replace('#', '') : null;
+  const hashIdx = hashScreen ? screensOrder.indexOf(hashScreen) : -1;
+
+  if (hashIdx !== -1) {
+    setTimeout(() => navigateTo(hashIdx), 20);
+  } else if (requestedScreen) {
     const screenIdx = isNaN(requestedScreen) ? screensOrder.indexOf(requestedScreen) : parseInt(requestedScreen, 10);
     if (screenIdx >= 0 && screenIdx < screensOrder.length) {
-      setTimeout(() => navigateTo(screenIdx), 50);
+      setTimeout(() => navigateTo(screenIdx), 20);
     }
   }
 

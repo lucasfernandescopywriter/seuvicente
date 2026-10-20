@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia da Colher Matinal — Protocolo do Silêncio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0F172A;
+      --teal: #0D9488;
+      --gold: #D97706;
+      --bg: #F8FAFC;
+      --card: #FFFFFF;
+      --text: #1E293B;
+      --muted: #64748B;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.6;
+      padding: 24px 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: 20px;
+      padding: 32px 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      border: 1px solid #E2E8F0;
+    }
+    .header-badge {
+      display: inline-block;
+      background: #CCFBF1;
+      color: var(--teal);
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--primary);
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .author-line {
+      font-size: 0.85rem;
+      color: var(--muted);
+      border-bottom: 1px solid #E2E8F0;
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+    .intro-box {
+      background: #F1F5F9;
+      border-left: 4px solid var(--teal);
+      padding: 16px;
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 28px;
+      font-size: 0.92rem;
+      color: #334155;
+    }
+    h2 {
+      font-size: 1.25rem;
+      color: var(--primary);
+      margin: 28px 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .ingredient-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 14px;
+      transition: all 0.2s;
+    }
+    .ingredient-card:hover {
+      border-color: var(--teal);
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.08);
+    }
+    .ing-title {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--primary);
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .ing-dose {
+      color: var(--gold);
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .ing-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .steps-list {
+      list-style: none;
+      counter-reset: step-counter;
+      margin-bottom: 24px;
+    }
+    .steps-list li {
+      counter-increment: step-counter;
+      position: relative;
+      padding-left: 40px;
+      margin-bottom: 14px;
+      font-size: 0.92rem;
+    }
+    .steps-list li::before {
+      content: counter(step-counter);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 28px;
+      height: 28px;
+      background: var(--teal);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+    }
+    .fridge-card {
+      background: #FEF3C7;
+      border: 2px dashed #F59E0B;
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 32px;
+      text-align: center;
+    }
+    .fridge-card h3 {
+      color: #92400E;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+    .fridge-card p {
+      font-size: 0.85rem;
+      color: #78350F;
+      line-height: 1.4;
+    }
+    .btn-print {
+      display: inline-block;
+      margin-top: 14px;
+      background: #92400E;
+      color: white;
+      text-decoration: none;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+    }
+    @media print {
+      body { background: white; padding: 0; }
+      .container { box-shadow: none; border: none; padding: 0; }
+      .btn-print { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <span class="header-badge">Protocolo do Silêncio • Módulo 2</span>
+    <h1>O Guia da Colher Matinal</h1>
+    <div class="author-line">Por Seu Vicente • Formulação de Remielinização do Nervo Auditivo</div>
+
+    <div class="intro-box">
+      <strong>O Mecanismo Biológico:</strong> Após os 50 anos, a mucosa estomacal reduz a absorção de vitaminas em cápsulas. A Colher Matinal entrega fosfolipídios puros em meio lipídico que são absorvidos logo na cavidade bucal e intestino alto, fornecendo às Células de Schwann os lipídios exatos para fechar o "curto-circuito" do nervo.
+    </div>
+
+    <h2>Os 3 Ingredientes Sagrados</h2>
+
+    <div class="ingredient-card">
+      <div class="ing-title">
+        <span>1. Azeite de Oliva Extravirgem</span>
+        <span class="ing-dose">1 colher de sopa (10ml)</span>
+      </div>
+      <div class="ing-desc">
+        Rico em ácido oleico e polifenóis protetores da membrana neuronal. <em>Recomendação: Acidez menor que 0,5%, garrafa de vidro escuro (marcas: Andorinha, Gallo, Borges).</em>
+      </div>
+    </div>
+
+    <div class="ingredient-card">
+      <div class="ing-title">
+        <span>2. Lecitina de Girassol ou Soja</span>
+        <span class="ing-dose">1 colher de café (3g)</span>
+      </div>
+      <div class="ing-desc">
+        A fonte mais pura e biodisponível de <strong>Fosfatidilcolina</strong>, o tijolo biológico da bainha de mielina. <em>Onde comprar: Casas de produtos naturais (Zona Cerealista, Mundo Verde) ou lojas de suplementos a granel.</em>
+      </div>
+    </div>
+
+    <div class="ingredient-card">
+      <div class="ing-title">
+        <span>3. Cúrcuma Pura + Micro-Pitada de Pimenta</span>
+        <span class="ing-dose">1 pitada generosa</span>
+      </div>
+      <div class="ing-desc">
+        Curcumina anti-inflamatória combinada à piperina da pimenta-do-reino preta, multiplicando a absorção em 2.000% para desinflamar a raiz do nervo craniano.
+      </div>
+    </div>
+
+    <h2>Modo de Preparo em 3 Passos (10 Segundos)</h2>
+    <ol class="steps-list">
+      <li><strong>Em jejum absoluto:</strong> Misture o azeite, a lecitina e a cúrcuma em uma colher de sopa ou copinho de café com um garfo até obter um líquido dourado uniforme.</li>
+      <li><strong>Absorção Sublingual:</strong> Coloque a colher na boca e mantenha por 10 a 15 segundos antes de engolir (isso acelera a absorção pelas microvias salivares).</li>
+      <li><strong>Hidratação:</strong> Beba 1 copo grande de água pura em temperatura ambiente e aguarde 20 minutos antes de tomar café preto ou comer alimentos sólidos.</li>
+    </ol>
+
+    <div class="fridge-card">
+      <h3>📌 Resumo para Fixar na Geladeira</h3>
+      <p><strong>Ao acordar:</strong> 1 colher de azeite + 1 colher café de lecitina + 1 pitada de cúrcuma com pimenta. Beba 1 copo de água e espere 20 minutos.</p>
+      <button class="btn-print" onclick="window.print()">Salvar / Imprimir em PDF</button>
+    </div>
+  </div>
+
+</body>
+</html>

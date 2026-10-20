@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Player Neuroacústico — Terapia Notched Sound</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0B192C;
+      --card-bg: #11223A;
+      --card-border: #1E3A5F;
+      --teal: #0D9488;
+      --teal-light: #14B8A6;
+      --teal-glow: rgba(13, 148, 136, 0.35);
+      --text-main: #FFFFFF;
+      --text-muted: #94A3B8;
+      --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .player-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 28px 22px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+      text-align: center;
+    }
+    .tag-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(13, 148, 136, 0.18);
+      border: 1px solid var(--teal);
+      color: var(--teal-light);
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .tag-pulse {
+      width: 7px;
+      height: 7px;
+      background: var(--teal-light);
+      border-radius: 50%;
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
+    h1 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+      line-height: 1.25;
+    }
+    p.subtitle {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-bottom: 22px;
+    }
+    .freq-label {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+      display: block;
+      text-align: left;
+    }
+    .freq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .btn-freq {
+      background: #0B192C;
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      border-radius: 14px;
+      padding: 10px 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+      line-height: 1.25;
+    }
+    .btn-freq span {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+    .btn-freq.active {
+      background: var(--teal);
+      border-color: var(--teal-light);
+      box-shadow: 0 0 16px var(--teal-glow);
+    }
+    .btn-freq.active span {
+      color: rgba(255, 255, 255, 0.85);
+    }
+    .wave-visualizer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      height: 48px;
+      margin-bottom: 22px;
+    }
+    .wave-bar {
+      width: 5px;
+      height: 10px;
+      background: var(--card-border);
+      border-radius: 999px;
+      transition: all 0.3s ease;
+    }
+    .wave-visualizer.playing .wave-bar {
+      background: var(--teal-light);
+      animation: waveDance 1.2s ease-in-out infinite alternate;
+    }
+    .wave-visualizer.playing .wave-bar:nth-child(2) { animation-delay: 0.15s; }
+    .wave-visualizer.playing .wave-bar:nth-child(3) { animation-delay: 0.3s; }
+    .wave-visualizer.playing .wave-bar:nth-child(4) { animation-delay: 0.45s; }
+    .wave-visualizer.playing .wave-bar:nth-child(5) { animation-delay: 0.6s; }
+    .wave-visualizer.playing .wave-bar:nth-child(6) { animation-delay: 0.35s; }
+    .wave-visualizer.playing .wave-bar:nth-child(7) { animation-delay: 0.2s; }
+    @keyframes waveDance {
+      0% { height: 10px; }
+      100% { height: 42px; }
+    }
+    .timer-readout {
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-main);
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 4px;
+    }
+    .timer-caption {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 24px;
+    }
+    .btn-play-circle {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal-light), var(--teal));
+      border: none;
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 10px 24px var(--teal-glow);
+      transition: all 0.25s ease;
+    }
+    .btn-play-circle:hover {
+      transform: scale(1.05);
+      box-shadow: 0 14px 30px rgba(13, 148, 136, 0.55);
+    }
+    .btn-play-circle:active {
+      transform: scale(0.96);
+    }
+    .btn-play-circle svg {
+      width: 28px;
+      height: 28px;
+      fill: currentColor;
+    }
+    .ear-tip {
+      margin-top: 24px;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px dashed var(--card-border);
+      border-radius: 14px;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      text-align: left;
+    }
+    .ear-tip strong {
+      color: var(--teal-light);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="player-card">
+    <div class="tag-badge">
+      <span class="tag-pulse"></span>
+      Terapia Notched Sound
+    </div>
+
+    <h1>Recalibração Neuroacústica</h1>
+    <p class="subtitle">Ruído orgânico de inibição lateral para silenciar o curto-circuito cortical ao deitar.</p>
+
+    <span class="freq-label">Selecione o som do seu zumbido:</span>
+    <div class="freq-grid">
+      <button class="btn-freq active" onclick="setFrequency(8000, this)">
+        Apito Fino
+        <span>8.000 Hz (Agudo)</span>
+      </button>
+      <button class="btn-freq" onclick="setFrequency(4000, this)">
+        Panela de Pressão
+        <span>4.000 Hz (Médio)</span>
+      </button>
+      <button class="btn-freq" onclick="setFrequency(6000, this)">
+        Cigarras / Grilos
+        <span>6.000 Hz (Estridente)</span>
+      </button>
+      <button class="btn-freq" onclick="setFrequency(2000, this)">
+        Chiado Suave
+        <span>2.000 Hz (Grave)</span>
+      </button>
+    </div>
+
+    <div class="wave-visualizer" id="wave-visualizer">
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+    </div>
+
+    <div class="timer-readout" id="timer-readout">15:00</div>
+    <div class="timer-caption">Temporizador de sono com fade-out suave</div>
+
+    <button class="btn-play-circle" id="btn-play" onclick="toggleSound()">
+      <svg id="icon-play" viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+      <svg id="icon-pause" viewBox="0 0 24 24" style="display: none;"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+    </button>
+
+    <div class="ear-tip">
+      🎧 <strong>Recomendação do Seu Vicente:</strong> Use fones de ouvido comuns. Mantenha o volume em nível suave (não deve abafar o som com força, apenas acalmar os neurônios vizinhos).
+    </div>
+  </div>
+
+  <script>
+    let audioCtx = null;
+    let noiseSource = null;
+    let notchFilter = null;
+    let gainNode = null;
+    let isPlaying = false;
+    let currentFreq = 8000;
+    let timerSeconds = 15 * 60;
+    let timerInterval = null;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function createBrownNoiseBuffer() {
+      const bufferSize = audioCtx.sampleRate * 5;
+      const buffer = audioCtx.createBuffer(2, bufferSize, audioCtx.sampleRate);
+      for (let channel = 0; channel < 2; channel++) {
+        const data = buffer.getChannelData(channel);
+        let lastOut = 0.0;
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1;
+          data[i] = (lastOut + (0.02 * white)) / 1.02;
+          lastOut = data[i];
+          data[i] *= 3.2;
+        }
+      }
+      return buffer;
+    }
+
+    function setFrequency(hz, btnElem) {
+      currentFreq = hz;
+      document.querySelectorAll('.btn-freq').forEach(b => b.classList.remove('active'));
+      if (btnElem) btnElem.classList.add('active');
+      if (notchFilter && audioCtx) {
+        notchFilter.frequency.setValueAtTime(currentFreq, audioCtx.currentTime);
+      }
+    }
+
+    function startSound() {
+      initAudio();
+      
+      const buffer = createBrownNoiseBuffer();
+      noiseSource = audioCtx.createBufferSource();
+      noiseSource.buffer = buffer;
+      noiseSource.loop = true;
+
+      notchFilter = audioCtx.createBiquadFilter();
+      notchFilter.type = 'notch';
+      notchFilter.frequency.setValueAtTime(currentFreq, audioCtx.currentTime);
+      notchFilter.Q.setValueAtTime(8.0, audioCtx.currentTime);
+
+      gainNode = audioCtx.createGain();
+      gainNode.gain.setValueAtTime(0.001, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.28, audioCtx.currentTime + 1.2);
+
+      noiseSource.connect(notchFilter);
+      notchFilter.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      noiseSource.start();
+      isPlaying = true;
+
+      document.getElementById('icon-play').style.display = 'none';
+      document.getElementById('icon-pause').style.display = 'block';
+      document.getElementById('wave-visualizer').classList.add('playing');
+
+      startTimer();
+    }
+
+    function stopSound() {
+      if (gainNode && audioCtx) {
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
+        setTimeout(() => {
+          if (noiseSource) {
+            try { noiseSource.stop(); noiseSource.disconnect(); } catch (e) {}
+            noiseSource = null;
+          }
+        }, 850);
+      }
+      isPlaying = false;
+      document.getElementById('icon-play').style.display = 'block';
+      document.getElementById('icon-pause').style.display = 'none';
+      document.getElementById('wave-visualizer').classList.remove('playing');
+      clearInterval(timerInterval);
+    }
+
+    function toggleSound() {
+      if (isPlaying) {
+        stopSound();
+      } else {
+        startSound();
+      }
+    }
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (timerSeconds > 0) {
+          timerSeconds--;
+          const m = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+          const s = String(timerSeconds % 60).padStart(2, '0');
+          document.getElementById('timer-readout').textContent = `${m}:${s}`;
+        } else {
+          stopSound();
+          timerSeconds = 15 * 60;
+          document.getElementById('timer-readout').textContent = "15:00";
+        }
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

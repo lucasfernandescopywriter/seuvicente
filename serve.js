@@ -34,7 +34,19 @@ const server = http.createServer((req, res) => {
     if (range && (ext === '.mp3' || ext === '.mp4')) {
       const parts = range.replace(/bytes=/, '').split('-');
       const start = parseInt(parts[0], 10);
-      const end = parts[1] ? parseInt(parts[1], 10) : stats.size - 1;
+      let end = parts[1] ? parseInt(parts[1], 10) : stats.size - 1;
+
+      if (isNaN(start) || start >= stats.size || start < 0) {
+        res.writeHead(416, {
+          'Content-Range': `bytes */${stats.size}`
+        });
+        return res.end();
+      }
+
+      if (end >= stats.size) {
+        end = stats.size - 1;
+      }
+
       const chunksize = end - start + 1;
 
       res.writeHead(206, {
@@ -44,7 +56,11 @@ const server = http.createServer((req, res) => {
         'Content-Type': contentType,
         'Cache-Control': 'no-store, no-cache, must-revalidate, private'
       });
-      fs.createReadStream(filePath, { start, end }).pipe(res);
+      const stream = fs.createReadStream(filePath, { start, end });
+      stream.on('error', () => {
+        try { res.end(); } catch (e) {}
+      });
+      stream.pipe(res);
     } else {
       res.writeHead(200, {
         'Content-Type': contentType,
@@ -52,9 +68,17 @@ const server = http.createServer((req, res) => {
         'Accept-Ranges': 'bytes',
         'Cache-Control': 'no-store, no-cache, must-revalidate, private'
       });
-      fs.createReadStream(filePath).pipe(res);
+      const stream = fs.createReadStream(filePath);
+      stream.on('error', () => {
+        try { res.end(); } catch (e) {}
+      });
+      stream.pipe(res);
     }
   });
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught server error:', err);
 });
 
 const PORT = 3000;
