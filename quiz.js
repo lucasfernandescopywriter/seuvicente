@@ -2064,7 +2064,7 @@
       if (!btn.getAttribute('data-track-initiate-checkout')) {
         btn.setAttribute('data-track-initiate-checkout', 'true');
         btn.addEventListener('click', function () {
-          const isBasic = btn.id === 'btn-pizza-basic' || (btn.href && btn.href.includes('basico'));
+          const isBasic = btn.id === 'btn-pizza-basic' || (btn.href && (btn.href.includes('basico') || btn.href.includes('798777')));
           const price = isBasic ? 67.00 : 97.00;
           const planName = isBasic ? 'Protocolo do Silêncio - Essencial' : 'Protocolo do Silêncio - Completo';
 
