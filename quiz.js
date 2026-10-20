@@ -63,6 +63,13 @@
     } catch (e) {
       console.warn('Erro no envio do evento Pixel:', eventName, e);
     }
+    try {
+      if (typeof window.clarity === 'function') {
+        window.clarity('event', eventName);
+      }
+    } catch (e) {
+      // silencia erro de clarity se bloqueado
+    }
   }
 
   initUtms();
@@ -564,6 +571,13 @@
 
     const nextScreenId = screensOrder[index];
     updateHeaderAndProgress(nextScreenId);
+
+    // Registra cada transição de tela no Microsoft Clarity
+    try {
+      if (typeof window.clarity === 'function') {
+        window.clarity('event', 'tela_' + (index + 1) + '_' + nextScreenId.replace('screen-', ''));
+      }
+    } catch (err) {}
 
     // Rastreamento de avanço do funil por etapa chave
     const screenEventMap = {
