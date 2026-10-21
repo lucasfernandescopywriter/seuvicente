@@ -103,19 +103,21 @@
   // Mapa de Progresso para a Barra Superior Fina
   const progressMap = {
     'screen-hero': { showProgress: false, percent: 0 },
-    'screen-sound-type': { showProgress: true, percent: 7 },
-    'screen-ear-side': { showProgress: true, percent: 14 },
-    'screen-duration': { showProgress: true, percent: 21 },
-    'screen-peak-time': { showProgress: true, percent: 28 },
-    'screen-severity': { showProgress: true, percent: 35 },
-    'screen-prev-treatments': { showProgress: true, percent: 42 },
-    'screen-vincent-story': { showProgress: true, percent: 50 },
-    'screen-chat-vicente': { showProgress: true, percent: 58 },
-    'screen-overload-alert': { showProgress: true, percent: 66 },
-    'screen-freq-intro': { showProgress: true, percent: 73 },
+    'screen-sound-type': { showProgress: true, percent: 6 },
+    'screen-ear-side': { showProgress: true, percent: 12 },
+    'screen-duration': { showProgress: true, percent: 18 },
+    'screen-trigger-origin': { showProgress: true, percent: 24 },
+    'screen-peak-time': { showProgress: true, percent: 30 },
+    'screen-somatosensory': { showProgress: true, percent: 36 },
+    'screen-severity': { showProgress: true, percent: 42 },
+    'screen-prev-treatments': { showProgress: true, percent: 48 },
+    'screen-vincent-story': { showProgress: true, percent: 55 },
+    'screen-chat-vicente': { showProgress: true, percent: 62 },
+    'screen-overload-alert': { showProgress: true, percent: 68 },
+    'screen-freq-intro': { showProgress: true, percent: 74 },
     'screen-freq-ab': { showProgress: true, percent: 80 },
-    'screen-notch-visualizer': { showProgress: true, percent: 86 },
-    'screen-science-backing': { showProgress: true, percent: 90 },
+    'screen-notch-visualizer': { showProgress: true, percent: 85 },
+    'screen-science-backing': { showProgress: true, percent: 89 },
     'screen-trajectory': { showProgress: true, percent: 93 },
     'screen-commitment': { showProgress: true, percent: 96 },
     'screen-bifurcation': { showProgress: true, percent: 98 },
@@ -2221,6 +2223,15 @@
 
   // Expose helpers for direct screen navigation / QA
   window.navigateTo = navigateTo;
+  
+    // Voucher TSL button click -> navigate to screen-result (Sales Page)
+    const btnVoucherTsl = document.getElementById('btn-claim-voucher-tsl');
+    if (btnVoucherTsl) {
+      btnVoucherTsl.addEventListener('click', function() {
+        navigateTo(screensOrder.indexOf('screen-result'));
+      });
+    }
+
   window.screensOrder = screensOrder;
   window.goToScreen = function (id) {
     const idx = screensOrder.indexOf(id);
