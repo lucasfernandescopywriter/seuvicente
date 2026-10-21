@@ -128,14 +128,14 @@
 
   // Dicionário de Nomes dos Sons (Português do Brasil)
   const soundNameDictionary = {
-    'ringing': 'Apito contínuo agudo',
-    'buzzing': 'Chiado elétrico ou zumbido',
-    'static': 'Estática de rádio ou TV fora do ar',
-    'roaring': 'Zumbido grave constante',
-    'kettle': 'Som de panela de pressão ou chaleira',
-    'electric': 'Ruído elétrico com mau contato',
-    'screeching': 'Cigarras ou grilos cantando',
-    'multiple': 'Sons múltiplos ou variáveis'
+    'ringing': 'Apito contínuo e agudo',
+    'buzzing': 'Chiado constante de panela de pressão',
+    'screeching': 'Ninho de cigarras ou grilos cantando',
+    'roaring': 'Motor constante, britadeira ou turbina de avião',
+    'kettle': 'Batimento cardíaco pulsátil (vu... vu... vu...)',
+    'electric': 'Curto-circuito elétrico com estalos',
+    'static': 'Vapor constante ou cachoeira',
+    'multiple': 'Mistura de múltiplos tons simultâneos'
   };
 
   // Estado Central da Aplicação
@@ -248,12 +248,12 @@
   // Sintetizador Unificado dos 8 Sons do MyPattern (Usado tanto na seleção inicial quanto no Teste A/B)
   const defaultSoundFreqMap = {
     'ringing': 4000,
-    'buzzing': 160,
-    'static': 2500,
-    'roaring': 140,
-    'kettle': 6200,
-    'electric': 4500,
+    'buzzing': 5200,
     'screeching': 4600,
+    'roaring': 85,
+    'kettle': 72,
+    'electric': 4500,
+    'static': 2500,
     'multiple': 3600
   };
 
@@ -294,7 +294,7 @@
 
     resetAutoStopTimer(5000);
 
-    const safeHz = Math.max(50, Math.min(14000, Math.round(hz)));
+    const safeHz = Math.max(45, Math.min(14000, Math.round(hz)));
 
     if (type === 'ringing') {
       // 1. Apito contínuo e agudo (onda senoidal pura na frequência alvo)
@@ -307,29 +307,51 @@
       activeGainNode.gain.exponentialRampToValueAtTime(0.10, ctx.currentTime + 0.08);
 
     } else if (type === 'buzzing') {
-      // 2. Chiado constante / zumbido elétrico (dente de serra em safeHz + senoidal safeHz*2 + filtro passa-baixa)
-      const osc1 = ctx.createOscillator();
-      const osc2 = ctx.createOscillator();
-      osc1.type = 'sawtooth';
-      osc1.frequency.setValueAtTime(safeHz, ctx.currentTime);
-      osc2.type = 'sine';
-      osc2.frequency.setValueAtTime(safeHz * 2, ctx.currentTime);
+      // 2. Chiado constante de panela de pressão (vapor violento sob alta pressão através da válvula)
+      const bufferSize = ctx.sampleRate * 2;
+      const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const output = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+      const whiteNoise = ctx.createBufferSource();
+      whiteNoise.buffer = noiseBuffer;
+      whiteNoise.loop = true;
 
-      const filter = ctx.createBiquadFilter();
-      filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(Math.max(450, safeHz * 2.6), ctx.currentTime);
+      // Filtro passa-alta para eliminar qualquer grave e evitar efeito de navio/buzina
+      const highpass = ctx.createBiquadFilter();
+      highpass.type = 'highpass';
+      highpass.frequency.setValueAtTime(2200, ctx.currentTime);
 
-      osc1.connect(filter);
-      osc2.connect(filter);
-      filter.connect(activeGainNode);
+      // Filtro passa-banda ressonante focado no som de escape do vapor metálico
+      const steamBand = ctx.createBiquadFilter();
+      steamBand.type = 'bandpass';
+      steamBand.frequency.setValueAtTime(safeHz, ctx.currentTime);
+      steamBand.Q.setValueAtTime(2.4, ctx.currentTime);
 
-      osc1.start();
-      osc2.start();
-      activeSoundNodes.push(osc1, osc2, filter);
-      activeGainNode.gain.exponentialRampToValueAtTime(0.09, ctx.currentTime + 0.08);
+      // Modulação de turbulência rápida a 22 Hz (flutuação de ar em alta pressão)
+      const turbGain = ctx.createGain();
+      turbGain.gain.setValueAtTime(0.85, ctx.currentTime);
+      const turbLfo = ctx.createOscillator();
+      turbLfo.type = 'sine';
+      turbLfo.frequency.setValueAtTime(22, ctx.currentTime);
+      const turbLfoGain = ctx.createGain();
+      turbLfoGain.gain.setValueAtTime(0.15, ctx.currentTime);
+      turbLfo.connect(turbLfoGain);
+      turbLfoGain.connect(turbGain.gain);
+
+      whiteNoise.connect(highpass);
+      highpass.connect(steamBand);
+      steamBand.connect(turbGain);
+      turbGain.connect(activeGainNode);
+
+      whiteNoise.start();
+      turbLfo.start();
+      activeSoundNodes.push(whiteNoise, highpass, steamBand, turbGain, turbLfo, turbLfoGain);
+      activeGainNode.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.08);
 
     } else if (type === 'static') {
-      // 3. Vapor constante / cachoeira / estática (ruído branco com filtro passa-banda sintonizado em safeHz)
+      // 3. Vapor constante / cachoeira / estática (ruído branco com filtro passa-banda em safeHz)
       const bufferSize = ctx.sampleRate * 2;
       const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
       const output = noiseBuffer.getChannelData(0);
@@ -352,43 +374,164 @@
       activeGainNode.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.08);
 
     } else if (type === 'roaring') {
-      // 4. Estalo pulsátil ou motor de geladeira (onda triangular em safeHz com modulação lenta LFO)
-      const osc = ctx.createOscillator();
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(safeHz, ctx.currentTime);
+      // 4. Motor constante, britadeira ou turbina de avião (ronco grave mecânico + vibração de pistão/britadeira)
+      const motorHz = (safeHz >= 50 && safeHz <= 250) ? safeHz : 85;
 
-      const lfo = ctx.createOscillator();
-      lfo.frequency.setValueAtTime(0.85, ctx.currentTime);
-      const lfoGain = ctx.createGain();
-      lfoGain.gain.setValueAtTime(Math.min(28, Math.max(8, safeHz * 0.15)), ctx.currentTime);
-      lfo.connect(osc.frequency);
-      lfo.start();
+      // Fundamental mecânica com textura dente de serra industrial
+      const oscSaw = ctx.createOscillator();
+      oscSaw.type = 'sawtooth';
+      oscSaw.frequency.setValueAtTime(motorHz, ctx.currentTime);
 
-      osc.connect(activeGainNode);
-      osc.start();
-      activeSoundNodes.push(osc, lfo, lfoGain);
-      activeGainNode.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.08);
+      // Sub-grave encorpado
+      const oscSub = ctx.createOscillator();
+      oscSub.type = 'sine';
+      oscSub.frequency.setValueAtTime(motorHz * 0.5, ctx.currentTime);
+
+      // Filtro passa-baixa para dar peso de motor e isolar agudos artificiais
+      const lowpass = ctx.createBiquadFilter();
+      lowpass.type = 'lowpass';
+      lowpass.frequency.setValueAtTime(Math.min(380, motorHz * 3.5), ctx.currentTime);
+
+      // Ruído de turbina / ar do motor
+      const bufferSize = ctx.sampleRate * 2;
+      const noiseBuf = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const nOut = noiseBuf.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        nOut[i] = (Math.random() * 2 - 1) * 0.35;
+      }
+      const noiseSource = ctx.createBufferSource();
+      noiseSource.buffer = noiseBuf;
+      noiseSource.loop = true;
+
+      const noiseFilter = ctx.createBiquadFilter();
+      noiseFilter.type = 'lowpass';
+      noiseFilter.frequency.setValueAtTime(280, ctx.currentTime);
+      noiseSource.connect(noiseFilter);
+
+      // Modulação de rotação mecânica / impacto de britadeira (flutter a 19 Hz)
+      const motorGain = ctx.createGain();
+      motorGain.gain.setValueAtTime(0.75, ctx.currentTime);
+      const lfoFlutter = ctx.createOscillator();
+      lfoFlutter.type = 'triangle';
+      lfoFlutter.frequency.setValueAtTime(19, ctx.currentTime);
+      const lfoFlutterGain = ctx.createGain();
+      lfoFlutterGain.gain.setValueAtTime(0.25, ctx.currentTime);
+      lfoFlutter.connect(lfoFlutterGain);
+      lfoFlutterGain.connect(motorGain.gain);
+
+      oscSaw.connect(lowpass);
+      oscSub.connect(lowpass);
+      lowpass.connect(motorGain);
+      noiseFilter.connect(motorGain);
+      motorGain.connect(activeGainNode);
+
+      oscSaw.start();
+      oscSub.start();
+      noiseSource.start();
+      lfoFlutter.start();
+
+      activeSoundNodes.push(oscSaw, oscSub, lowpass, noiseSource, noiseFilter, motorGain, lfoFlutter, lfoFlutterGain);
+      activeGainNode.gain.exponentialRampToValueAtTime(0.15, ctx.currentTime + 0.08);
 
     } else if (type === 'kettle') {
-      // 5. Broca fina ou metal agudo / chaleira (onda senoidal estridente com vibrato rápido a 8.5 Hz)
-      const osc = ctx.createOscillator();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(safeHz, ctx.currentTime);
+      // 5. Batimento cardíaco pulsátil vascular ("vu... vu... vu...")
+      // Ritmo sincronizado com a pulsação arterial (~60 a 95 BPM)
+      const bpm = (safeHz >= 45 && safeHz <= 140) ? safeHz : (safeHz > 140 ? 72 : 70);
+      const beatLen = 60.0 / bpm; // ~0.83s por batimento
+      const numBeats = 4;
+      const totalLen = beatLen * numBeats;
+      const bufferSize = Math.floor(ctx.sampleRate * totalLen);
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
 
-      const lfo = ctx.createOscillator();
-      lfo.frequency.setValueAtTime(8.5, ctx.currentTime);
-      const lfoGain = ctx.createGain();
-      lfoGain.gain.setValueAtTime(25, ctx.currentTime);
-      lfo.connect(osc.frequency);
-      lfo.start();
+      for (let beatIdx = 0; beatIdx < numBeats; beatIdx++) {
+        const tStart = beatIdx * beatLen;
+        
+        // 1. Pulso sistólico principal ("vuuu")
+        const dur1 = 0.38;
+        const sampCount1 = Math.floor(dur1 * ctx.sampleRate);
+        const startSamp1 = Math.floor(tStart * ctx.sampleRate);
+        
+        for (let i = 0; i < sampCount1; i++) {
+          const t = i / ctx.sampleRate;
+          let env;
+          if (t < 0.07) {
+            env = Math.sin((t / 0.07) * (Math.PI / 2));
+          } else {
+            env = Math.pow(Math.cos(((t - 0.07) / (dur1 - 0.07)) * (Math.PI / 2)), 2);
+          }
+          
+          // Thump sub-grave arterial (74 Hz modulando para 52 Hz)
+          const thFreq = 74.0 - 22.0 * (t / dur1);
+          const thump = Math.sin(2 * Math.PI * thFreq * t) * 0.52;
+          
+          // Whoosh vascular arterial ("vuuu" com harmônicos e ar turbulento)
+          const whoosh = (
+            Math.sin(2 * Math.PI * 280 * t) * 0.18 +
+            Math.sin(2 * Math.PI * 380 * t + 0.8) * 0.14 +
+            Math.sin(2 * Math.PI * 510 * t + 1.9) * 0.08 +
+            (Math.random() * 2 - 1) * 0.22
+          );
+          
+          const val = env * (thump + whoosh * 0.65);
+          const idx = startSamp1 + i;
+          if (idx < bufferSize) data[idx] += val;
+        }
 
-      osc.connect(activeGainNode);
-      osc.start();
-      activeSoundNodes.push(osc, lfo, lfoGain);
-      activeGainNode.gain.exponentialRampToValueAtTime(0.08, ctx.currentTime + 0.08);
+        // 2. Pulso diastólico secundário mais suave ("vu") a 0.28s
+        const tSec = tStart + 0.28;
+        const dur2 = 0.22;
+        const sampCount2 = Math.floor(dur2 * ctx.sampleRate);
+        const startSamp2 = Math.floor(tSec * ctx.sampleRate);
+        
+        for (let i = 0; i < sampCount2; i++) {
+          const t = i / ctx.sampleRate;
+          let env;
+          if (t < 0.05) {
+            env = Math.sin((t / 0.05) * (Math.PI / 2)) * 0.38;
+          } else {
+            env = Math.pow(Math.cos(((t - 0.05) / (dur2 - 0.05)) * (Math.PI / 2)), 2) * 0.38;
+          }
+          
+          const thFreq = 64.0 - 15.0 * (t / dur2);
+          const thump = Math.sin(2 * Math.PI * thFreq * t) * 0.45;
+          const whoosh = (
+            Math.sin(2 * Math.PI * 260 * t) * 0.14 +
+            (Math.random() * 2 - 1) * 0.18
+          );
+          
+          const val = env * (thump + whoosh * 0.55);
+          const idx = startSamp2 + i;
+          if (idx < bufferSize) data[idx] += val;
+        }
+      }
+
+      // Normalização suave
+      let maxVal = 0.001;
+      for (let i = 0; i < bufferSize; i++) {
+        if (Math.abs(data[i]) > maxVal) maxVal = Math.abs(data[i]);
+      }
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (data[i] / maxVal) * 0.85;
+      }
+
+      const pulseSource = ctx.createBufferSource();
+      pulseSource.buffer = buffer;
+      pulseSource.loop = true;
+
+      const lowpass = ctx.createBiquadFilter();
+      lowpass.type = 'lowpass';
+      lowpass.frequency.setValueAtTime(650, ctx.currentTime);
+
+      pulseSource.connect(lowpass);
+      lowpass.connect(activeGainNode);
+      pulseSource.start();
+
+      activeSoundNodes.push(pulseSource, lowpass);
+      activeGainNode.gain.exponentialRampToValueAtTime(0.18, ctx.currentTime + 0.08);
 
     } else if (type === 'electric') {
-      // 6. Ruído elétrico contínuo / faísca (impulsos estocásticos de ruído com filtro passa-banda em safeHz)
+      // 6. Ruído elétrico contínuo / faísca (impulsos estocásticos com filtro passa-banda em safeHz)
       const bufferSize = ctx.sampleRate * 2;
       const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
       const output = noiseBuffer.getChannelData(0);
@@ -411,7 +554,7 @@
       activeGainNode.gain.exponentialRampToValueAtTime(0.10, ctx.currentTime + 0.08);
 
     } else if (type === 'screeching') {
-      // 7. Cigarras ou grilos cantando (duas frequências portadoras em safeHz + modulação AM a 28 Hz + atrito de asas)
+      // 7. Cigarras ou grilos cantando (mantido exatamente como aprovado)
       const carrier1 = ctx.createOscillator();
       const carrier2 = ctx.createOscillator();
       carrier1.type = 'triangle';
@@ -462,7 +605,7 @@
       activeGainNode.gain.exponentialRampToValueAtTime(0.09, ctx.currentTime + 0.08);
 
     } else if (type === 'multiple') {
-      // 8. Mistura de múltiplos tons (duas frequências dissonantes simultâneas em safeHz e safeHz*1.62)
+      // 8. Mistura de múltiplos tons
       const osc1 = ctx.createOscillator();
       const osc2 = ctx.createOscillator();
       osc1.type = 'sine';
@@ -1408,11 +1551,13 @@
 
     const soundType = userAnswers.soundType || 'ringing';
     if (soundType === 'buzzing') {
-      abFreqA = 120;
-      abFreqB = 320;
+      // Panela de pressão: teste A/B entre tom de vapor médio (~3800 Hz) e vapor mais agudo (~6200 Hz)
+      abFreqA = 3800;
+      abFreqB = 6200;
     } else if (soundType === 'roaring') {
-      abFreqA = 85;
-      abFreqB = 210;
+      // Motor / britadeira: teste A/B entre motor sub-bass grave (~70 Hz) e motor acelerado (~125 Hz)
+      abFreqA = 70;
+      abFreqB = 125;
     } else if (soundType === 'static') {
       abFreqA = 2200;
       abFreqB = 5200;
@@ -1420,8 +1565,9 @@
       abFreqA = 2800;
       abFreqB = 5600;
     } else if (soundType === 'kettle') {
-      abFreqA = 5200;
-      abFreqB = 8400;
+      // Batimento cardíaco pulsátil: teste A/B de ritmo e intensidade arterial (64 BPM vs 86 BPM)
+      abFreqA = 64;
+      abFreqB = 86;
     } else if (soundType === 'screeching') {
       abFreqA = 3800;
       abFreqB = 6200;
@@ -1554,7 +1700,7 @@
       vslFreqCallout.textContent = hz.toLocaleString('pt-BR') + ' Hz';
     }
 
-    const soundName = soundNameDictionary[userAnswers.soundType] || 'Sifflement continu aigu';
+    const soundName = soundNameDictionary[userAnswers.soundType] || 'Apito contínuo e agudo';
     const vslSoundDisplay = document.getElementById('vsl-sound-display');
     if (vslSoundDisplay) {
       vslSoundDisplay.textContent = soundName;
