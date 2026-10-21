@@ -6129,3 +6129,132 @@ input:focus-visible {
   border: none !important;
   box-shadow: none !important;
 }
+
+
+/* ========================================================================= */
+/* TSL EDITORIAL NEWSPAPER LAYOUT ENHANCEMENTS                              */
+/* ========================================================================= */
+.tsl-meta-readtime {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #64748B;
+  font-style: italic;
+  font-weight: 500;
+  margin: 10px 0 24px 0;
+}
+
+.tsl-editorial-divider {
+  width: 100%;
+  height: 1px;
+  background: #E2E8F0;
+  margin: 36px 0 28px 0;
+  border: none;
+}
+
+.tsl-section-heading {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  line-height: 1.35;
+}
+
+@media (max-width: 640px) {
+  .tsl-section-heading {
+    font-size: 1.12rem;
+  }
+}
+
+.tsl-editorial-bullets {
+  margin: 18px 0 24px 0;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tsl-editorial-bullets li {
+  position: relative;
+  padding-left: 26px;
+  line-height: 1.65;
+  color: #334155;
+  font-size: 0.98rem;
+}
+
+.tsl-editorial-bullets li::before {
+  content: "•";
+  position: absolute;
+  left: 8px;
+  top: -1px;
+  font-size: 1.3rem;
+  color: #0284C7;
+  line-height: 1.4;
+}
+
+.tsl-editorial-bullets li strong {
+  color: #0F172A;
+  font-weight: 700;
+}
+
+/* Pilar Cards - Minimalist, Sophisticated & Editorial */
+.tsl-pilar-card {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-left: 3px solid #0284C7;
+  border-radius: 10px;
+  padding: 22px 24px;
+  margin: 22px 0;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+}
+
+.tsl-pilar-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.tsl-pilar-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: #E0F2FE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tsl-pilar-tag {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #0284C7;
+  background: #E0F2FE;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+.tsl-pilar-title {
+  color: #0F172A;
+  font-weight: 800;
+  font-size: 1.05rem;
+  margin: 0;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.tsl-pilar-text {
+  font-size: 0.95rem;
+  color: #475569;
+  margin: 0;
+  line-height: 1.65;
+}
