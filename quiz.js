@@ -2239,6 +2239,17 @@
     if (screenIdx >= 0 && screenIdx < screensOrder.length) {
       setTimeout(() => navigateTo(screenIdx), 20);
     }
+  } else {
+    // Dispara o evento de abertura da tela inicial (Hero) no Clarity
+    const fireHero = () => {
+      try {
+        if (typeof window.clarity === 'function') {
+          window.clarity('event', 'tela_1_hero');
+        }
+      } catch (e) {}
+    };
+    fireHero();
+    setTimeout(fireHero, 800);
   }
 
 })();
