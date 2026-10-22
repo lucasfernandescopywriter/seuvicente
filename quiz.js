@@ -1019,7 +1019,6 @@
     }
 
     voiceIsPlaying = true;
-    const playIco = document.getElementById("wa-play-icon-vincent"); const pauseIco = document.getElementById("wa-pause-icon-vincent"); if (playIco && pauseIco) { playIco.style.display = "none"; pauseIco.style.display = "block"; }
     if (waVoicePlayBtn) {
       waVoicePlayBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
     }
@@ -1111,7 +1110,6 @@
       elodieVoiceProgressInterval = null;
     }
     elodieVoiceIsPlaying = false;
-    const pIcoE = document.getElementById("wa-elodie-play-icon"); const paIcoE = document.getElementById("wa-elodie-pause-icon"); if (pIcoE && paIcoE) { pIcoE.style.display = "block"; paIcoE.style.display = "none"; }
     if (waVoiceElodieBtn) {
       waVoiceElodieBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>';
     }
@@ -1136,7 +1134,6 @@
     }
 
     elodieVoiceIsPlaying = true;
-    const pIcoE = document.getElementById("wa-elodie-play-icon"); const paIcoE = document.getElementById("wa-elodie-pause-icon"); if (pIcoE && paIcoE) { pIcoE.style.display = "none"; paIcoE.style.display = "block"; }
     if (waVoiceElodieBtn) {
       waVoiceElodieBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
     }
