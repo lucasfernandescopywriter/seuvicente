@@ -513,7 +513,7 @@
       <p class="question-helper">Selecione todas as opções que se aplicam (pode marcar mais de uma)&nbsp;:</p>
 
       <div class="visual-editorial-card" style="margin-bottom: 16px;">
-        <img src="assets/idoso_frustrado_ouvido.jpg" alt="Frustração com tratamentos convencionais ineficazes" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 18px 0 20px;">
+        <img src="assets/idoso_frustrado_ouvido.jpg" alt="Frustração com tratamentos convencionais ineficazes" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 28px 0 32px;">
       </div>
 
       <div class="choice-tiles-stack multi-select-stack" data-question="prevTreatments">
@@ -588,21 +588,28 @@
     <!-- =======================================================================
          TELA 7: CONSULTATION WHATSAPP (AVEC NOTE VOCALE DE VINCENT RESTAURADA)
          ======================================================================= -->
-    <section class="screen-pane" id="screen-chat-vicente">
-      <div class="wa-fullscreen-container">
-        <div class="wa-header-bar">
-          <div class="wa-header-left">
-            <img src="assets/vicente_hero.jpg" alt="Seu Vicente" class="wa-header-avatar">
-            <div class="wa-header-info">
-              <h4>Seu Vicente</h4>
-              <span id="wa-status-text">online</span>
-            </div>
+    <section class="screen-pane" <section class="screen" id="screen-chat-vicente">
+      <div class="wa-app-container">
+        <!-- Header WhatsApp Realiste -->
+        <div class="wa-top-header">
+          <button type="button" class="wa-header-back-btn" id="btn-wa-back" aria-label="Voltar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="wa-header-avatar-wrap">
+            <img src="assets/vicente_hero.jpg" alt="Vicente Valença" class="wa-header-avatar">
+            <span class="wa-online-dot"></span>
           </div>
-          <div>
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M20 15.5c-1.2 0-2.4-.2-3.6-.6-.3-.1-.7 0-1 .2l-2.2 2.2c-2.8-1.4-5.1-3.8-6.6-6.6l2.2-2.2c.3-.3.4-.7.2-1-.3-1.1-.5-2.3-.5-3.5 0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1 0 9.4 7.6 17 17 17 .6 0 1-.4 1-1v-3.5c0-.6-.4-1-1-1z"/></svg>
+          <div class="wa-header-info">
+            <div class="wa-contact-name">Vicente Valença</div>
+            <div class="wa-contact-status" id="wa-status-text">online</div>
+          </div>
+          <div class="wa-header-actions">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-2.2 2.2a15.053 15.053 0 0 1-6.59-6.59l2.2-2.21a.96.96 0 0 0 .25-1A11.36 11.36 0 0 1 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1.12z"/></svg>
           </div>
         </div>
 
+        <!-- Corps de Chat Scrollable -->
         <div class="wa-chat-scroll" id="wa-chat-body">
           <div class="wa-date-pill">HOJE</div>
 
@@ -630,75 +637,94 @@
             <span class="wa-time-tag">10:43 <span class="wa-blue-ticks">✓✓</span></span>
           </div>
 
-          <!-- Message Voice: Vicente note vocale 30s -->
+          <!-- Message Voice: Vicente note vocale 30s (Design Moderno WhatsApp Conforme Screenshot) -->
           <div class="wa-bubble-in wa-bubble-voice" id="wa-msg-audio" style="display: none;">
-            <div class="wa-voice-row">
-              <div class="wa-voice-avatar-wrap">
-                <img src="assets/vicente_hero.jpg" class="wa-voice-avatar" alt="Seu Vicente">
-                <span class="wa-voice-mic-badge">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+            <div class="wa-voice-main-row">
+              <button type="button" class="wa-voice-circle-btn" id="wa-voice-play-btn" aria-label="Reproduzir áudio do Seu Vicente">
+                <svg class="wa-play-icon" id="wa-play-icon-vincent" width="16" height="16" viewBox="0 0 24 24" fill="#334155"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+                <svg class="wa-pause-icon" id="wa-pause-icon-vincent" width="16" height="16" viewBox="0 0 24 24" fill="#334155" style="display: none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+              </button>
+
+              <div class="wa-waveform-container" id="wa-waveform-vincent">
+                <div class="wa-wave-bar" style="height: 6px;"></div>
+                <div class="wa-wave-bar" style="height: 12px;"></div>
+                <div class="wa-wave-bar" style="height: 18px;"></div>
+                <div class="wa-wave-bar" style="height: 8px;"></div>
+                <div class="wa-wave-bar" style="height: 22px;"></div>
+                <div class="wa-wave-bar" style="height: 14px;"></div>
+                <div class="wa-wave-bar" style="height: 10px;"></div>
+                <div class="wa-wave-bar" style="height: 20px;"></div>
+                <div class="wa-wave-bar" style="height: 16px;"></div>
+                <div class="wa-wave-bar" style="height: 24px;"></div>
+                <div class="wa-wave-bar" style="height: 12px;"></div>
+                <div class="wa-wave-bar" style="height: 18px;"></div>
+                <div class="wa-wave-bar" style="height: 22px;"></div>
+                <div class="wa-wave-bar" style="height: 15px;"></div>
+                <div class="wa-wave-bar" style="height: 9px;"></div>
+                <div class="wa-wave-bar" style="height: 19px;"></div>
+                <div class="wa-wave-bar" style="height: 14px;"></div>
+                <div class="wa-wave-bar" style="height: 24px;"></div>
+                <div class="wa-wave-bar" style="height: 16px;"></div>
+                <div class="wa-wave-bar" style="height: 10px;"></div>
+                <div class="wa-wave-bar" style="height: 18px;"></div>
+                <div class="wa-wave-bar" style="height: 8px;"></div>
+                <div class="wa-wave-bar" style="height: 14px;"></div>
+                <div class="wa-wave-bar" style="height: 6px;"></div>
+              </div>
+
+              <div class="wa-voice-avatar-right">
+                <img src="assets/vicente_hero.jpg" class="wa-voice-avatar-img" alt="Vicente Valença">
+                <span class="wa-mic-badge-small">
+                  <svg width="9" height="9" viewBox="0 0 24 24" fill="#3B82F6"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
                 </span>
               </div>
-              <button type="button" class="wa-play-btn" id="wa-btn-play-vincent" aria-label="Ouvir áudio do Seu Vicente">
-                <svg class="wa-icon-play" id="wa-icon-play-vincent" width="18" height="18" viewBox="0 0 24 24" fill="#0F172A"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                <svg class="wa-icon-pause" id="wa-icon-pause-vincent" width="18" height="18" viewBox="0 0 24 24" fill="#0F172A" style="display: none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-              </button>
-              <div class="wa-waveform" id="wa-waveform-vincent">
-                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
-                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
-                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
-                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
-                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
-                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
-              </div>
             </div>
-            <div class="wa-voice-footer">
-              <span id="wa-voice-vincent-time" class="wa-voice-time">0:30</span>
+
+            <div class="wa-voice-bottom-row">
+              <span id="wa-voice-time" class="wa-voice-timer">0:30</span>
               <span class="wa-time-tag">10:43</span>
             </div>
           </div>
 
-          <!-- Message Photo: Camila + Marcelo -->
+          <!-- Message Photo: Camila Encaminhada (Conforme Screenshot 2 de Referência) -->
           <div class="wa-bubble-in wa-photo-bubble wa-bubble-forwarded" id="wa-msg-photo" style="display: none;">
-            <div class="wa-forward-header" style="margin-bottom: 4px; padding-left: 2px;">
+            <div class="wa-forward-header">
               <svg class="wa-forward-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 14 20 9 15 4"/><path d="M4 20v-7a4 4 0 0 1 4-4h12"/></svg>
               <span>Encaminhada</span>
             </div>
-            <img src="assets/camila_selfie_whatsapp.jpg?v=3" alt="Camila e Marcelo" class="wa-photo-img" loading="lazy">
-            <div class="wa-photo-caption">
+            <div class="wa-photo-wrap-relative">
+              <img src="assets/camila_selfie_whatsapp.jpg?v=3" alt="Camila e Marcelo" class="wa-photo-img" loading="lazy">
+              <div class="wa-photo-forward-circle-btn" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5"><polyline points="15 14 20 9 15 4"/><path d="M4 20v-7a4 4 0 0 1 4-4h12"/></svg>
+              </div>
+            </div>
+            <div class="wa-photo-caption-row">
               <span>Camila, 48 anos. Silenciou o apito de 4.200 Hz e voltou a dormir a noite toda.</span>
               <span class="wa-time-tag">10:44</span>
             </div>
           </div>
 
-          <!-- Message Voice: Camila (Audio 23s) -->
+          <!-- Message Voice: Camila (Audio 23s Encaminhado Linha Reta Padrão) -->
           <div class="wa-bubble-in wa-bubble-forwarded wa-bubble-voice" id="wa-msg-audio-elodie" style="display: none;">
             <div class="wa-forward-header">
               <svg class="wa-forward-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 14 20 9 15 4"/><path d="M4 20v-7a4 4 0 0 1 4-4h12"/></svg>
               <span>Encaminhada</span>
             </div>
-            <div class="wa-voice-row">
-              <div class="wa-voice-avatar-wrap">
-                <img src="assets/camila_selfie_whatsapp.jpg?v=3" class="wa-voice-avatar" alt="Camila">
-                <span class="wa-voice-mic-badge">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
-                </span>
-              </div>
-              <button type="button" class="wa-play-btn" id="wa-btn-play-elodie" aria-label="Ouvir áudio da Camila">
-                <svg class="wa-icon-play" id="wa-icon-play-elodie" width="18" height="18" viewBox="0 0 24 24" fill="#0F172A"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                <svg class="wa-icon-pause" id="wa-icon-pause-elodie" width="18" height="18" viewBox="0 0 24 24" fill="#0F172A" style="display: none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+            <div class="wa-forwarded-voice-row">
+              <button type="button" class="wa-forward-play-btn" id="wa-voice-elodie-btn" aria-label="Ouvir áudio da Camila">
+                <svg class="wa-forward-play-icon" id="wa-elodie-play-icon" width="16" height="16" viewBox="0 0 24 24" fill="#334155"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+                <svg class="wa-forward-pause-icon" id="wa-elodie-pause-icon" width="16" height="16" viewBox="0 0 24 24" fill="#334155" style="display: none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
               </button>
-              <div class="wa-waveform" id="wa-waveform-elodie">
-                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
-                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
-                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
-                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
-                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
-                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
+
+              <div class="wa-voice-track" id="wa-voice-elodie-track">
+                <div class="wa-voice-progress" id="wa-voice-elodie-bar" style="width: 0%;"></div>
+                <div class="wa-voice-thumb" id="wa-voice-elodie-thumb" style="left: 0%;"></div>
               </div>
+
+              <span id="wa-voice-elodie-time" class="wa-forward-time-label">0:23</span>
             </div>
-            <div class="wa-voice-footer">
-              <span id="wa-voice-elodie-time" class="wa-voice-time">0:23</span>
+            <div class="wa-voice-bottom-row" style="margin-top: 4px;">
+              <span></span>
               <span class="wa-time-tag">10:44</span>
             </div>
           </div>
@@ -781,8 +807,7 @@
             <!-- Injetado dinamicamente pelo quiz.js -->
           </div>
         </div>
-      </div>
-    </section>
+      </div></section>
 
     <!-- =======================================================================
          TELA 9: ALERTE DE SURCHARGE NEURONALE & NEUROPLASTICITÉ (BLOCO 4 - MYPATTERN)
@@ -1160,7 +1185,7 @@
           <div class="tsl-accent-dash"></div>
         </div>
         <h3 class="tsl-section-heading">O DESESPERO DAS 3H DA MANHÃ E O FIM DO <mark class="tsl-mark">PESADELO NOTURNO</mark></h3>
-        <img src="assets/cena_quarto_3am.jpg" alt="Noite em claro com zumbido no ouvido às 3h da manhã" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 16px 0 8px;">
+        <img src="assets/cena_quarto_3am.jpg" alt="Noite em claro com zumbido no ouvido às 3h da manhã" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 28px 0 32px;">
         <p>São exatamente 3 horas e 14 minutos da madrugada.</p>
         <p>A sua casa inteira está no mais absoluto silêncio. A rua está calma. As luzes apagadas. O seu parceiro dorme profundamente do outro lado da cama.</p>
         <p>Mas, dentro da sua cabeça... é como se houvesse uma <strong>turbina de avião roncando no máximo</strong>.</p>
@@ -1271,7 +1296,7 @@
         <p>Isso não é coincidência. É anatomia pura.</p>
         <p>Os nervos que controlam a sua mastigação (a articulação temporomandibular, ou ATM) e os músculos cervicais da sua nuca passam a <strong>menos de 2 milímetros do canal auditivo interno</strong>.</p>
         
-        <img src="assets/decompression_atm.jpg" alt="Exame da articulação temporomandibular (ATM) e conexão com o nervo auditivo" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 16px 0 8px;">
+        <img src="assets/decompression_atm.jpg" alt="Exame da articulação temporomandibular (ATM) e conexão com o nervo auditivo" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 28px 0 32px;">
 
         <p>Se você tem o hábito involuntário de apertar ou ranger os dentes à noite (bruxismo), ou se passa o dia com os ombros encolhidos, essa tensão mecânica contínua esmaga a base do nervo auditivo.</p>
         <p>E se você já teve uma infecção respiratória antiga, sinusite crônica ou gripe forte, toxinas ácidas inflamatórias penetraram na raiz do ouvido, acelerando a quebra da camada protetora.</p>
@@ -1287,7 +1312,7 @@
         <p>Eu passei exatamente por essa mesma peregrinação de frustrações durante mais de 2 anos.</p>
         <p>Tudo o que você tentou até hoje falhou por uma única razão biológica simples: cada um desses métodos tentava consertar o <em>ouvido de fora</em>, enquanto o alarme de incêndio estava disparando no <em>circuito elétrico de dentro</em>.</p>
         
-        <img src="assets/idoso_frustrado_ouvido.jpg" alt="Frustração com tratamentos convencionais ineficazes" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 18px 0 20px;">
+        <img src="assets/idoso_frustrado_ouvido.jpg" alt="Frustração com tratamentos convencionais ineficazes" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 28px 0 32px;">
 
         <p>Veja a mecânica da falha de cada uma das 7 alternativas convencionais mais comuns:</p>
         
@@ -1324,7 +1349,7 @@
         
         <p>Para calar o apito e restaurar o silêncio de forma permanente, a neurociência moderna exige uma <strong>solução coordenada em dois eixos inseparáveis</strong>:</p>
 
-        <img src="assets/harvard_fmri_brasil.jpg" alt="Exame fMRI comparativo: Córtex auditivo em sobrecarga vs Córtex calibrado (Harvard Auditory Lab)" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 18px 0 20px;">
+        
 
         <p><strong>EIXO 1: A RECALIBRAÇÃO ACÚSTICA (O FILTRO NOTCHED)</strong><br>
         O exame de ressonância magnética funcional (fMRI) acima comprovou que o zumbido é uma <strong>hiperatividade compensatória elétrica</strong> no córtex auditivo.<br>
@@ -1338,6 +1363,8 @@
 
         <p><strong>A Sinergia Obrigatória:</strong><br>
         Nenhum desses dois eixos funciona sozinho no longo prazo. A frequência sonora desliga o alarme do cérebro na hora. E os 3 bioativos reencapam o nervo para que o alarme nunca mais volte a disparar.</p>
+
+        <img src="assets/harvard_fmri_brasil.jpg" alt="Exame fMRI comparativo: Córtex auditivo em sobrecarga vs Córtex calibrado após a sinergia dos dois eixos (Harvard & FMUSP)" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 28px 0 32px;">
 
         <div class="tsl-callout-quote" style="border-left: 4px solid #10B981; margin: 24px 0;">
           "O zumbido não é uma lesão incurável na orelha, mas uma reação compensatória de neurônios que perderam estímulo e começaram a disparar sozinhos no volume máximo. Com a estimulação filtrada correta aliada à remielinização lipídica, comprova-se uma redução mensurável do apito em mais de 80% dos casos entre 14 e 28 noites de uso."
@@ -1361,7 +1388,7 @@
         <!-- PILAR 1 -->
         <div class="tsl-pilar-card">
           <h4 class="tsl-pilar-title">PILAR 1: O GUIA DA COLHER MATINAL (ENCAPAR O FIO DESENCAPADO)</h4>
-          <img src="assets/colher_mielina_real.jpg" alt="A colher matinal dos bioativos naturais regeneradores da mielina" style="width: 100%; border-radius: 6px; display: block; box-shadow: 0 3px 10px rgba(0,0,0,0.05); margin: 16px 0 18px;">
+          <img src="assets/colher_mielina_real.jpg" alt="A colher matinal dos bioativos naturais regeneradores da mielina" style="width: 100%; border-radius: 6px; display: block; box-shadow: 0 3px 10px rgba(0,0,0,0.05); margin: 28px 0 32px;">
           <p class="tsl-pilar-text">
             Uma combinação precisa de <strong>3 nutrientes lipídicos naturais</strong>, comuns e muito baratos de encontrar em qualquer feira ou supermercado de bairro por poucos reais.
           </p>
@@ -1415,7 +1442,7 @@
           </ul>
         </div>
 
-                <img src="assets/senior_peaceful_sleep.jpg" alt="Idoso dormindo em silêncio absoluto e paz restaurada" style="width: 100%; border-radius: 6px; display: block; box-shadow: 0 3px 10px rgba(0,0,0,0.05); margin: 16px 0 8px;">
+                
 
       </div>
 
