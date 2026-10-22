@@ -344,12 +344,13 @@ main {
 }
 
 .hero-promise-title {
-  font-size: clamp(1.85rem, 5vw, 2.75rem);
+  font-size: clamp(1.68rem, 4.8vw, 2.75rem);
   font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.03em;
+  line-height: 1.22;
+  letter-spacing: -0.025em;
   color: var(--ink);
   max-width: 620px;
+  text-wrap: balance !important;
 }
 
 .hero-sensory-hook {
