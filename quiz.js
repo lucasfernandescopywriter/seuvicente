@@ -94,7 +94,6 @@
     'screen-science-backing',   // 13: Bloco 5 - Harvard & Münster (Plein cadre sans rognage)
     'screen-trajectory',        // 14: Bloco 5 - Trajectoire Animée (Courbes dessinées)
     'screen-commitment',        // 15: Bloco 5 - Micro-engagement (10 min/jour)
-    'screen-bifurcation',       // 16: Bloco 5 - Les 2 Chemins (Inaction vs Protocole)
     'screen-loading',           // 17: Bloco 5 - Cascade en 5 étapes AVANT la VSL
     'screen-vsl-presentation',  // 18: Bloco 6 - Diagnostic & Dossier TSL avec Voucher Intégré
     'screen-result'             // 19: Bloco 7/8/9 - Page de Vente Officielle MyPattern
@@ -120,7 +119,6 @@
     'screen-science-backing': { showProgress: true, percent: 89 },
     'screen-trajectory': { showProgress: true, percent: 93 },
     'screen-commitment': { showProgress: true, percent: 96 },
-    'screen-bifurcation': { showProgress: true, percent: 98 },
     'screen-loading': { showProgress: true, percent: 99 },
     'screen-vsl-presentation': { showProgress: false, percent: 100 },
     'screen-result': { showProgress: false, percent: 100 }
@@ -2080,12 +2078,7 @@
   // =========================================================================
   // 19. TELA 18: BIFURCATION (LES DEUX CHEMINS)
   // =========================================================================
-  const btnNextBifurcation = document.getElementById('btn-next-bifurcation');
-  if (btnNextBifurcation) {
-    btnNextBifurcation.addEventListener('click', function () {
-      navigateTo(currentScreenIndex + 1); // Vai para screen-vsl-presentation
-    });
-  }
+  // btnNextBifurcation removed: bifurcation screen consolidated into TSL
 
   // =========================================================================
   // 21. TELA 21: MASTER VSL CINÉMA (VIDEO 1)
