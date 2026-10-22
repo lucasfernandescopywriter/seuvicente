@@ -6589,3 +6589,64 @@ input:focus-visible {
     padding: 18px 16px;
   }
 }
+
+
+/* ==========================================================================
+   TSL AUTHOR BYLINE EDITORIAL (SEU VICENTE)
+   ========================================================================== */
+.tsl-author-editorial-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  margin: 20px 0 24px 0;
+}
+
+.tsl-author-photo {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.1);
+  flex-shrink: 0;
+}
+
+.tsl-author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tsl-author-name {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.25;
+}
+
+.tsl-author-role {
+  font-size: 0.82rem;
+  color: #64748B;
+  line-height: 1.35;
+}
+
+@media (max-width: 480px) {
+  .tsl-author-editorial-card {
+    padding: 12px 14px;
+    gap: 12px;
+  }
+  .tsl-author-photo {
+    width: 52px;
+    height: 52px;
+  }
+  .tsl-author-name {
+    font-size: 0.94rem;
+  }
+  .tsl-author-role {
+    font-size: 0.78rem;
+  }
+}

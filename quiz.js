@@ -85,7 +85,6 @@
     'screen-peak-time',         // 4: Bloco 2 - Visualisation (Pic Nocturne 3h du Matin)
     'screen-severity',          // 5: Bloco 2 - Visualisation (Réglette 1-10 avec bouton continuer)
     'screen-prev-treatments',   // 6: Bloco 2 - Frustration Médicale & Traitements (Checkboxes)
-    'screen-vincent-story',     // 7: Bloco 3 - Histoire & Crédibilité de Vincent Mercier
     'screen-chat-vicente',      // 8: Bloco 3 - Consultation WhatsApp avec Note Vocale
     'screen-overload-alert',    // 9: Bloco 4 - Alerte Surcharge Neuronale & Myéline
     'screen-freq-intro',        // 10: Bloco 4 - Mecanismo do Cabo Dénudé (Vidéo plein cadre)
@@ -110,7 +109,6 @@
     'screen-somatosensory': { showProgress: true, percent: 36 },
     'screen-severity': { showProgress: true, percent: 42 },
     'screen-prev-treatments': { showProgress: true, percent: 48 },
-    'screen-vincent-story': { showProgress: true, percent: 55 },
     'screen-chat-vicente': { showProgress: true, percent: 62 },
     'screen-overload-alert': { showProgress: true, percent: 68 },
     'screen-freq-intro': { showProgress: true, percent: 74 },
@@ -726,7 +724,6 @@
     const screenEventMap = {
       'screen-hero': 'Quiz_Step_0_Hero',
       'screen-sound-type': 'Quiz_Step_1_SoundType',
-      'screen-vincent-story': 'Quiz_Step_7_Story',
       'screen-chat-vicente': 'Quiz_Step_8_WhatsApp',
       'screen-freq-ab': 'Quiz_Step_11_AB_Calibration',
       'screen-trajectory': 'Quiz_Step_14_Trajectory',
@@ -953,15 +950,7 @@
     });
   }
 
-  // =========================================================================
-  // 7. TELA 7: HISTOIRE DE VINCENT MERCIER
-  // =========================================================================
-  const btnNextVincentStory = document.getElementById('btn-next-vincent-story');
-  if (btnNextVincentStory) {
-    btnNextVincentStory.addEventListener('click', function () {
-      navigateTo(currentScreenIndex + 1); // Vai para screen-chat-vicente
-    });
-  }
+  
 
   // =========================================================================
   // 8. TELA 8: CONSULTATION WHATSAPP AVEC NOTE VOCALE DE VINCENT MERCIER
