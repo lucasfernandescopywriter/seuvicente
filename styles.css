@@ -5934,7 +5934,7 @@ input:focus-visible {
   width: 100% !important;
   max-width: 100% !important;
   box-sizing: border-box !important;
-  overflow: hidden !important;
+  overflow: visible !important;
 }
 
 .pizza-pricing-grid {
@@ -5947,6 +5947,8 @@ input:focus-visible {
   width: 100% !important;
   max-width: 100% !important;
   box-sizing: border-box !important;
+  min-width: 0 !important;
+  overflow: visible !important;
 }
 
 .btn-pizza-cta {
@@ -5955,6 +5957,7 @@ input:focus-visible {
   overflow-wrap: break-word !important;
   line-height: 1.35 !important;
   width: 100% !important;
+  max-width: 100% !important;
   box-sizing: border-box !important;
   text-align: center !important;
   justify-content: center !important;
@@ -5971,20 +5974,37 @@ input:focus-visible {
 
 @media (max-width: 768px) {
   .pizza-pricing-grid {
-    grid-template-columns: 1fr !important;
-    gap: 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
     padding: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
   .pizza-tier-card {
-    padding: 24px 18px !important;
-    margin: 0 auto 20px !important;
+    padding: 24px 16px !important;
+    margin: 0 0 20px 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    overflow: visible !important;
   }
   .pizza-popular-ribbon {
-    white-space: normal !important;
-    max-width: 90% !important;
+    white-space: nowrap !important;
+    max-width: 92% !important;
+    box-sizing: border-box !important;
     text-align: center !important;
-    font-size: 0.72rem !important;
-    padding: 4px 12px !important;
+    font-size: clamp(0.68rem, 2.7vw, 0.76rem) !important;
+    padding: 5px 14px !important;
+  }
+  .pizza-basic-disclaimer-ribbon {
+    white-space: nowrap !important;
+    max-width: 92% !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+    font-size: clamp(0.68rem, 2.7vw, 0.74rem) !important;
+    padding: 5px 14px !important;
   }
 }
 
@@ -6082,12 +6102,14 @@ input:focus-visible {
 
 
 .pizza-pricing-grid {
-  padding-top: 32px !important;
-  margin-top: 28px !important;
+  padding-top: 24px !important;
+  margin-top: 20px !important;
 }
 
 .pizza-tier-card {
   margin-top: 18px !important;
+  box-sizing: border-box !important;
+  max-width: 100% !important;
 }
 
 
@@ -6394,25 +6416,20 @@ input:focus-visible {
 }
 
 /* ==========================================================================
-   CTA BUTTON LINES: PREVINE PALAVRAS E NÚMEROS ÓRFÃOS NO MOBILE (IPHONE XR / SE)
+   CTA BUTTON LINES: TEXTO UNIFICADO, BOLD E BALANCEADO SEM ÓRFÃOS (IPHONE / MOBILE)
    ========================================================================== */
-.btn-cta-line1 {
-  display: block;
-  font-size: clamp(0.86rem, 3.5vw, 1.05rem);
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  line-height: 1.25;
-  white-space: nowrap;
-}
-
-.btn-cta-line2 {
-  display: block;
-  font-size: clamp(0.74rem, 2.9vw, 0.86rem);
-  font-weight: 700;
-  line-height: 1.25;
-  margin-top: 3px;
-  white-space: nowrap;
-  opacity: 0.95;
+.btn-cta-unified {
+  display: block !important;
+  font-size: clamp(0.85rem, 3.4vw, 0.98rem) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.35 !important;
+  color: #FFFFFF !important;
+  text-align: center !important;
+  white-space: normal !important;
+  text-wrap: balance !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 .btn-voucher-text {
@@ -6459,14 +6476,14 @@ input:focus-visible {
     padding: 12px 14px !important;
     min-height: 52px !important;
   }
+  .btn-cta-unified {
+    font-size: clamp(0.82rem, 3.2vw, 0.92rem) !important;
+  }
 }
 
 @media (max-width: 380px) {
-  .btn-cta-line1 {
+  .btn-cta-unified {
     font-size: 0.80rem !important;
-  }
-  .btn-cta-line2 {
-    font-size: 0.68rem !important;
   }
   .btn-voucher-text {
     white-space: normal !important;
