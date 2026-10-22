@@ -1022,7 +1022,7 @@
       try { waAudioInstance.currentTime = 0; } catch (e) {}
     }
     updateVincentWaveform(0);
-    if (waVoiceTime) waVoiceTime.textContent = '0:20';
+    if (waVoiceTime) waVoiceTime.textContent = '0:30';
   }
 
   function playVincentVoiceNote() {
@@ -1395,60 +1395,48 @@
             if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
           }
 
-          // Delay de 20 segundos após o envio do áudio para acompanhar o ritmo do lead ouvindo a nota de voz
+          // Delay de 30 segundos após o envio do áudio (tempo exato de duração do áudio de 30s do Seu Vicente)
           waTimers.push(setTimeout(() => {
-            setTyping('text');
+            // Envio direto da foto encaminhada da Camila com o marido (sem a mensagem redundante de 'semana passada')
+            setBubbleTime(msgPhoto, false, 2);
+            if (msgPhoto) {
+              msgPhoto.style.display = 'block';
+              setTimeout(() => {
+                msgPhoto.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+              }, 50);
+            }
 
-            // Digitando por 2.0s
+            // Envio em seguida do áudio encaminhado da Camila (intervalo natural de 2.0s)
             waTimers.push(setTimeout(() => {
-              setTyping(false);
-              setBubbleTime(msg3, false, 2);
-              if (msg3) msg3.style.display = 'block';
+              setBubbleTime(msgAudioElodie, false, 2);
+              if (msgAudioElodie) msgAudioElodie.style.display = 'block';
               if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
 
-              // Envio da foto da Camila com intervalo de 1.8s
+              // Distância de 2.2s antes de Seu Vicente começar a digitar msg 4
               waTimers.push(setTimeout(() => {
-                setBubbleTime(msgPhoto, false, 2);
-                if (msgPhoto) {
-                  msgPhoto.style.display = 'block';
-                  setTimeout(() => {
-                    msgPhoto.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                  }, 50);
-                }
+                setTyping('text');
 
-                // Envio do áudio encaminhado da Camila com intervalo de 1.8s
+                // Digitando por 2.0s
                 waTimers.push(setTimeout(() => {
-                  setBubbleTime(msgAudioElodie, false, 2);
-                  if (msgAudioElodie) msgAudioElodie.style.display = 'block';
+                  setTyping(false);
+                  setBubbleTime(msg4, false, 3);
+                  if (msg4) msg4.style.display = 'block';
                   if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
 
-                  // Distância de 2.0s antes de Seu Vicente começar a digitar msg 4
+                  // Opções de resposta do lead liberadas após 1.6s
                   waTimers.push(setTimeout(() => {
-                    setTyping('text');
-
-                    // Digitando por 2.0s
-                    waTimers.push(setTimeout(() => {
-                      setTyping(false);
-                      setBubbleTime(msg4, false, 3);
-                      if (msg4) msg4.style.display = 'block';
-                      if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
-
-                      // Opções de resposta do lead liberadas após 1.6s
-                      waTimers.push(setTimeout(() => {
-                        const opts2 = [
-                          'Sim, quero ver como desligar esse curto-circuito!',
-                          'Como funciona essa desativação do som?'
-                        ];
-                        showWhatsAppInputOptions(opts2, (chosenText2) => {
-                          handleStep2Send(chosenText2);
-                        });
-                      }, 1600));
-                    }, 2000));
-                  }, 2000));
-                }, 1800));
-              }, 1800));
+                    const opts2 = [
+                      'Sim, quero ver como desligar esse curto-circuito!',
+                      'Como funciona essa desativação do som?'
+                    ];
+                    showWhatsAppInputOptions(opts2, (chosenText2) => {
+                      handleStep2Send(chosenText2);
+                    });
+                  }, 1600));
+                }, 2000));
+              }, 2200));
             }, 2000));
-          }, 20000)); // <-- 20 SEGUNDOS EXATOS DE ESPERA APÓS O ÁUDIO DO SEU VICENTE
+          }, 30000)); // <-- 30 SEGUNDOS EXATOS (DURAÇÃO DO ÁUDIO DE SEU VICENTE)
         }, 6500));
       }, 1800));
     }
