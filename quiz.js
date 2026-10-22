@@ -1238,17 +1238,20 @@
 
     const chatBody = document.getElementById('wa-chat-body');
     const msg1 = document.getElementById('wa-msg-1');
-    const msg2 = document.getElementById('wa-msg-2');
+    const msg2a = document.getElementById('wa-msg-2a') || document.getElementById('wa-msg-2');
+    const msg2b = document.getElementById('wa-msg-2b');
     const msgUser1 = document.getElementById('wa-msg-user-1');
     const msgAudio = document.getElementById('wa-msg-audio');
-    const msg3 = document.getElementById('wa-msg-3');
     const msgPhoto = document.getElementById('wa-msg-photo');
     const msgAudioElodie = document.getElementById('wa-msg-audio-elodie');
-    const msg4 = document.getElementById('wa-msg-4');
+    const msg4a = document.getElementById('wa-msg-4a') || document.getElementById('wa-msg-4');
     const msg4b = document.getElementById('wa-msg-4b');
+    const msg4c = document.getElementById('wa-msg-4c');
     const msgUser2 = document.getElementById('wa-msg-user-2');
-    const msg5 = document.getElementById('wa-msg-5');
-    const msg6 = document.getElementById('wa-msg-6');
+    const msg5a = document.getElementById('wa-msg-5a') || document.getElementById('wa-msg-5');
+    const msg5b = document.getElementById('wa-msg-5b');
+    const msg6a = document.getElementById('wa-msg-6a') || document.getElementById('wa-msg-6');
+    const msg6b = document.getElementById('wa-msg-6b');
     const msgUser3 = document.getElementById('wa-msg-user-3');
 
     const typingBubble = document.getElementById('wa-typing-bubble');
@@ -1277,7 +1280,7 @@
     }
 
     // Reset initial visibility
-    [msg2, msgUser1, msgAudio, msg3, msgPhoto, msgAudioElodie, msg4, msg4b, msgUser2, msg5, msg6, msgUser3, typingBubble].forEach(el => {
+    [msg2a, msg2b, msgUser1, msgAudio, msgPhoto, msgAudioElodie, msg4a, msg4b, msg4c, msgUser2, msg5a, msg5b, msg6a, msg6b, msgUser3, typingBubble].forEach(el => {
       if (el) el.style.display = 'none';
     });
     if (msg1) msg1.style.display = 'block';
@@ -1340,38 +1343,47 @@
 
     hideWhatsAppInputOptions();
 
-    // Etapa 1: Seu Vicente escreve msg 2
+    // Etapa 1: Seu Vicente escreve msg 2a e 2b
     waTimers.push(setTimeout(() => {
       setTyping('text');
 
       waTimers.push(setTimeout(() => {
         setTyping(false);
-        setBubbleTime(msg2, false, 0);
-        if (msg2) msg2.style.display = 'block';
+        setBubbleTime(msg2a, false, 0);
+        if (msg2a) msg2a.style.display = 'block';
         if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
 
-        // INTERACAO 1 DO LEAD
         waTimers.push(setTimeout(() => {
-          const opts1 = [
-            'O senhor conseguiu se livrar disso completamente?',
-            'É realmente possível desligar esse som sem remédios?'
-          ];
-          showWhatsAppInputOptions(opts1, (chosenText) => {
-            handleStep1Send(chosenText);
-          });
-        }, 600));
-      }, 1600));
+          setTyping('text');
+          waTimers.push(setTimeout(() => {
+            setTyping(false);
+            setBubbleTime(msg2b, false, 0);
+            if (msg2b) msg2b.style.display = 'block';
+            if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
+
+            // INTERAÇÃO 1 DO LEAD
+            waTimers.push(setTimeout(() => {
+              const opts1 = [
+                'O senhor conseguiu se livrar disso completamente?',
+                'É realmente possível desligar esse som sem remédios?'
+              ];
+              showWhatsAppInputOptions(opts1, (chosenText) => {
+                handleStep1Send(chosenText);
+              });
+            }, 500));
+          }, 1100));
+        }, 500));
+      }, 1200));
     }, 500));
 
-        function handleStep1Send(chosenText) {
+    function handleStep1Send(chosenText) {
       hideWhatsAppInputOptions();
       setUserBubbleText(msgUser1, chosenText, 1);
 
-      // Distância de 1.8s antes de Seu Vicente começar a gravar áudio
+      // Distância antes do áudio de Seu Vicente
       waTimers.push(setTimeout(() => {
         setTyping('audio');
 
-        // Gravação do áudio com duração de 6.5s
         waTimers.push(setTimeout(() => {
           setTyping(false);
           setBubbleTime(msgAudio, false, 1);
@@ -1380,9 +1392,8 @@
             if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
           }
 
-          // Delay de 30 segundos após o envio do áudio (tempo exato de duração do áudio de 30s do Seu Vicente)
+          // Delay de 30 segundos após envio do áudio
           waTimers.push(setTimeout(() => {
-            // Envio direto da foto encaminhada da Camila com o marido (sem a mensagem redundante de 'semana passada')
             setBubbleTime(msgPhoto, false, 2);
             if (msgPhoto) {
               msgPhoto.style.display = 'block';
@@ -1391,79 +1402,125 @@
               }, 50);
             }
 
-            // Envio em seguida do áudio encaminhado da Camila (intervalo natural de 2.0s)
+            // Áudio da Camila (2.0s)
             waTimers.push(setTimeout(() => {
               setBubbleTime(msgAudioElodie, false, 2);
               if (msgAudioElodie) msgAudioElodie.style.display = 'block';
               if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
 
-              // Distância de 2.2s antes de Seu Vicente começar a digitar msg 4
+              // Vicente digita msg 4a
               waTimers.push(setTimeout(() => {
                 setTyping('text');
 
-                // Digitando por 2.0s
                 waTimers.push(setTimeout(() => {
                   setTyping(false);
-                  setBubbleTime(msg4, false, 3);
-                  if (msg4) msg4.style.display = 'block';
+                  setBubbleTime(msg4a, false, 3);
+                  if (msg4a) msg4a.style.display = 'block';
                   if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
 
-                  // Opções de resposta do lead liberadas após 1.6s
+                  // Vicente digita msg 4b
                   waTimers.push(setTimeout(() => {
-                    const opts2 = [
-                      'Sim, quero ver como desligar esse curto-circuito!',
-                      'Como funciona essa desativação do som?'
-                    ];
-                    showWhatsAppInputOptions(opts2, (chosenText2) => {
-                      handleStep2Send(chosenText2);
-                    });
-                  }, 1600));
-                }, 2000));
-              }, 2200));
-            }, 2000));
-          }, 30000)); // <-- 30 SEGUNDOS EXATOS (DURAÇÃO DO ÁUDIO DE SEU VICENTE)
-        }, 6500));
-      }, 1800));
-    }
+                    setTyping('text');
 
-    
+                    waTimers.push(setTimeout(() => {
+                      setTyping(false);
+                      setBubbleTime(msg4b, false, 3);
+                      if (msg4b) msg4b.style.display = 'block';
+                      if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
+
+                      // Vicente digita msg 4c (pergunta)
+                      waTimers.push(setTimeout(() => {
+                        setTyping('text');
+
+                        waTimers.push(setTimeout(() => {
+                          setTyping(false);
+                          setBubbleTime(msg4c, false, 3);
+                          if (msg4c) msg4c.style.display = 'block';
+                          if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
+
+                          // Opções Lead 2
+                          waTimers.push(setTimeout(() => {
+                            const opts2 = [
+                              'Sim, quero ver como desligar esse curto-circuito!',
+                              'Como funciona essa desativação do som?'
+                            ];
+                            showWhatsAppInputOptions(opts2, (chosenText2) => {
+                              handleStep2Send(chosenText2);
+                            });
+                          }, 600));
+                        }, 900));
+                      }, 500));
+                    }, 1100));
+                  }, 500));
+                }, 1200));
+              }, 1200));
+            }, 1800));
+          }, 30000));
+        }, 6500));
+      }, 1500));
+    }
 
     function handleStep2Send(chosenText2) {
       hideWhatsAppInputOptions();
       setUserBubbleText(msgUser2, chosenText2, 3);
 
-      // Vicente responde com a explicacao neural
+      // Vicente responde com msg 5a
       waTimers.push(setTimeout(() => {
         setTyping('text');
 
         waTimers.push(setTimeout(() => {
           setTyping(false);
-          setBubbleTime(msg5, false, 4);
-          if (msg5) msg5.style.display = 'block';
+          setBubbleTime(msg5a, false, 4);
+          if (msg5a) msg5a.style.display = 'block';
           if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
 
+          // msg 5b
           waTimers.push(setTimeout(() => {
             setTyping('text');
 
             waTimers.push(setTimeout(() => {
               setTyping(false);
-              setBubbleTime(msg6, false, 4);
-              if (msg6) msg6.style.display = 'block';
+              setBubbleTime(msg5b, false, 4);
+              if (msg5b) msg5b.style.display = 'block';
               if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
 
-              // INTERACAO 3 DO LEAD (sem caracter de seta no texto)
+              // msg 6a
               waTimers.push(setTimeout(() => {
-                const opts3 = [
-                  'Ver a análise do meu caso agora'
-                ];
-                showWhatsAppInputOptions(opts3, (chosenText3) => {
-                  handleStep3Send(chosenText3);
-                });
-              }, 700));
-            }, 1800));
-          }, 900));
-        }, 1800));
-      }, 600));
+                setTyping('text');
+
+                waTimers.push(setTimeout(() => {
+                  setTyping(false);
+                  setBubbleTime(msg6a, false, 4);
+                  if (msg6a) msg6a.style.display = 'block';
+                  if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
+
+                  // msg 6b
+                  waTimers.push(setTimeout(() => {
+                    setTyping('text');
+
+                    waTimers.push(setTimeout(() => {
+                      setTyping(false);
+                      setBubbleTime(msg6b, false, 4);
+                      if (msg6b) msg6b.style.display = 'block';
+                      if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
+
+                      // INTERAÇÃO 3 FINAL DO LEAD
+                      waTimers.push(setTimeout(() => {
+                        const opts3 = [
+                          'Ver o resultado do meu teste agora'
+                        ];
+                        showWhatsAppInputOptions(opts3, (chosenText3) => {
+                          handleStep3Send(chosenText3);
+                        });
+                      }, 600));
+                    }, 1200));
+                  }, 500));
+                }, 1100));
+              }, 500));
+            }, 1100));
+          }, 500));
+        }, 1100));
+      }, 1000));
     }
 
     function handleStep3Send(chosenText3) {
@@ -1475,7 +1532,7 @@
 
       setTimeout(() => {
         navigateTo(currentScreenIndex + 1);
-      }, 800);
+      }, 700);
     }
   }
 

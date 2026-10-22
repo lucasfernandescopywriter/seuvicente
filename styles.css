@@ -6601,9 +6601,10 @@ input:focus-visible {
    ========================================================================== */
 .tsl-author-editorial-card {
   display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 18px;
+  flex-direction: column !important;
+  align-items: center !important;
+  text-align: center !important;
+  padding: 18px 16px !important;
   background: #F8FAFC;
   border: 1px solid #E2E8F0;
   border-radius: 8px;
