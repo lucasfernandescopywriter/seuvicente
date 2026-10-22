@@ -1749,6 +1749,29 @@
       'somniferes': 'Calmantes / remédios para labirintite',
       'rien': 'Primeira tentativa de tratamento real'
     };
+        const triggerDictionary = {
+      'gripe-sinusite': 'Infecção respiratória antiga / sinusite',
+      'nuca-mandibula': 'Tensão muscular na nuca / bruxismo (ATM)',
+      'estresse-pressao': 'Pico severo de estresse / crise de ansiedade',
+      'ruido-alto': 'Exposição a ruído alto (show, maquinário, fones)',
+      'nao-lembro': 'Desgaste gradual silencioso da mielina'
+    };
+    const diagTrigger = document.getElementById('diag-summary-trigger');
+    if (diagTrigger) {
+      diagTrigger.textContent = triggerDictionary[userAnswers.triggerOrigin] || 'Desgaste mecânico e neural da mielina';
+    }
+
+    const impactDictionary = {
+      'sono-insonia': 'Insônia e acordar no meio da noite (3h da manhã)',
+      'irritabilidade-foco': 'Cansaço mental extremo e perda de foco',
+      'ansiedade-medo': 'Ansiedade contínua e medo de piorar',
+      'isolamento-social': 'Dificuldade de conversar e isolamento'
+    };
+    const diagImpact = document.getElementById('diag-summary-impact');
+    if (diagImpact) {
+      diagImpact.textContent = impactDictionary[userAnswers.emotionalImpact] || 'Insônia, estresse e desgaste mental';
+    }
+
     const diagTreatments = document.getElementById('diag-summary-treatments');
     if (diagTreatments) {
       if (userAnswers.prevTreatments && userAnswers.prevTreatments.length > 0) {

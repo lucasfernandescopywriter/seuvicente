@@ -321,12 +321,7 @@
         </div>
       </div>
 
-      <div class="reassurance-empathy-card" style="margin-top: 20px;">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <div class="reassurance-empathy-text">
-          <strong>Você não está sozinho&nbsp;:</strong> Médicos podem ter te dito para <em>"aprender a conviver com isso"</em>. Mas o cérebro mantém toda a capacidade de reaprender o silêncio, não importa há quantos anos você sofra.
-        </div>
-      </div>
+      
     </section>
 
     <!-- =======================================================================
@@ -732,7 +727,7 @@
 
           <!-- Message 6 -->
           <div class="wa-bubble-in" id="wa-msg-6" style="display: none;">
-            Agora que já identificamos as características do seu caso e a sobrecarga no seu nervo auditivo, veja a sua projeção de retorno ao silêncio...
+            Já identificamos a frequência exata da sua sobrecarga e o curto-circuito no seu nervo auditivo. Veja a sua projeção de retorno ao silêncio e o resultado do seu diagnóstico com a frequência compensatória para o seu caso:
             <span class="wa-time-tag">10:45</span>
           </div>
 
@@ -1044,11 +1039,20 @@
             <span class="p-param-label">Momento mais difícil</span>
             <strong class="p-param-val" id="diag-summary-peak">Ao deitar / 3h da manhã</strong>
           </div>
-          <div class="patient-param-line full-width-line">
+          <div class="patient-param-line">
+            <span class="p-param-label">Gatilho Inicial Mapeado</span>
+            <strong class="p-param-val" id="diag-summary-trigger">Tensão na nuca / bruxismo</strong>
+          </div>
+          <div class="patient-param-line">
+            <span class="p-param-label">Impacto Principal</span>
+            <strong class="p-param-val" id="diag-summary-impact">Insônia e noites em claro</strong>
+          </div>
+          <div class="patient-param-line full-width-line" style="border-top: 1px solid #E2E8F0; padding-top: 12px; margin-top: 2px;">
             <span class="p-param-label">Tentativas anteriores</span>
             <strong class="p-param-val" id="diag-summary-treatments">Aparelhos auditivos, Ventilador, Otorrino</strong>
             <span class="p-param-subnote">Essas tentativas tratavam o ouvido de fora sem desligar o volume aumentado da cabeça.</span>
           </div>
+        </div>
         </div>
 
         
@@ -1070,12 +1074,10 @@
         </p>
 
         <!-- BLOCO EDITORIAL DE AUTOR (BYLINE) -->
-        <div class="tsl-author-editorial-card">
-          <img src="assets/vicente_hero.jpg" alt="Seu Vicente, afinador de pianos" class="tsl-author-photo">
-          <div class="tsl-author-info">
-            <span class="tsl-author-name">Seu Vicente, 64 anos</span>
-            <span class="tsl-author-role">Afinador de pianos em São Paulo · Criador do Protocolo do Silêncio</span>
-          </div>
+        <div class="tsl-author-editorial-card" style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 18px 16px; margin: 24px 0 28px; text-align: center;">
+          <img src="assets/vicente_hero.jpg" alt="Seu Vicente, afinador de pianos" style="width: 100%; max-width: 380px; aspect-ratio: 1/1; object-fit: cover; border-radius: 6px; display: block; margin: 0 auto 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+          <div style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin-bottom: 3px;">Seu Vicente</div>
+          <div style="font-size: 0.88rem; font-weight: 600; color: #64748B;">64 anos • Afinador de Pianos há 44 anos em São Paulo</div>
         </div>
 
         <div class="tsl-hook-wrapper">
@@ -1205,9 +1207,7 @@
           <video autoplay loop muted playsinline style="width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; display: block; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
             <source src="assets/advertorial/debcae2ebe5c4792942607684b248da9.mp4" type="video/mp4">
           </video>
-          <p style="font-size: 0.82rem; color: #64748B; font-style: italic; margin-top: 8px; text-align: center; line-height: 1.45;">
-            Visão microscópica do nervo auditivo com a camada protetora gasta, gerando mau contato elétrico contínuo que o cérebro amplifica no volume máximo.
-          </p>
+          <div style="font-size: 0.80rem; color: #64748B; border-left: 2px solid #10B981; padding: 4px 10px; margin: 8px 0 16px; font-style: italic; background: #F8FAFC; border-radius: 0 4px 4px 0; line-height: 1.4;">Visão microscópica do nervo auditivo com a camada protetora gasta, gerando mau contato elétrico contínuo que o cérebro amplifica no volume máximo.</div>
         </div>
 
         <p>E agora vem o golpe de misericórdia:</p>
@@ -1221,9 +1221,7 @@
         <!-- SOBRECARGA DAS CÉLULAS NEURAIS (FORMATO EDITORIAL PURO) -->
         <div style="margin: 26px auto 18px; max-width: 580px;">
           <img src="assets/advertorial/Gross_Close_up_of_brain_cells_being_overloaded_and_starting_to_die.webp" alt="Sobrecarga das células do córtex auditivo pelo chiado contínuo" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
-          <p style="font-size: 0.82rem; color: #64748B; font-style: italic; margin-top: 8px; text-align: center; line-height: 1.45;">
-            Disparos ininterruptos 24 horas por dia esgotam a sua energia mental e gravam o chiado na memória.
-          </p>
+          <div style="font-size: 0.80rem; color: #64748B; border-left: 2px solid #10B981; padding: 4px 10px; margin: 8px 0 16px; font-style: italic; background: #F8FAFC; border-radius: 0 4px 4px 0; line-height: 1.4;">Disparos ininterruptos 24 horas por dia esgotam a sua energia mental e gravam o chiado na memória auditiva.</div>
         </div>
 
         <!-- 3 BULLETS EDITORIAIS COM NEGRITOS ESTRATÉGICOS -->
@@ -1311,6 +1309,37 @@
           </div>
         </div>
 
+        <!-- ========================================================================= -->
+        <!-- SEÇÃO CIENTÍFICA: A COMPROVAÇÃO DE HARVARD E DA FMUSP -->
+        <!-- ========================================================================= -->
+        <div class="tsl-section-break">
+          <div class="tsl-accent-dash"></div>
+        </div>
+        <h3 class="tsl-section-heading">A COMPROVAÇÃO CIENTÍFICA: <mark class="tsl-mark">HARVARD E O GRUPO DA FMUSP</mark></h3>
+        
+        <p>Quando os médicos dizem que "não há nada a ser feito", eles estão ignorando as descobertas mais recentes da neurociência aplicada.</p>
+        <p>Pesquisadores do Laboratório de Pesquisa Auditiva de Harvard, em conjunto com estudos clínicos do Grupo de Pesquisa em Zumbido da FMUSP (Hospital das Clínicas da USP), mapearam exatamente o que acontece dentro do cérebro durante uma crise:</p>
+        
+        <img src="assets/harvard_fmri_brasil.jpg" alt="Exame fMRI comparativo: Córtex auditivo em sobrecarga vs Córtex calibrado (Harvard Auditory Lab)" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin: 16px 0 8px;">
+        <div style="font-size: 0.80rem; color: #64748B; border-left: 2px solid #10B981; padding: 4px 10px; margin: 8px 0 14px; font-style: italic; background: #F8FAFC; border-radius: 0 4px 4px 0; line-height: 1.4;">Exame fMRI comparativo: em (1), a hiperatividade elétrica em vermelho durante a crise de zumbido; em (2), a calma neural restabelecida após a estimulação acústica compensatória.</div>
+
+        <p>O exame comprovou algo revolucionário: o zumbido não é uma lesão mecânica irreversível no tímpano, mas uma <strong>hiperatividade compensatória elétrica</strong> no córtex auditivo.</p>
+        <p>E quando exposto à frequência acústica compensatória precisa, veja o que acontece em tempo real com as descargas desordenadas:</p>
+
+        <div style="margin: 18px 0 14px;">
+          <video autoplay loop muted playsinline style="width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; display: block; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+            <source src="assets/advertorial/Video (3).mp4" type="video/mp4">
+          </video>
+          <div style="font-size: 0.80rem; color: #64748B; border-left: 2px solid #10B981; padding: 4px 10px; margin: 8px 0 16px; font-style: italic; background: #F8FAFC; border-radius: 0 4px 4px 0; line-height: 1.4;">Observação em tempo real: desaceleração imediata das descargas elétricas nos centros auditivos após o estímulo calibrado.</div>
+        </div>
+
+        <div class="tsl-callout-quote" style="border-left: 4px solid #10B981; margin: 22px 0 24px;">
+          "O zumbido não é uma lesão incurável na orelha, mas uma reação compensatória de neurônios que perderam estímulo e começaram a disparar sozinhos no volume máximo. Com a estimulação filtrada correta, comprova-se uma redução mensurável do apito em mais de 80% dos casos entre 14 e 28 noites de uso."
+          <span style="display: block; font-weight: 700; font-size: 0.85rem; font-style: normal; color: #64748B; margin-top: 8px;">
+            Conclusão de estudos clínicos combinados de Harvard e da FMUSP (HC-USP)
+          </span>
+        </div>
+
         <!-- SEÇÃO 7: APRESENTANDO O PROTOCOLO DO SILÊNCIO -->
         <div class="tsl-section-break">
           <div class="tsl-accent-dash"></div>
@@ -1344,40 +1373,20 @@
 
           <!-- CONTRASTE EDITORIAL: RUÍDO BRANCO vs FREQUÊNCIA CIRÚRGICA -->
           <p style="margin-top: 14px; line-height: 1.7; color: #334155;">
-            Ao contrário dos <strong>ruídos brancos genéricos e sons de chuva da internet</strong> — que apenas soltam um chiado desorganizado que não bate com o seu som e cansam a cabeça ainda mais —, a terapia com frequência notched age com <strong>precisão cirúrgica</strong>.
+            Ao contrário dos <strong>ruídos brancos genéricos e sons de chuva da internet</strong>, que apenas soltam um chiado desorganizado que não bate com o seu som e cansam a cabeça ainda mais,, a terapia com frequência notched age com <strong>precisão cirúrgica</strong>.
           </p>
           <p style="margin-top: 12px; line-height: 1.7; color: #334155;">
             Afinada exatamente no tom do seu apito, ela funciona como aqueles <strong>fones modernos com cancelamento de ruído que calam a turbina de avião entregando a contra-onda oposta</strong>. Ela neutraliza a descarga no córtex e faz o cérebro finalmente desligar o alerta de emergência.
           </p>
         </div>
 
-        <!-- COMPROVAÇÃO CIENTÍFICA DE HARVARD E DA USP (FORMATO EDITORIAL NATIVO) -->
-        <div style="margin: 28px 0 32px;">
-          <h4 style="font-size: 1.08rem; font-weight: 800; color: #0F172A; margin: 0 0 14px; text-transform: uppercase; letter-spacing: 0.04em;">
-            A Comprovação Científica de Harvard e da USP
-          </h4>
-          
-          <img src="assets/harvard_fmri_brasil.jpg" alt="Exame fMRI comparativo: Córtex auditivo em sobrecarga vs Córtex calibrado (Harvard Auditory Lab)" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
-          
-          <p style="font-size: 0.82rem; color: #64748B; font-style: italic; margin-top: 8px; text-align: center; line-height: 1.45;">
-            <strong>Exame Comparativo de Ressonância (fMRI):</strong> Em <strong>1</strong>, o foco de hiperatividade elétrica em vermelho/laranja disparando no córtex durante a crise de zumbido. Em <strong>2</strong>, a calma neural restabelecida após a recalibração acústica com a frequência compensatória.
-          </p>
-
-          <!-- Micro-Vídeo da Desaceleração Neural em Tempo Real (16/9, Fluido) -->
-          <div style="margin: 20px 0 14px;">
-            <video autoplay loop muted playsinline style="width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; display: block; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
-              <source src="assets/advertorial/Video (3).mp4" type="video/mp4">
-            </video>
-            <p style="font-size: 0.82rem; color: #64748B; font-style: italic; margin-top: 8px; text-align: center; line-height: 1.45;">
-              <strong>Observação em tempo real:</strong> Desaceleração imediata das descargas involuntárias nos centros auditivos logo após o estímulo sonoro calibrado.
-            </p>
-          </div>
+        
 
           <!-- CITAÇÃO NO PADRÃO tsl-callout-quote (COM LATERAL VERDE ESMERALDA) -->
           <div class="tsl-callout-quote" style="border-left: 4px solid #10B981; margin: 22px 0 18px;">
             "O zumbido não é uma lesão incurável na orelha, mas uma reação compensatória de neurônios que perderam estímulo e começaram a disparar sozinhos no volume máximo. Com a estimulação filtrada correta, comprova-se uma redução mensurável do apito em mais de 80% dos casos entre 14 e 28 noites de uso."
             <span style="display: block; font-weight: 700; font-size: 0.85rem; font-style: normal; color: #64748B; margin-top: 8px;">
-              — Pesquisas combinadas de Harvard e do Grupo de Pesquisa da FMUSP (HC-USP)
+             , Pesquisas combinadas de Harvard e do Grupo de Pesquisa da FMUSP (HC-USP)
             </span>
           </div>
         </div>
@@ -1419,15 +1428,15 @@
           </li>
           <li style="margin-bottom: 14px; padding-left: 28px; position: relative; line-height: 1.6;">
             <svg style="position: absolute; left: 0; top: 3px; color: #16A34A;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            <strong>BÔNUS 1 — A Farmácia dos Chás Ancestrais &amp; Os 7 Alimentos Gatilho:</strong> Infusões bioativas naturais que desinflamam o canal auditivo, protegem os microvasos e a lista dos 7 vilões alimentares da sua dieta. <em style="color: #64748B;">(Valor normal: R$ 67,00)</em>
+            <strong>BÔNUS 1, A Farmácia dos Chás Ancestrais &amp; Os 7 Alimentos Gatilho:</strong> Infusões bioativas naturais que desinflamam o canal auditivo, protegem os microvasos e a lista dos 7 vilões alimentares da sua dieta. <em style="color: #64748B;">(Valor normal: R$ 67,00)</em>
           </li>
           <li style="margin-bottom: 14px; padding-left: 28px; position: relative; line-height: 1.6;">
             <svg style="position: absolute; left: 0; top: 3px; color: #16A34A;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            <strong>BÔNUS 2 — O Manual da Blindagem Sonora &amp; Descompressão Cervical/ATM:</strong> Movimentos simples de 3 minutos para soltar a nuca travada, descomprimir o bulbo neural e técnicas caseiras de isolamento do quarto. <em style="color: #64748B;">(Valor normal: R$ 67,00)</em>
+            <strong>BÔNUS 2, O Manual da Blindagem Sonora &amp; Descompressão Cervical/ATM:</strong> Movimentos simples de 3 minutos para soltar a nuca travada, descomprimir o bulbo neural e técnicas caseiras de isolamento do quarto. <em style="color: #64748B;">(Valor normal: R$ 67,00)</em>
           </li>
           <li style="margin-bottom: 14px; padding-left: 28px; position: relative; line-height: 1.6;">
             <svg style="position: absolute; left: 0; top: 3px; color: #16A34A;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            <strong>BÔNUS 3 — Áudios Binaurais de Frequência Noturna &amp; Ondas Delta (SOS Sono):</strong> Faixas acústicas harmônicas para desarmar crises agudas e induzir o sono profundo em minutos sem depender de calmantes. <em style="color: #64748B;">(Valor normal: R$ 67,00)</em>
+            <strong>BÔNUS 3, Áudios Binaurais de Frequência Noturna &amp; Ondas Delta (SOS Sono):</strong> Faixas acústicas harmônicas para desarmar crises agudas e induzir o sono profundo em minutos sem depender de calmantes. <em style="color: #64748B;">(Valor normal: R$ 67,00)</em>
           </li>
         </ul>
 
@@ -1455,7 +1464,7 @@
           </div>
 
           <p style="margin-bottom: 0;">
-            Isso dá <strong>menos de R$ 0,33 centavos por dia</strong> — menos do que um cafezinho na padaria e infinitamente mais barato do que uma única caixa de remédio de farmácia que não resolve a raiz do problema.
+            Isso dá <strong>menos de R$ 0,33 centavos por dia</strong>, menos do que um cafezinho na padaria e infinitamente mais barato do que uma única caixa de remédio de farmácia que não resolve a raiz do problema.
           </p>
         </div>
 
