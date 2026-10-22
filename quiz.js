@@ -1454,7 +1454,7 @@
               // INTERACAO 3 DO LEAD (sem caracter de seta no texto)
               waTimers.push(setTimeout(() => {
                 const opts3 = [
-                  'Entender o diagnóstico do Seu Vicente'
+                  'Ver a análise do meu caso agora'
                 ];
                 showWhatsAppInputOptions(opts3, (chosenText3) => {
                   handleStep3Send(chosenText3);
