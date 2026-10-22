@@ -1948,10 +1948,115 @@
   // 17. TELA 16: TRAJECTOIRE DE RÉCUPÉRATION (COURBES CROISÉES)
   // =========================================================================
   function updateTrajectoryScreen() {
-    const score = userAnswers.severity || 7;
+    const rawScore = userAnswers.severity;
+    const score = (rawScore !== undefined && rawScore !== null) ? parseInt(rawScore, 10) : 7;
+    const safeScore = Math.max(1, Math.min(10, isNaN(score) ? 7 : score));
+
+    // 1. Atualiza o texto do título
     const scoreLabel = document.getElementById('traj-score-label');
     if (scoreLabel) {
-      scoreLabel.textContent = score;
+      scoreLabel.textContent = safeScore;
+    }
+
+    // 2. Coordenada Y da curva de zumbido:
+    // Escala linear 0 a 10 entre y=180 (score 0) e y=30 (score 10) -> 15px por ponto
+    const yTinnitusStart = Math.round(180 - (safeScore / 10) * 150);
+
+    // Curva de Paz & Sono: inversamente proporcional ao zumbido atual
+    const peaceScore = Math.max(0.5, Math.min(6, 10 - safeScore));
+    const yPeaceStart = Math.round(180 - (peaceScore / 10) * 150);
+
+    // 3. Atualiza pontos de controle das curvas Bezier
+    const cp1TinnitusY = Math.round(yTinnitusStart + (168 - yTinnitusStart) * 0.28);
+    const cp2TinnitusY = Math.round(yTinnitusStart + (168 - yTinnitusStart) * 0.82);
+    const dPathTinnitus = `M 50 ${yTinnitusStart} C 150 ${cp1TinnitusY}, 280 ${cp2TinnitusY}, 460 168`;
+
+    const cp1PeaceY = Math.round(yPeaceStart - (yPeaceStart - 42) * 0.28);
+    const cp2PeaceY = Math.round(yPeaceStart - (yPeaceStart - 42) * 0.82);
+    const dPathPeace = `M 50 ${yPeaceStart} C 150 ${cp1PeaceY}, 280 ${cp2PeaceY}, 460 42`;
+
+    // 4. Elementos SVG
+    const pathTinnitus = document.getElementById('traj-path-tinnitus');
+    const pointTinnitus = document.getElementById('traj-point-tinnitus');
+    const labelTinnitus = document.getElementById('traj-label-tinnitus');
+
+    const pathPeace = document.getElementById('traj-path-peace');
+    const pointPeace = document.getElementById('traj-point-peace');
+    const labelPeace = document.getElementById('traj-label-peace');
+
+    if (pathTinnitus) {
+      pathTinnitus.setAttribute('d', dPathTinnitus);
+    }
+    if (pointTinnitus) {
+      pointTinnitus.setAttribute('cx', '50');
+      pointTinnitus.setAttribute('cy', yTinnitusStart);
+    }
+    if (labelTinnitus) {
+      labelTinnitus.textContent = 'HOJE — ' + safeScore + '/10';
+      labelTinnitus.setAttribute('x', '65');
+      const textY = (safeScore >= 9) ? (yTinnitusStart + 16) : Math.max(26, yTinnitusStart - 8);
+      labelTinnitus.setAttribute('y', textY);
+    }
+
+    if (pathPeace) {
+      pathPeace.setAttribute('d', dPathPeace);
+    }
+    if (pointPeace) {
+      pointPeace.setAttribute('cx', '50');
+      pointPeace.setAttribute('cy', yPeaceStart);
+    }
+    if (labelPeace) {
+      labelPeace.setAttribute('x', '65');
+      const textPeaceY = (safeScore >= 9) ? Math.min(195, yPeaceStart - 8) : Math.min(195, yPeaceStart + 16);
+      labelPeace.setAttribute('y', textPeaceY);
+    }
+
+    // 5. Animação fluida de desenho SVG
+    if (pathTinnitus && pathPeace) {
+      try {
+        const len1 = pathTinnitus.getTotalLength ? pathTinnitus.getTotalLength() : 500;
+        const len2 = pathPeace.getTotalLength ? pathPeace.getTotalLength() : 500;
+
+        pathTinnitus.style.transition = 'none';
+        pathPeace.style.transition = 'none';
+        pathTinnitus.style.strokeDasharray = len1;
+        pathTinnitus.style.strokeDashoffset = len1;
+        pathPeace.style.strokeDasharray = len2;
+        pathPeace.style.strokeDashoffset = len2;
+
+        if (pointTinnitus) pointTinnitus.style.opacity = '0';
+        if (labelTinnitus) labelTinnitus.style.opacity = '0';
+        if (pointPeace) pointPeace.style.opacity = '0';
+        if (labelPeace) labelPeace.style.opacity = '0';
+
+        void pathTinnitus.getBoundingClientRect();
+
+        pathTinnitus.style.transition = 'stroke-dashoffset 1.4s cubic-bezier(0.25, 1, 0.5, 1)';
+        pathPeace.style.transition = 'stroke-dashoffset 1.4s cubic-bezier(0.25, 1, 0.5, 1) 0.1s';
+        pathTinnitus.style.strokeDashoffset = '0';
+        pathPeace.style.strokeDashoffset = '0';
+
+        setTimeout(() => {
+          if (pointTinnitus) {
+            pointTinnitus.style.transition = 'opacity 0.5s ease';
+            pointTinnitus.style.opacity = '1';
+          }
+          if (labelTinnitus) {
+            labelTinnitus.style.transition = 'opacity 0.5s ease';
+            labelTinnitus.style.opacity = '1';
+          }
+          if (pointPeace) {
+            pointPeace.style.transition = 'opacity 0.5s ease';
+            pointPeace.style.opacity = '1';
+          }
+          if (labelPeace) {
+            labelPeace.style.transition = 'opacity 0.5s ease';
+            labelPeace.style.opacity = '1';
+          }
+        }, 150);
+      } catch (err) {
+        console.warn('Trajectory animation fallback:', err);
+      }
     }
   }
 

@@ -1070,28 +1070,30 @@
       <p class="question-helper">Projeção das suas próximas semanas com o Protocolo do Silêncio&nbsp;:</p>
 
       <div class="trajectory-chart-wrap">
-        <svg class="trajectory-svg-canvas" viewBox="0 0 500 220" fill="none">
+        <svg class="trajectory-svg-canvas" id="trajectory-svg-canvas" viewBox="0 0 500 220" fill="none">
           <!-- Grille de fond -->
           <line x1="40" y1="30" x2="480" y2="30" stroke="#E2E8F0" stroke-dasharray="4 4"/>
-          <line x1="40" y1="80" x2="480" y2="80" stroke="#E2E8F0" stroke-dasharray="4 4"/>
-          <line x1="40" y1="130" x2="480" y2="130" stroke="#E2E8F0" stroke-dasharray="4 4"/>
+          <line x1="40" y1="68" x2="480" y2="68" stroke="#E2E8F0" stroke-dasharray="4 4"/>
+          <line x1="40" y1="105" x2="480" y2="105" stroke="#E2E8F0" stroke-dasharray="4 4"/>
+          <line x1="40" y1="143" x2="480" y2="143" stroke="#E2E8F0" stroke-dasharray="4 4"/>
           <line x1="40" y1="180" x2="480" y2="180" stroke="#CBD5E1"/>
 
           <!-- Axe Y labels -->
-          <text x="15" y="35" font-family="Plus Jakarta Sans" font-size="11" fill="#94A3B8">10</text>
-          <text x="15" y="85" font-family="Plus Jakarta Sans" font-size="11" fill="#94A3B8">7.5</text>
-          <text x="15" y="135" font-family="Plus Jakarta Sans" font-size="11" fill="#94A3B8">5.0</text>
-          <text x="15" y="185" font-family="Plus Jakarta Sans" font-size="11" fill="#94A3B8">0</text>
+          <text x="15" y="34" font-family="Plus Jakarta Sans" font-size="11" fill="#94A3B8">10</text>
+          <text x="15" y="72" font-family="Plus Jakarta Sans" font-size="11" fill="#94A3B8">7.5</text>
+          <text x="15" y="109" font-family="Plus Jakarta Sans" font-size="11" fill="#94A3B8">5.0</text>
+          <text x="15" y="147" font-family="Plus Jakarta Sans" font-size="11" fill="#94A3B8">2.5</text>
+          <text x="15" y="184" font-family="Plus Jakarta Sans" font-size="11" fill="#94A3B8">0</text>
 
-          <!-- Courbe 1&nbsp;: Acouphène qui chute (Orange) -->
-          <path d="M50 90 C 140 100, 220 150, 460 168" stroke="#EA580C" stroke-width="3.5" stroke-linecap="round"/>
-          <circle cx="50" cy="90" r="6" fill="#EA580C"/>
-          <text x="60" y="85" font-family="Plus Jakarta Sans" font-size="11" font-weight="700" fill="#EA580C">HOJE · 7/10</text>
+          <!-- Courbe 1: Acouphène qui chute (Orange) -->
+          <path id="traj-path-tinnitus" d="M50 75 C 150 101, 280 151, 460 168" stroke="#EA580C" stroke-width="3.5" stroke-linecap="round"/>
+          <circle id="traj-point-tinnitus" cx="50" cy="75" r="6" fill="#EA580C"/>
+          <text id="traj-label-tinnitus" x="65" y="70" font-family="Plus Jakarta Sans" font-size="11" font-weight="700" fill="#EA580C">HOJE — 7/10</text>
 
-          <!-- Courbe 2&nbsp;: Contrôle et silence qui grimpent (Bleu ciel) -->
-          <path d="M50 145 C 140 130, 220 60, 460 45" stroke="#0284C7" stroke-width="3.5" stroke-linecap="round"/>
-          <circle cx="50" cy="145" r="6" fill="#0284C7"/>
-          <text x="60" y="155" font-family="Plus Jakarta Sans" font-size="11" font-weight="700" fill="#0284C7">SITUAÇÃO ATUAL</text>
+          <!-- Courbe 2: Contrôle et silence qui grimpent (Bleu ciel) -->
+          <path id="traj-path-peace" d="M50 135 C 150 110, 280 60, 460 42" stroke="#0284C7" stroke-width="3.5" stroke-linecap="round"/>
+          <circle id="traj-point-peace" cx="50" cy="135" r="6" fill="#0284C7"/>
+          <text id="traj-label-peace" x="65" y="150" font-family="Plus Jakarta Sans" font-size="11" font-weight="700" fill="#0284C7">SITUAÇÃO ATUAL</text>
 
           <!-- Axe X labels (Semaines) -->
           <text x="45" y="208" font-family="Plus Jakarta Sans" font-size="11" fill="#64748B">Hoje</text>
