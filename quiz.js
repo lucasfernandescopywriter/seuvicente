@@ -79,44 +79,38 @@
   // =========================================================================
   const screensOrder = [
     'screen-hero',              // 0: Bloco 1 - Attention & Promesse Hybride
-    'screen-sound-type',        // 1: Bloco 1/2 - Identification du Son (Avec bouton continuer)
+    'screen-sound-type',        // 1: Bloco 1/2 - Identification du Son
     'screen-ear-side',          // 2: Bloco 2 - Visualisation (Latéralisation)
     'screen-duration',          // 3: Bloco 2 - Visualisation (Durée & Empathie)
-    'screen-peak-time',         // 4: Bloco 2 - Visualisation (Pic Nocturne 3h du Matin)
-    'screen-severity',          // 5: Bloco 2 - Visualisation (Réglette 1-10 avec bouton continuer)
-    'screen-prev-treatments',   // 6: Bloco 2 - Frustration Médicale & Traitements (Checkboxes)
-    'screen-chat-vicente',      // 8: Bloco 3 - Consultation WhatsApp avec Note Vocale
-    'screen-overload-alert',    // 9: Bloco 4 - Alerte Surcharge Neuronale & Myéline
-    'screen-freq-intro',        // 10: Bloco 4 - Mecanismo do Cabo Dénudé (Vidéo plein cadre)
-    'screen-freq-ab',           // 11: Calibration A vs B en 3 Étapes (MyPattern)
-    'screen-notch-visualizer',  // 12: Bloco 5 - Filtre Notch Avant/Après
-    'screen-science-backing',   // 13: Bloco 5 - Harvard & Münster (Plein cadre sans rognage)
-    'screen-trajectory',        // 14: Bloco 5 - Trajectoire Animée (Courbes dessinées)
-    'screen-commitment',        // 15: Bloco 5 - Micro-engagement (10 min/jour)
-    'screen-loading',           // 17: Bloco 5 - Cascade en 5 étapes AVANT la VSL
-    'screen-vsl-presentation',  // 18: Bloco 6 - Diagnostic & Dossier TSL avec Voucher Intégré
-    'screen-result'             // 19: Bloco 7/8/9 - Page de Vente Officielle MyPattern
+    'screen-trigger-origin',    // 4: Bloco 2 - Origine & Déclencheur (Gripe, Estresse, Remédios) [ATIVADA]
+    'screen-peak-time',         // 5: Bloco 2 - Visualisation (Qualidade do Sono & 3h da manhã)
+    'screen-somatosensory',     // 6: Bloco 2 - Conexão Somatossensorial (Nuca, ATM, Mandíbula) [ATIVADA]
+    'screen-severity',          // 7: Bloco 2 - Visualisation (Réglette 1-10)
+    'screen-prev-treatments',   // 8: Bloco 2 - Frustration Médicale & Traitements
+    'screen-freq-ab',           // 9: Calibration A vs B en 3 étapes (Teste Auditivo Final)
+    'screen-chat-vicente',      // 10: Bloco 3 - Consultation WhatsApp avec Note Vocale
+    'screen-trajectory',        // 11: Bloco 5 - Trajectoire Animée (Courbes de 7/10 a 0/10)
+    'screen-commitment',        // 12: Bloco 5 - Micro-engagement (15 min/jour)
+    'screen-loading',           // 13: Bloco 5 - Cascade en 5 étapes AVANT la VSL
+    'screen-vsl-presentation',  // 14: Bloco 6 - Diagnostic & Dossier TSL com Harvard/USP
+    'screen-result'             // 15: Bloco 7/8/9 - Page de Vente Officielle
   ];
 
   // Mapa de Progresso para a Barra Superior Fina
   const progressMap = {
     'screen-hero': { showProgress: false, percent: 0 },
-    'screen-sound-type': { showProgress: true, percent: 6 },
-    'screen-ear-side': { showProgress: true, percent: 12 },
-    'screen-duration': { showProgress: true, percent: 18 },
-    'screen-trigger-origin': { showProgress: true, percent: 24 },
-    'screen-peak-time': { showProgress: true, percent: 30 },
-    'screen-somatosensory': { showProgress: true, percent: 36 },
-    'screen-severity': { showProgress: true, percent: 42 },
-    'screen-prev-treatments': { showProgress: true, percent: 48 },
-    'screen-chat-vicente': { showProgress: true, percent: 62 },
-    'screen-overload-alert': { showProgress: true, percent: 68 },
-    'screen-freq-intro': { showProgress: true, percent: 74 },
-    'screen-freq-ab': { showProgress: true, percent: 80 },
-    'screen-notch-visualizer': { showProgress: true, percent: 85 },
-    'screen-science-backing': { showProgress: true, percent: 89 },
-    'screen-trajectory': { showProgress: true, percent: 93 },
-    'screen-commitment': { showProgress: true, percent: 96 },
+    'screen-sound-type': { showProgress: true, percent: 8 },
+    'screen-ear-side': { showProgress: true, percent: 16 },
+    'screen-duration': { showProgress: true, percent: 24 },
+    'screen-trigger-origin': { showProgress: true, percent: 32 },
+    'screen-peak-time': { showProgress: true, percent: 40 },
+    'screen-somatosensory': { showProgress: true, percent: 48 },
+    'screen-severity': { showProgress: true, percent: 56 },
+    'screen-prev-treatments': { showProgress: true, percent: 64 },
+    'screen-freq-ab': { showProgress: true, percent: 76 },
+    'screen-chat-vicente': { showProgress: true, percent: 84 },
+    'screen-trajectory': { showProgress: true, percent: 92 },
+    'screen-commitment': { showProgress: true, percent: 97 },
     'screen-loading': { showProgress: true, percent: 99 },
     'screen-vsl-presentation': { showProgress: false, percent: 100 },
     'screen-result': { showProgress: false, percent: 100 }
@@ -842,7 +836,9 @@
 
   setupChoiceStack('[data-question="earSide"]', 'earSide');
   setupChoiceStack('[data-question="duration"]', 'duration');
+  setupChoiceStack('[data-question="triggerOrigin"]', 'triggerOrigin');
   setupChoiceStack('[data-question="peakTime"]', 'peakTime');
+  setupChoiceStack('[data-question="somatosensory"]', 'somatosensory');
 
   // =========================================================================
   // 6. TELA 5: HISTOGRAMA DE SÉVÉRITÉ & RÉGUE NUMÉRIQUE 1 À 10 (AVEC BOUTON)
