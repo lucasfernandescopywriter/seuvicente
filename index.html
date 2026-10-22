@@ -513,7 +513,7 @@
       <p class="question-helper">Selecione todas as opções que se aplicam (pode marcar mais de uma)&nbsp;:</p>
 
       <div class="visual-editorial-card" style="margin-bottom: 16px;">
-        <img src="assets/advertorial/Gross_Senior_wearing_a_hearing_aid_struggling_mentally.webp" alt="Desconforto com aparelhos auditivos e cansaço mental" class="visual-fit-img">
+        <img src="assets/idoso_frustrado_ouvido.jpg" alt="Frustração com tratamentos convencionais ineficazes" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 18px 0 20px;">
       </div>
 
       <div class="choice-tiles-stack multi-select-stack" data-question="prevTreatments">
@@ -608,13 +608,19 @@
 
           <!-- Message 1 -->
           <div class="wa-bubble-in" id="wa-msg-1">
-            Olá, aqui é o Seu Vicente. Eu acabei de analisar com atenção as respostas que você enviou sobre o seu zumbido.
+            Olá, aqui é o Seu Vicente. Acabei de analisar com atenção as respostas que você enviou sobre o seu zumbido.
             <span class="wa-time-tag">10:42</span>
           </div>
 
-          <!-- Message 2 -->
-          <div class="wa-bubble-in" id="wa-msg-2" style="display: none;">
-            Esse tormento de deitar e ouvir esse apito gritando no travesseiro... olha, eu vivi exatamente esse mesmo pesadelo antes de entender como o volume da cabeça funciona.
+          <!-- Message 2a -->
+          <div class="wa-bubble-in" id="wa-msg-2a" style="display: none;">
+            Esse tormento de deitar e ouvir esse apito gritando no travesseiro...
+            <span class="wa-time-tag">10:42</span>
+          </div>
+
+          <!-- Message 2b -->
+          <div class="wa-bubble-in" id="wa-msg-2b" style="display: none;">
+            Olha, eu sofri com isso por anos, até descobrir como silenciar o volume da cabeça e voltar a dormir em paz absoluta.
             <span class="wa-time-tag">10:42</span>
           </div>
 
@@ -624,120 +630,133 @@
             <span class="wa-time-tag">10:43 <span class="wa-blue-ticks">✓✓</span></span>
           </div>
 
-          <!-- Note Vocale 1: Vincent (30s) -->
+          <!-- Message Voice: Vicente note vocale 30s -->
           <div class="wa-bubble-in wa-bubble-voice" id="wa-msg-audio" style="display: none;">
             <div class="wa-voice-row">
               <div class="wa-voice-avatar-wrap">
                 <img src="assets/vicente_hero.jpg" class="wa-voice-avatar" alt="Seu Vicente">
-                <span class="wa-mic-badge">
-                  <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+                <span class="wa-voice-mic-badge">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
                 </span>
               </div>
-              <button type="button" id="wa-voice-play-btn" class="wa-voice-play-btn" aria-label="Ouvir a mensagem de áudio do Seu Vicente">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+              <button type="button" class="wa-play-btn" id="wa-btn-play-vincent" aria-label="Ouvir áudio do Seu Vicente">
+                <svg class="wa-icon-play" id="wa-icon-play-vincent" width="18" height="18" viewBox="0 0 24 24" fill="#0F172A"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <svg class="wa-icon-pause" id="wa-icon-pause-vincent" width="18" height="18" viewBox="0 0 24 24" fill="#0F172A" style="display: none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
               </button>
-              <div class="wa-waveform-container" id="wa-waveform-vincent">
-                <span class="wa-wave-bar" style="height: 6px;"></span>
-                <span class="wa-wave-bar" style="height: 12px;"></span>
-                <span class="wa-wave-bar" style="height: 18px;"></span>
-                <span class="wa-wave-bar" style="height: 10px;"></span>
-                <span class="wa-wave-bar" style="height: 14px;"></span>
-                <span class="wa-wave-bar" style="height: 22px;"></span>
-                <span class="wa-wave-bar" style="height: 16px;"></span>
-                <span class="wa-wave-bar" style="height: 8px;"></span>
-                <span class="wa-wave-bar" style="height: 20px;"></span>
-                <span class="wa-wave-bar" style="height: 15px;"></span>
-                <span class="wa-wave-bar" style="height: 11px;"></span>
-                <span class="wa-wave-bar" style="height: 19px;"></span>
-                <span class="wa-wave-bar" style="height: 24px;"></span>
-                <span class="wa-wave-bar" style="height: 17px;"></span>
-                <span class="wa-wave-bar" style="height: 9px;"></span>
-                <span class="wa-wave-bar" style="height: 13px;"></span>
-                <span class="wa-wave-bar" style="height: 21px;"></span>
-                <span class="wa-wave-bar" style="height: 15px;"></span>
-                <span class="wa-wave-bar" style="height: 7px;"></span>
-                <span class="wa-wave-bar" style="height: 18px;"></span>
-                <span class="wa-wave-bar" style="height: 22px;"></span>
-                <span class="wa-wave-bar" style="height: 14px;"></span>
-                <span class="wa-wave-bar" style="height: 9px;"></span>
-                <span class="wa-wave-bar" style="height: 16px;"></span>
-                <span class="wa-wave-bar" style="height: 11px;"></span>
-                <span class="wa-wave-bar" style="height: 6px;"></span>
+              <div class="wa-waveform" id="wa-waveform-vincent">
+                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
+                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
+                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
+                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
+                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
+                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
               </div>
-              <span id="wa-voice-time" class="wa-voice-time">0:30</span>
             </div>
-            <span class="wa-time-tag">10:43</span>
+            <div class="wa-voice-footer">
+              <span id="wa-voice-vincent-time" class="wa-voice-time">0:30</span>
+              <span class="wa-time-tag">10:43</span>
+            </div>
           </div>
 
-          
-
-          <!-- Photo POV WhatsApp de Camila e o marido com café da manhã (Encaminhada) -->
+          <!-- Message Photo: Camila + Marcelo -->
           <div class="wa-bubble-in wa-photo-bubble wa-bubble-forwarded" id="wa-msg-photo" style="display: none;">
             <div class="wa-forward-header" style="margin-bottom: 4px; padding-left: 2px;">
-              <svg class="wa-forward-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              <svg class="wa-forward-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 14 20 9 15 4"/><path d="M4 20v-7a4 4 0 0 1 4-4h12"/></svg>
               <span>Encaminhada</span>
             </div>
-            <img src="assets/camila_selfie_whatsapp.jpg?v=3" alt="Camila e o marido tomando café da manhã no silêncio" class="wa-photo-preview" width="260" height="195" loading="eager" style="width: 100%; height: 195px; object-fit: cover; display: block; border-radius: 6px;">
+            <img src="assets/camila_selfie_whatsapp.jpg?v=3" alt="Camila e Marcelo" class="wa-photo-img" loading="lazy">
             <div class="wa-photo-caption">
-              "Primeiro café da manhã no silêncio absoluto depois de anos... O Marcelo e eu agradecemos de coração, Seu Vicente!"
+              <span>Camila, 48 anos. Silenciou o apito de 4.200 Hz e voltou a dormir a noite toda.</span>
               <span class="wa-time-tag">10:44</span>
             </div>
           </div>
 
-          <!-- Note Vocale 2: Camila (23s) (Encaminhada) -->
+          <!-- Message Voice: Camila (Audio 23s) -->
           <div class="wa-bubble-in wa-bubble-forwarded wa-bubble-voice" id="wa-msg-audio-elodie" style="display: none;">
             <div class="wa-forward-header">
-              <svg class="wa-forward-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              <svg class="wa-forward-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 14 20 9 15 4"/><path d="M4 20v-7a4 4 0 0 1 4-4h12"/></svg>
               <span>Encaminhada</span>
             </div>
             <div class="wa-voice-row">
-              <button type="button" id="wa-voice-elodie-btn" class="wa-voice-play-btn" aria-label="Ouvir o áudio da Camila">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-              </button>
-              <div class="wa-voice-track" id="wa-voice-elodie-track">
-                <div id="wa-voice-elodie-bar" class="wa-voice-progress"></div>
-                <div id="wa-voice-elodie-thumb" class="wa-voice-thumb"></div>
+              <div class="wa-voice-avatar-wrap">
+                <img src="assets/camila_selfie_whatsapp.jpg?v=3" class="wa-voice-avatar" alt="Camila">
+                <span class="wa-voice-mic-badge">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+                </span>
               </div>
-              <span id="wa-voice-elodie-time" class="wa-voice-time">0:23</span>
+              <button type="button" class="wa-play-btn" id="wa-btn-play-elodie" aria-label="Ouvir áudio da Camila">
+                <svg class="wa-icon-play" id="wa-icon-play-elodie" width="18" height="18" viewBox="0 0 24 24" fill="#0F172A"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <svg class="wa-icon-pause" id="wa-icon-pause-elodie" width="18" height="18" viewBox="0 0 24 24" fill="#0F172A" style="display: none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+              </button>
+              <div class="wa-waveform" id="wa-waveform-elodie">
+                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
+                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
+                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
+                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
+                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
+                <span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span><span class="wa-bar"></span>
+              </div>
             </div>
+            <div class="wa-voice-footer">
+              <span id="wa-voice-elodie-time" class="wa-voice-time">0:23</span>
+              <span class="wa-time-tag">10:44</span>
+            </div>
+          </div>
+
+          <!-- Message 4a -->
+          <div class="wa-bubble-in" id="wa-msg-4a" style="display: none;">
+            A Camila também achava que o ouvido estava condenado e sofria há anos sem conseguir dormir.
             <span class="wa-time-tag">10:44</span>
           </div>
 
-          
-
-          <!-- Message 4: Vincent commente le cas de Camila -->
-          <div class="wa-bubble-in" id="wa-msg-4" style="display: none;">
-            Ela também achava que o ouvido estava condenado e sofria há anos. Assim que a gente equilibra esse sinal e reencapa o nervo, o silêncio volta. Você quer ver como a gente desliga esse curto-circuito e silencia a sua frequência?
+          <!-- Message 4b -->
+          <div class="wa-bubble-in" id="wa-msg-4b" style="display: none;">
+            Assim que a gente equilibrou a frequência dela e reencapou o nervo, o silêncio finalmente voltou.
             <span class="wa-time-tag">10:44</span>
           </div>
 
-          <!-- User Bubble 2 (Interação 2 no local correto do DOM) -->
+          <!-- Message 4c (A Pergunta) -->
+          <div class="wa-bubble-in" id="wa-msg-4c" style="display: none;">
+            Você quer ver como a gente desliga esse curto-circuito no seu caso?
+            <span class="wa-time-tag">10:44</span>
+          </div>
+
+          <!-- User Bubble 2 (Interação 2) -->
           <div class="wa-bubble-out" id="wa-msg-user-2" style="display: none;">
             Sim, quero ver como desligar esse curto-circuito!
             <span class="wa-time-tag">10:44 <span class="wa-blue-ticks">✓✓</span></span>
           </div>
 
-          
-
-          <!-- Message 5 -->
-          <div class="wa-bubble-in" id="wa-msg-5" style="display: none;">
-            O seu cérebro não está danificado: ele está apenas tentando compensar o sinal elétrico fraco do nervo auditivo desencapado, jogando o volume interno no máximo.
+          <!-- Message 5a -->
+          <div class="wa-bubble-in" id="wa-msg-5a" style="display: none;">
+            O seu cérebro não está estragado e o seu ouvido não está condenado.
             <span class="wa-time-tag">10:45</span>
           </div>
 
-          <!-- Message 6 -->
-          <div class="wa-bubble-in" id="wa-msg-6" style="display: none;">
-            Já identificamos a frequência exata da sua sobrecarga e o curto-circuito no seu nervo auditivo. Veja a sua projeção de retorno ao silêncio e o resultado do seu diagnóstico com a frequência compensatória para o seu caso:
+          <!-- Message 5b -->
+          <div class="wa-bubble-in" id="wa-msg-5b" style="display: none;">
+            Ele só está compensando o sinal elétrico fraco do nervo desencapado, jogando o volume interno no máximo.
+            <span class="wa-time-tag">10:45</span>
+          </div>
+
+          <!-- Message 6a -->
+          <div class="wa-bubble-in" id="wa-msg-6a" style="display: none;">
+            Já identificamos a frequência exata da sua sobrecarga e o curto-circuito no seu nervo auditivo.
+            <span class="wa-time-tag">10:45</span>
+          </div>
+
+          <!-- Message 6b -->
+          <div class="wa-bubble-in" id="wa-msg-6b" style="display: none;">
+            Veja a sua projeção de retorno ao silêncio e o resultado do seu diagnóstico com a frequência compensatória para o seu caso:
             <span class="wa-time-tag">10:45</span>
           </div>
 
           <!-- User Bubble 3 Final (Interação 3) -->
           <div class="wa-bubble-out" id="wa-msg-user-3" style="display: none;">
-            Entender o diagnóstico do Seu Vicente
+            Ver o resultado do meu teste agora
             <span class="wa-time-tag">10:46 <span class="wa-blue-ticks">✓✓</span></span>
           </div>
 
-          <!-- WhatsApp Typing Indicator Bubble -->
           <div class="wa-bubble-in wa-typing-indicator" id="wa-typing-bubble" style="display: none;">
             <div class="wa-typing-dots">
               <span class="wa-dot"></span>
@@ -1075,9 +1094,9 @@
 
         <!-- BLOCO EDITORIAL DE AUTOR (BYLINE) -->
         <div class="tsl-author-editorial-card" style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 18px 16px; margin: 24px 0 28px; text-align: center;">
-          <img src="assets/vicente_hero.jpg" alt="Seu Vicente, afinador de pianos" style="width: 100%; max-width: 380px; aspect-ratio: 1/1; object-fit: cover; border-radius: 6px; display: block; margin: 0 auto 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
-          <div style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin-bottom: 3px;">Seu Vicente</div>
-          <div style="font-size: 0.88rem; font-weight: 600; color: #64748B;">64 anos • Afinador de Pianos há 44 anos em São Paulo</div>
+          <img src="assets/vicente_hero.jpg" alt="Vicente Valença, afinador de pianos" style="width: 100%; max-width: 380px; aspect-ratio: 1/1; object-fit: cover; border-radius: 6px; display: block; margin: 0 auto 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+          <div style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin-bottom: 2px;">Vicente Valença</div>
+          <div style="font-size: 0.85rem; font-weight: 500; color: #64748B;">64 anos • Especialista em Acústica e Afinador em São Paulo</div>
         </div>
 
         <div class="tsl-hook-wrapper">
@@ -1142,7 +1161,6 @@
         </div>
         <h3 class="tsl-section-heading">O DESESPERO DAS 3H DA MANHÃ E O FIM DO <mark class="tsl-mark">PESADELO NOTURNO</mark></h3>
         <img src="assets/cena_quarto_3am.jpg" alt="Noite em claro com zumbido no ouvido às 3h da manhã" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 16px 0 8px;">
-        <div style="font-size: 0.80rem; color: #64748B; border-left: 2px solid #10B981; padding: 4px 10px; margin: 8px 0 16px; font-style: italic; background: #F8FAFC; border-radius: 0 4px 4px 0; line-height: 1.4;">Relógio marcando 3h14 da manhã: o ápice do silêncio da noite amplifica o chiado interno no travesseiro, gerando noites em claro e exaustão mental.</div>
         <p>São exatamente 3 horas e 14 minutos da madrugada.</p>
         <p>A sua casa inteira está no mais absoluto silêncio. A rua está calma. As luzes apagadas. O seu parceiro dorme profundamente do outro lado da cama.</p>
         <p>Mas, dentro da sua cabeça... é como se houvesse uma <strong>turbina de avião roncando no máximo</strong>.</p>
@@ -1254,7 +1272,6 @@
         <p>Os nervos que controlam a sua mastigação (a articulação temporomandibular, ou ATM) e os músculos cervicais da sua nuca passam a <strong>menos de 2 milímetros do canal auditivo interno</strong>.</p>
         
         <img src="assets/decompression_atm.jpg" alt="Exame da articulação temporomandibular (ATM) e conexão com o nervo auditivo" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 16px 0 8px;">
-        <div style="font-size: 0.80rem; color: #64748B; border-left: 2px solid #10B981; padding: 4px 10px; margin: 8px 0 16px; font-style: italic; background: #F8FAFC; border-radius: 0 4px 4px 0; line-height: 1.4;">Exame clínico da articulação temporomandibular (ATM): o nervo trigêmeo da mandíbula passa a milímetros do canal auditivo, transmitindo tensão mecânica e toxinas ácidas para a raiz do nervo.</div>
 
         <p>Se você tem o hábito involuntário de apertar ou ranger os dentes à noite (bruxismo), ou se passa o dia com os ombros encolhidos, essa tensão mecânica contínua esmaga a base do nervo auditivo.</p>
         <p>E se você já teve uma infecção respiratória antiga, sinusite crônica ou gripe forte, toxinas ácidas inflamatórias penetraram na raiz do ouvido, acelerando a quebra da camada protetora.</p>
@@ -1265,51 +1282,65 @@
           <div class="tsl-accent-dash"></div>
         </div>
         <h3 class="tsl-section-heading">POR QUE TUDO O QUE VOCÊ TENTOU ATÉ HOJE <mark class="tsl-mark">FALHOU MISERAVELMENTE</mark></h3>
-        <p>Se você já gastou pequenas fortunas em consultas, exames, aparelhos e remédios de farmácia, preste muita atenção:</p>
+        <p>Se você já gastou pequenas fortunas em consultas, exames, aparelhos e remédios de farmácia, preste muita atenção no que eu vou te dizer:</p>
         <p><strong>A culpa não é sua. E o seu corpo não é fraco.</strong></p>
-        <p>Tudo o que você tentou até hoje falhou por um único motivo simples: todos esses métodos tentavam consertar o <em>ouvido de fora</em>, enquanto o alarme de incêndio estava disparando no <em>circuito elétrico de dentro</em>.</p>
+        <p>Eu passei exatamente por essa mesma peregrinação de frustrações durante mais de 2 anos.</p>
+        <p>Tudo o que você tentou até hoje falhou por uma única razão biológica simples: cada um desses métodos tentava consertar o <em>ouvido de fora</em>, enquanto o alarme de incêndio estava disparando no <em>circuito elétrico de dentro</em>.</p>
         
-        <img src="assets/advertorial/Gross_Senior_wearing_a_hearing_aid_struggling_mentally.webp" alt="Frustração com aparelho auditivo convencional que não silencia o zumbido interno" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 16px 0 8px;">
-        <div style="font-size: 0.80rem; color: #64748B; border-left: 2px solid #10B981; padding: 4px 10px; margin: 8px 0 16px; font-style: italic; background: #F8FAFC; border-radius: 0 4px 4px 0; line-height: 1.4;">Aparelhos auditivos convencionais amplificam apenas o som de fora, enquanto o curto-circuito elétrico continua disparando desprotegido dentro do crânio.</div>
+        <img src="assets/idoso_frustrado_ouvido.jpg" alt="Frustração com tratamentos convencionais ineficazes" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 18px 0 20px;">
 
-        <p>Veja a mecânica da falha de cada uma dessas abordagens tradicionais:</p>
+        <p>Veja a mecânica da falha de cada uma das 7 alternativas convencionais mais comuns:</p>
         
         <p><strong>1. Aparelhos Auditivos de R$ 10.000 a R$ 15.000:</strong><br>
-        O aparelho auditivo é apenas um microfone potente que capta o som do ambiente e joga mais volume para dentro do canal. Mas o seu zumbido <em>não vem do ambiente externo</em>! Ele é um curto-circuito elétrico gerado dentro do córtex. É como colocar um megafone na frente de alguém que está tendo uma enxaqueca: só cansa a sua cabeça ainda mais.</p>
+        O aparelho auditivo é apenas um microfone potente que capta as ondas do ambiente externo e joga mais pressão sonora no tímpano. Mas o seu zumbido <em>não vem do ar de fora</em>: ele nasce de um curto-circuito elétrico dentro do crânio. É como colocar um megafone no ouvido de quem está com enxaqueca: só cansa a sua cabeça ainda mais.</p>
 
-        <p><strong>2. Ginkgo Biloba, Gotas e Vitaminas Isoladas:</strong><br>
-        Mais de 95% das substâncias vendidas em cápsulas comuns são destruídas pelo ácido gástrico do estômago ou bloqueadas pela barreira hematoencefálica antes de chegarem a 1 milímetro do nervo auditivo.</p>
+        <p><strong>2. Gotas Auriculares, Cotonetes e Lavagens de Cera no Posto:</strong><br>
+        As gotas e as lavagens atuam apenas na pele do canal auditivo externo. Só que a cóclea e o nervo auditivo ficam blindados dentro do osso temporal mais duro do corpo humano. Nenhuma gota líquida consegue encostar no nervo onde o curto-circuito acontece.</p>
 
-        <p><strong>3. Ventilador Ligado e Ruídos Brancos de Celular:</strong><br>
-        Funcionam apenas como um véu provisório. Assim que você desliga o aparelho ou o silêncio da madrugada se instala, o apito parece voltar duas vezes mais agressivo, porque o cérebro se acostuma a brigar com mais barulho.</p>
+        <p><strong>3. Ginkgo Biloba, Magnésio e Vitaminas de Farmácia:</strong><br>
+        Mais de 95% das cápsulas e vitaminas sintéticas vendidas no comércio são destruídas pelo ácido clorídrico do estômago ou filtradas pelo fígado antes de cruzarem a barreira hematoencefálica do cérebro. Elas não possuem os carreadores lipídicos necessários para reconstruir a mielina.</p>
 
-        <!-- SEÇÃO CIENTÍFICA: A COMPROVAÇÃO DE HARVARD E DA FMUSP -->
+        <p><strong>4. Calmantes, Ansiolíticos e Remédios para Labirintite:</strong><br>
+        Remédios como clonazepam ou indutores de sono apenas dopam os receptores cerebrais para mascarar o desespero. Eles não reconstroem 1 milímetro da capa do nervo. E quando o efeito da química passa, o zumbido continua no mesmo volume ou volta em efeito rebote ainda mais agressivo.</p>
+
+        <p><strong>5. Ventiladores Ligados, Sons de Chuva e Ruído Branco no Celular:</strong><br>
+        Funcionam apenas como um véu temporário que joga mais barulho sobre o seu cérebro já exausto. Quando você acorda às 3h da manhã no silêncio repentino, o contraste acústico faz o chiado parecer ensurdecedor.</p>
+
+        <p><strong>6. Consultas com Otorrinos que disseram "Aprenda a conviver com isso":</strong><br>
+        A medicina tradicional é extraordinária para tratar infecções bacterianas agudas, tímpanos perfurados ou cirurgias de emergência. Mas a maioria dos consultórios não dispõe de equipamentos de neuroacústica digital para reprogramar o ganho central do córtex auditivo.</p>
+
+        <p><strong>7. Procedimentos Invasivos e Cirurgias do Passado:</strong><br>
+        No passado, médicos chegaram a tentar a cirurgia radical de cortar o nervo auditivo de pacientes desesperados. O resultado foi uma tragédia clínica: o paciente perdia 100% da audição daquele lado, mas o zumbido continuava apitando no cérebro com a mesma intensidade. Isso provou ao mundo que o zumbido não está na orelha: ele está gravado no circuito elétrico neural.</p>
+
         <!-- ========================================================================= -->
         <div class="tsl-section-break">
           <div class="tsl-accent-dash"></div>
         </div>
         <h3 class="tsl-section-heading">A COMPROVAÇÃO CIENTÍFICA: <mark class="tsl-mark">HARVARD E O GRUPO DA FMUSP</mark></h3>
-        <p>Quando os médicos dizem que "não há nada a ser feito", eles estão ignorando as descobertas mais recentes da neurociência acústica mundial.</p>
-        <p>Pesquisadores do Laboratório de Pesquisa Auditiva de Harvard, em conjunto com estudos clínicos do Grupo de Pesquisa em Zumbido da FMUSP (Hospital das Clínicas da USP), mapearam exatamente o que acontece dentro do cérebro durante uma crise:</p>
         
-        <img src="assets/harvard_fmri_brasil.jpg" alt="Exame fMRI comparativo: Córtex auditivo em sobrecarga vs Córtex calibrado (Harvard Auditory Lab)" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 16px 0 8px;">
-        <div style="font-size: 0.80rem; color: #64748B; border-left: 2px solid #10B981; padding: 4px 10px; margin: 8px 0 16px; font-style: italic; background: #F8FAFC; border-radius: 0 4px 4px 0; line-height: 1.4;">Exame fMRI comparativo: em (1), a tempestade elétrica em vermelho no córtex durante a crise; em (2), a calma neural em azul restabelecida após a contra-frequência sonora compensatória.</div>
-
-        <p>O exame de ressonância funcional comprovou um fato biológico incontestável:</p>
-        <p>O zumbido não é uma lesão mecânica incurável no tímpano, mas uma <strong>hiperatividade compensatória elétrica</strong> no córtex auditivo.</p>
+        <p>Se todas as tentativas convencionais falharam porque tratavam o lugar errado... onde está a verdadeira saída biológica?</p>
+        <p>Foi nessa busca incansável que eu tive acesso aos estudos mais recentes do Laboratório de Pesquisa Auditiva de Harvard, em cooperação com médicos do Grupo de Pesquisa em Zumbido da FMUSP (Hospital das Clínicas da USP).</p>
+        <p>Eles mapearam exatamente o que acontece dentro do cérebro durante uma crise e provaram algo que mudou tudo:</p>
         
-        <p>Pense no seu cérebro como uma sala de máquinas em alerta vermelho de emergência.</p>
-        <p>Como a borracha de proteção da mielina racha e esfarela, o sinal sonoro limpo deixa de chegar.</p>
-        <p>Em pânico, o cérebro faz o que qualquer um faria num rádio fora da estação: <strong>ele gira o botão de volume no nível 10</strong>, disparando faíscas desordenadas 24 horas por dia na tentativa desesperada de encontrar o som que sumiu.</p>
-        <p>É essa tempestade de faíscas que você escuta gritando no travesseiro toda noite.</p>
+        <p>Para calar o apito e restaurar o silêncio de forma permanente, a neurociência moderna exige uma <strong>solução coordenada em dois eixos inseparáveis</strong>:</p>
 
-        <p>Agora, veja o que os pesquisadores registraram no instante exato em que a contra-frequência acústica precisa toca no ouvido:</p>
-        <p>Por um processo neurológico chamado <strong>inibição lateral</strong>, os neurônios sadios ao redor entram em ação e 'abraçam' os circuitos em curto.</p>
-        <p>É como se o cérebro finalmente respirasse aliviado e dissesse: <em>'O som voltou. O alarme de emergência pode ser desligado'</em>.</p>
-        <p>Na mesma hora, aquele botão de volume emperrado no máximo começa a girar de volta para o zero. As faíscas elétricas se acalmam. E o silêncio profundo volta a reinar na sua mente.</p>
+        <img src="assets/harvard_fmri_brasil.jpg" alt="Exame fMRI comparativo: Córtex auditivo em sobrecarga vs Córtex calibrado (Harvard Auditory Lab)" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 18px 0 20px;">
 
-        <div class="tsl-callout-quote" style="border-left: 4px solid #10B981; margin: 22px 0 24px;">
-          "O zumbido não é uma lesão incurável na orelha, mas uma reação compensatória de neurônios que perderam estímulo e começaram a disparar sozinhos no volume máximo. Com a estimulação filtrada correta, comprova-se uma redução mensurável do apito em mais de 80% dos casos entre 14 e 28 noites de uso."
+        <p><strong>EIXO 1: A RECALIBRAÇÃO ACÚSTICA (O FILTRO NOTCHED)</strong><br>
+        O exame de ressonância magnética funcional (fMRI) acima comprovou que o zumbido é uma <strong>hiperatividade compensatória elétrica</strong> no córtex auditivo.<br>
+        Como o nervo está desencapado e o sinal chega fraco, o cérebro entra em pânico e gira o botão de volume no nível 10, disparando tempestades elétricas contínuas.<br>
+        Quando o paciente escuta uma frequência acústica precisa com um <em>entalhe sonoro cirúrgico (Notch)</em> no tom exato do seu apito, ocorre o fenômeno da <strong>inibição lateral neural</strong>: os neurônios sadios ao redor 'abraçam' os neurônios em curto, forçando o cérebro a girar o botão de volume de volta para o zero em 15 minutos por dia.</p>
+
+        <p><strong>EIXO 2: O BIO-ISOLAMENTO NEURAL (A TRÍADE DOS 3 BIOATIVOS LIPÍDICOS)</strong><br>
+        Mas os pesquisadores descobriram algo ainda mais importante: <em>baixar o volume no cérebro não basta se o fio continuar desencapado</em>.<br>
+        Se a capa de mielina não for regenerada, assim que o estímulo sonoro cessa, o nervo continua soltando faíscas e o apito volta.<br>
+        A ciência comprovou que a bainha de mielina só consegue se recompor quando recebe uma combinação sinérgica de <strong>3 bioativos fosfolipídicos naturais</strong> de alta biodisponibilidade. Esses nutrientes lipídicos específicos conseguem atravessar a barreira hematoencefálica pela manhã e agir como uma resina biológica líquida, selando cada microfissura do nervo de dentro para fora.</p>
+
+        <p><strong>A Sinergia Obrigatória:</strong><br>
+        Nenhum desses dois eixos funciona sozinho no longo prazo. A frequência sonora desliga o alarme do cérebro na hora. E os 3 bioativos reencapam o nervo para que o alarme nunca mais volte a disparar.</p>
+
+        <div class="tsl-callout-quote" style="border-left: 4px solid #10B981; margin: 24px 0;">
+          "O zumbido não é uma lesão incurável na orelha, mas uma reação compensatória de neurônios que perderam estímulo e começaram a disparar sozinhos no volume máximo. Com a estimulação filtrada correta aliada à remielinização lipídica, comprova-se uma redução mensurável do apito em mais de 80% dos casos entre 14 e 28 noites de uso."
           <span style="display: block; font-weight: 700; font-size: 0.85rem; font-style: normal; color: #64748B; margin-top: 8px;">
             Conclusão de estudos clínicos combinados de Harvard e da FMUSP (HC-USP)
           </span>
@@ -1323,13 +1354,14 @@
         <p>Para calar esse apito de forma definitiva, você não precisa de cirurgias arriscadas no crânio.</p>
         <p>Não precisa gastar R$ 15 mil em aparelhos que só aumentam o barulho de fora.</p>
         <p>E muito menos de calmantes tarja preta que dopam a sua mente e te deixam grogue o dia inteiro.</p>
-        <p>Você só precisa de duas ações coordenadas e simples, comprovadas pela neuroacústica clínica:</p>
+        <p>Quando eu comprovei essa ciência no meu próprio caso e vi o apito que me torturava se calar por completo, eu sabia que tinha uma missão:</p>
+        <p>Eu precisava transformar essas descobertas de laboratório em um método prático, natural e simples de aplicar em casa, sem depender de clínicas caras.</p>
+        <p>Foi exatamente assim que eu estruturei o <strong>Protocolo do Silêncio</strong>, dividido em dois pilares diários de 15 minutos:</p>
 
         <!-- PILAR 1 -->
         <div class="tsl-pilar-card">
           <h4 class="tsl-pilar-title">PILAR 1: O GUIA DA COLHER MATINAL (ENCAPAR O FIO DESENCAPADO)</h4>
-          <img src="assets/cuillere_myeline.jpg" alt="A colher matinal dos 3 bioativos naturais regeneradores da mielina" style="width: 100%; border-radius: 6px; display: block; box-shadow: 0 3px 10px rgba(0,0,0,0.05); margin: 14px 0 8px;">
-          <div style="font-size: 0.80rem; color: #64748B; border-left: 2px solid #10B981; padding: 4px 10px; margin: 8px 0 14px; font-style: italic; background: #FFFFFF; border-radius: 0 4px 4px 0; line-height: 1.4;">A colher matinal com os 3 bioativos fosfolipídicos: uma resina biológica natural que passa pela barreira hematoencefálica e sela as microfissuras da mielina.</div>
+          <img src="assets/colher_mielina_real.jpg" alt="A colher matinal dos bioativos naturais regeneradores da mielina" style="width: 100%; border-radius: 6px; display: block; box-shadow: 0 3px 10px rgba(0,0,0,0.05); margin: 16px 0 18px;">
           <p class="tsl-pilar-text">
             Uma combinação precisa de <strong>3 nutrientes lipídicos naturais</strong>, comuns e muito baratos de encontrar em qualquer feira ou supermercado de bairro por poucos reais.
           </p>
@@ -1384,7 +1416,6 @@
         </div>
 
                 <img src="assets/senior_peaceful_sleep.jpg" alt="Idoso dormindo em silêncio absoluto e paz restaurada" style="width: 100%; border-radius: 6px; display: block; box-shadow: 0 3px 10px rgba(0,0,0,0.05); margin: 16px 0 8px;">
-        <div style="font-size: 0.80rem; color: #64748B; border-left: 2px solid #10B981; padding: 4px 10px; margin: 8px 0 16px; font-style: italic; background: #FFFFFF; border-radius: 0 4px 4px 0; line-height: 1.4;">Após 28 noites de recalibração: o botão de volume do córtex desarmado e o retorno ao sono profundo e contínuo no silêncio da madrugada.</div>
 
       </div>
 
@@ -2235,6 +2266,6 @@
 
   </main>
 
-  <script src="quiz.js"></script>
+  <script src="quiz.js?v=4.0"></script>
 </body>
 </html>
