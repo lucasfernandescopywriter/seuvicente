@@ -6069,17 +6069,28 @@ input:focus-visible {
   margin: 0 !important;
 }
 
-/* 3.2 CTA Buttons strictly in at most 2 lines */
+/* 3.2 CTA Buttons - Texto corrido fluido e balanceado */
 .btn-pizza-cta {
-  font-size: clamp(0.82rem, 3.2vw, 0.95rem) !important;
-  line-height: 1.25 !important;
-  padding: 14px 16px !important;
+  font-size: clamp(0.88rem, 3.4vw, 1.05rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
+  padding: 16px 20px !important;
   text-align: center !important;
   justify-content: center !important;
+  align-items: center !important;
+  display: flex !important;
   white-space: normal !important;
   word-break: normal !important;
   overflow-wrap: break-word !important;
-  min-height: 52px !important;
+  text-wrap: balance !important;
+  min-height: 54px !important;
+}
+
+.btn-pizza-cta span {
+  display: inline !important;
+  text-align: center !important;
+  text-wrap: balance !important;
+  line-height: 1.35 !important;
 }
 
 /* 3.3 Foto WhatsApp com Altura Garantida (Nunca colapsa para 0px) */
@@ -6419,8 +6430,8 @@ input:focus-visible {
    CTA BUTTON LINES: TEXTO UNIFICADO, BOLD E BALANCEADO SEM ÓRFÃOS (IPHONE / MOBILE)
    ========================================================================== */
 .btn-cta-unified {
-  display: block !important;
-  font-size: clamp(0.85rem, 3.4vw, 0.98rem) !important;
+  display: inline !important;
+  font-size: inherit !important;
   font-weight: 800 !important;
   letter-spacing: -0.01em !important;
   line-height: 1.35 !important;
@@ -6428,8 +6439,6 @@ input:focus-visible {
   text-align: center !important;
   white-space: normal !important;
   text-wrap: balance !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
 }
 
 .btn-voucher-text {
@@ -6473,7 +6482,8 @@ input:focus-visible {
     gap: 10px !important;
   }
   .btn-pizza-cta {
-    padding: 12px 14px !important;
+    padding: 13px 16px !important;
+    font-size: clamp(0.84rem, 3.2vw, 0.94rem) !important;
     min-height: 52px !important;
   }
   .btn-cta-unified {
@@ -6482,6 +6492,10 @@ input:focus-visible {
 }
 
 @media (max-width: 380px) {
+  .btn-pizza-cta {
+    font-size: 0.80rem !important;
+    padding: 12px 14px !important;
+  }
   .btn-cta-unified {
     font-size: 0.80rem !important;
   }
