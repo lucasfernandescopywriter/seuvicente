@@ -6504,3 +6504,87 @@ input:focus-visible {
     text-wrap: balance !important;
   }
 }
+
+
+/* ==========================================================================
+   HOOK EDITORIAL & TIMELINE DO PROTOCOLO (ANATOMIA DO HOOK & COPY VALIDADA)
+   ========================================================================== */
+.tsl-hook-wrapper {
+  margin: 28px 0 32px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tsl-hook-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  color: #166534;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  width: fit-content;
+  margin-bottom: 4px;
+}
+
+.tsl-hook-lead-p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #334155;
+  margin: 0;
+}
+
+.tsl-hook-lead-p strong {
+  color: #0F172A;
+  font-weight: 700;
+}
+
+.tsl-hook-lead-p em {
+  color: #0F172A;
+  font-style: italic;
+}
+
+.tsl-timeline-editorial {
+  background: #F0FDF4;
+  border: 1px solid #DCFCE7;
+  border-left: 4px solid #16A34A;
+  border-radius: 6px;
+  padding: 24px 26px;
+  margin: 28px 0 32px 0;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+}
+
+.tsl-timeline-title {
+  color: #15803D !important;
+  font-size: 1.05rem !important;
+  font-weight: 800 !important;
+  margin: 0 0 8px 0 !important;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.tsl-timeline-sub {
+  color: #475569;
+  font-size: 0.95rem;
+  margin: 0 0 16px 0;
+  line-height: 1.6;
+}
+
+.tsl-timeline-list {
+  margin: 0 !important;
+  gap: 14px !important;
+}
+
+@media (max-width: 480px) {
+  .tsl-hook-lead-p {
+    font-size: 0.98rem;
+    line-height: 1.68;
+  }
+  .tsl-timeline-editorial {
+    padding: 18px 16px;
+  }
+}
