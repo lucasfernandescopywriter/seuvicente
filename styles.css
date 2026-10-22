@@ -152,7 +152,7 @@ main {
   display: flex;
   flex-direction: column;
   opacity: 1;
-  transform: translateY(0);
+  transform: none; /* iOS Safari WebKit fix: transform on ancestor breaks position:sticky and detaches background from text */
 }
 
 .screen-pane.wide-pane {
@@ -263,21 +263,32 @@ main {
 .hero-eyebrow-trust-row {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 6px;
   background-color: #FFFFFF;
   border: 1px solid var(--border);
-  padding: 6px 14px;
+  padding: 5px 12px;
   border-radius: var(--radius-pill);
-  font-size: 0.84rem;
+  font-size: clamp(0.68rem, 2.8vw, 0.82rem);
   font-weight: 600;
   color: #334155;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+  white-space: nowrap;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .hero-trust-stars {
   color: #F59E0B;
-  font-size: 0.95rem;
-  letter-spacing: 1px;
+  font-size: clamp(0.74rem, 3vw, 0.88rem);
+  letter-spacing: 0.5px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.hero-trust-text {
+  white-space: nowrap;
+  line-height: 1.2;
 }
 
 .hero-start-btn {
@@ -299,10 +310,18 @@ main {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  font-size: 0.84rem;
+  font-size: clamp(0.72rem, 2.9vw, 0.84rem);
   color: #475569;
   font-weight: 600;
   margin-top: 10px;
+  text-align: center;
+  white-space: nowrap;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.hero-quick-reassurance span {
+  white-space: nowrap;
 }
 
 .hero-pill-badge,
@@ -2505,26 +2524,33 @@ main {
    ========================================================================== */
 .mypattern-timer-banner,
 .mypattern-timer-banner-solid {
+  position: -webkit-sticky;
   position: sticky;
-  top: 10px;
+  top: 8px;
   z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
+  align-self: center;
   gap: 8px;
   background-color: #F59E0B;
   border: none;
   color: #451A03;
-  padding: 8px 18px;
+  padding: 8px 16px;
   border-radius: 6px;
-  font-size: 0.84rem;
+  font-size: clamp(0.72rem, 2.8vw, 0.84rem);
   font-weight: 600;
+  line-height: 1.25;
   margin: 0 auto 20px;
-  max-width: 95%;
+  max-width: calc(100% - 24px);
   width: fit-content;
   white-space: nowrap;
+  box-sizing: border-box;
   box-shadow: 0 4px 14px rgba(245, 158, 11, 0.28);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 .mypattern-timer-banner svg,
@@ -2540,7 +2566,7 @@ main {
   font-weight: 800;
   color: #451A03;
   letter-spacing: 0.02em;
-  font-size: 0.88rem;
+  font-size: clamp(0.76rem, 2.9vw, 0.88rem);
 }
 
 .features-grid-3 {
@@ -3554,29 +3580,8 @@ main {
 }
 
 /* ==========================================================================
-   PÁGINA DE VENDAS: TIMER AMÂMBAR SÓLIDO & CARDS SEM LINHAS FINAS COLORIDAS
+   PÁGINA DE VENDAS: CARDS SEM LINHAS FINAS COLORIDAS (ESTILO SUÍÇO CLEAN)
    ========================================================================== */
-.mypattern-timer-banner-solid {
-  position: sticky;
-  top: 10px;
-  z-index: 1000;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background-color: #F59E0B;
-  border: none;
-  color: #451A03;
-  padding: 8px 18px;
-  border-radius: 6px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  margin: 0 auto 20px;
-  max-width: 95%;
-  width: fit-content;
-  white-space: nowrap;
-  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.28);
-}
 
 .sales-subvention-card {
   background: #F8FAFC;
@@ -6386,4 +6391,85 @@ input:focus-visible {
   margin: 0 !important;
   line-height: 1.7;
   font-weight: 400;
+}
+
+/* ==========================================================================
+   CTA BUTTON LINES: PREVINE PALAVRAS E NÚMEROS ÓRFÃOS NO MOBILE (IPHONE XR / SE)
+   ========================================================================== */
+.btn-cta-line1 {
+  display: block;
+  font-size: clamp(0.86rem, 3.5vw, 1.05rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.btn-cta-line2 {
+  display: block;
+  font-size: clamp(0.74rem, 2.9vw, 0.86rem);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-top: 3px;
+  white-space: nowrap;
+  opacity: 0.95;
+}
+
+.btn-voucher-text {
+  white-space: nowrap;
+}
+
+.btn-primary-pill span,
+.hero-start-btn span {
+  text-wrap: balance;
+}
+
+@media (max-width: 480px) {
+  .hero-eyebrow-trust-row {
+    font-size: clamp(0.66rem, 2.7vw, 0.76rem) !important;
+    padding: 4px 10px !important;
+    gap: 5px !important;
+    white-space: nowrap !important;
+  }
+  .hero-trust-stars {
+    font-size: 0.76rem !important;
+    letter-spacing: 0px !important;
+  }
+  .hero-quick-reassurance {
+    font-size: clamp(0.70rem, 2.8vw, 0.78rem) !important;
+    white-space: nowrap !important;
+  }
+  .mypattern-timer-banner,
+  .mypattern-timer-banner-solid {
+    font-size: 0.72rem !important;
+    padding: 7px 12px !important;
+    gap: 6px !important;
+    max-width: 96% !important;
+  }
+  .mypattern-timer-banner svg,
+  .mypattern-timer-banner-solid svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+  .ab-choice-buttons {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+  .btn-pizza-cta {
+    padding: 12px 14px !important;
+    min-height: 52px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .btn-cta-line1 {
+    font-size: 0.80rem !important;
+  }
+  .btn-cta-line2 {
+    font-size: 0.68rem !important;
+  }
+  .btn-voucher-text {
+    white-space: normal !important;
+    text-wrap: balance !important;
+  }
 }
