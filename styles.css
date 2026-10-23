@@ -6665,3 +6665,195 @@ input:focus-visible {
   opacity: 0.8;
 }
 
+
+
+/* =========================================================================
+   TELA 9: TRAJECTORY DIAGNOSTIC BADGE CARD (SOBRECARGA & FREQUÊNCIA)
+   ========================================================================= */
+.traj-diagnostic-badge-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  gap: 12px;
+}
+
+.traj-badge-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: center;
+}
+
+.traj-badge-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.traj-badge-value {
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.traj-badge-freq {
+  color: #DC2626;
+  font-variant-numeric: tabular-nums;
+}
+
+.traj-badge-sev {
+  color: #EA580C;
+}
+
+.traj-badge-sep {
+  width: 1px;
+  height: 38px;
+  background: #CBD5E1;
+}
+
+@media (max-width: 480px) {
+  .traj-diagnostic-badge-card {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  .traj-badge-value {
+    font-size: 1.05rem;
+  }
+}
+
+/* =========================================================================
+   TELA 10 / TSL: DUAL FREQUENCY COMPARISON PANEL (DIAGNÓSTICO VS SOLUÇÃO)
+   ========================================================================= */
+.dual-freq-comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
+  gap: 16px;
+  margin: 18px 0 22px;
+  text-align: left;
+}
+
+.dual-freq-card {
+  background: #FFFFFF;
+  border-radius: 8px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.freq-diagnostic-card {
+  border: 1.5px solid #FCA5A5;
+  background: #FEF2F2;
+}
+
+.freq-solution-card {
+  border: 1.5px solid #7DD3FC;
+  background: #F0F9FF;
+}
+
+.dual-freq-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tag-warning {
+  color: #991B1B;
+}
+
+.tag-solution {
+  color: #0369A1;
+}
+
+.dual-freq-hz {
+  font-size: 1.85rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.text-danger-dark {
+  color: #DC2626;
+}
+
+.text-solution {
+  color: #0284C7;
+}
+
+.dual-freq-subtitle {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #334155;
+  line-height: 1.3;
+}
+
+.dual-freq-desc {
+  font-size: 0.8rem;
+  color: #64748B;
+  line-height: 1.45;
+  flex-grow: 1;
+}
+
+.pill-solution {
+  background: #0284C7 !important;
+  border-color: #0369A1 !important;
+  color: #FFFFFF !important;
+}
+
+.dual-freq-arrow-divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #0284C7;
+}
+
+.dual-arrow-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #E0F2FE;
+  border: 1px solid #BAE6FD;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0284C7;
+}
+
+.dual-arrow-caption {
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #0284C7;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 768px) {
+  .dual-freq-comparison-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .dual-freq-arrow-divider {
+    flex-direction: row;
+    justify-content: center;
+    margin: 4px 0;
+  }
+  .dual-arrow-circle svg {
+    transform: rotate(90deg);
+  }
+}

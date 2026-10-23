@@ -513,7 +513,7 @@
       <p class="question-helper">Selecione todas as opções que se aplicam (pode marcar mais de uma)&nbsp;:</p>
 
       <div class="visual-editorial-card" style="margin-bottom: 16px;">
-        <img src="assets/idoso_frustrado_ouvido.jpg" alt="Frustração com tratamentos convencionais ineficazes" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 0 0 16px;">
+        <img src="assets/idoso_tratamentos_quiz_real.jpg" alt="Frustração com tratamentos convencionais ineficazes" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 0 0 16px;">
       </div>
 
       <div class="choice-tiles-stack multi-select-stack" data-question="prevTreatments">
@@ -879,8 +879,20 @@
          TELA 16: TRAJECTOIRE DE RÉCUPÉRATION (COURBES CROISÉES)
          ======================================================================= -->
     <section class="screen-pane" id="screen-trajectory">
-      <h2 class="question-heading">Você está em <span id="traj-score-label">7</span>/10 hoje. Veja o caminho de volta.</h2>
-      <p class="question-helper">Estimativa da queda de sobrecarga conforme a camada protetora do nervo (mielina) se regenera e o alarme do cérebro é desligado:</p>
+      <div class="traj-diagnostic-badge-card">
+        <div class="traj-badge-item">
+          <span class="traj-badge-label">Frequência com Sobrecarga</span>
+          <span class="traj-badge-value traj-badge-freq" id="traj-freq-display">4.250 Hz</span>
+        </div>
+        <div class="traj-badge-sep"></div>
+        <div class="traj-badge-item">
+          <span class="traj-badge-label">Nível de Hiperativação</span>
+          <span class="traj-badge-value traj-badge-sev" id="traj-sev-badge">7/10 (Severo)</span>
+        </div>
+      </div>
+
+      <h2 class="question-heading">O seu córtex auditivo travou em <span id="traj-freq-heading">4.250 Hz</span> com nível <span id="traj-score-label">7</span>/10. Veja o caminho de volta.</h2>
+      <p class="question-helper">O seu teste confirmou que o zumbido decorre de uma <strong>falha de sobrecarga cortical na frequência de <span id="traj-freq-copy">4.250 Hz</span></strong>. Conforme a bainha protetora de mielina for recuperada e a estimulação sonora atuar, o alarme do cérebro é gradualmente desligado:</p>
 
       <div class="trajectory-chart-wrap">
         <svg class="trajectory-svg-canvas" id="trajectory-svg-canvas" viewBox="0 0 500 220" fill="none">
@@ -1028,11 +1040,49 @@
       <!-- DIAGNOSTIC COMPARATIF CLINIQUE (DESIGN IDENTIQUE AU PROFIL DE LA LANDING PAGE) -->
       <div class="vsl-diagnostic-container mypattern-profile-card">
         <div class="profile-card-badge">
-          <span>MAPEAMENTO NEUROACÚSTICO</span>
+          <span>MAPEAMENTO NEUROACÚSTICO INDIVIDUAL</span>
         </div>
 
-        <div class="profile-card-hz" id="vsl-freq-callout">4 250 Hz</div>
-        <div class="profile-card-type">Tipo de som&nbsp;: <span id="vsl-sound-display">Apito contínuo e agudo</span></div>
+        <!-- PAINEL COMPARATIVO DE DUAS FREQUÊNCIAS (DIAGNÓSTICO VS RECALIBRAÇÃO) -->
+        <div class="dual-freq-comparison-grid">
+          <!-- Coluna 1: Frequência Diagnosticada (Em Falha) -->
+          <div class="dual-freq-card freq-diagnostic-card">
+            <div class="dual-freq-tag tag-warning">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span>1. FREQUÊNCIA DIAGNOSTICADA (EM FALHA)</span>
+            </div>
+            <div class="dual-freq-hz text-danger-dark" id="vsl-freq-callout">4.250 Hz</div>
+            <div class="dual-freq-subtitle">Apito em Curto-Circuito Neural Ativo</div>
+            <div class="dual-freq-desc">Frequência em que o seu córtex auditivo sofre hiperativação contínua e perdeu a inibição natural.</div>
+            <div>
+              <span class="diag-status-pill" id="diag-severity-pill">Sobrecarga Severa (7/10)</span>
+            </div>
+          </div>
+
+          <!-- Divisor com seta de recalibração -->
+          <div class="dual-freq-arrow-divider">
+            <div class="dual-arrow-circle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+            <span class="dual-arrow-caption">Recalibração</span>
+          </div>
+
+          <!-- Coluna 2: Frequência Terapêutica / Solução Notched -->
+          <div class="dual-freq-card freq-solution-card">
+            <div class="dual-freq-tag tag-solution">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <span>2. FREQUÊNCIA DE RECALIBRAÇÃO (SOLUÇÃO)</span>
+            </div>
+            <div class="dual-freq-hz text-solution" id="vsl-recalib-callout">Filtro Notched 4.250 Hz</div>
+            <div class="dual-freq-subtitle">Inibição Lateral Anti-Sobrecarga</div>
+            <div class="dual-freq-desc">Estímulo acústico cirúrgico que cria uma "zona de silêncio" em <span id="vsl-recalib-target">4.250 Hz</span> para desligar os neurônios hiperativos.</div>
+            <div>
+              <span class="diag-status-pill pill-solution" id="diag-solution-pill">Alvo Terapêutico Configurado</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-card-type" style="margin-top: 14px;">Tipo de som detectado&nbsp;: <strong id="vsl-sound-display">Apito contínuo e agudo</strong></div>
 
         <div class="profile-waveform-bars">
           <span class="p-bar b1"></span>
@@ -1045,15 +1095,19 @@
           <span class="p-bar b8"></span>
         </div>
 
-        <div style="margin: 10px 0 18px;">
-          <span class="diag-status-pill" id="diag-severity-pill">Sobrecarga Severa (7/10)</span>
-        </div>
-
-        <!-- RÉCAPITULATIF DES PARAMÈTRES DU PATIENT -->
+<!-- RÉCAPITULATIF DES PARAMÈTRES DU PATIENT -->
         <div class="patient-params-flat-table">
           <div class="patient-param-line">
             <span class="p-param-label">Tom identificado</span>
             <strong class="p-param-val" id="diag-summary-sound">Apito contínuo e agudo</strong>
+          </div>
+          <div class="patient-param-line">
+            <span class="p-param-label">Frequência em falha</span>
+            <strong class="p-param-val" id="diag-summary-freq-flaw">4.250 Hz (Curto-circuito cortical)</strong>
+          </div>
+          <div class="patient-param-line">
+            <span class="p-param-label">Filtro de Recalibração</span>
+            <strong class="p-param-val" id="diag-summary-freq-filter" style="color: #0284C7;">Filtro Notched 4.250 Hz (Inibição Lateral)</strong>
           </div>
           <div class="patient-param-line">
             <span class="p-param-label">Localização</span>
@@ -1169,7 +1223,7 @@
           <div class="tsl-accent-dash"></div>
         </div>
         <h3 class="tsl-section-heading">O DESESPERO DAS 3H DA MANHÃ E O FIM DO <mark class="tsl-mark">PESADELO NOTURNO</mark></h3>
-        <img src="assets/cena_quarto_3am.jpg" alt="Noite em claro com zumbido no ouvido às 3h da manhã" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 28px 0 32px;">
+        <img src="assets/cena_quarto_3am_real.jpg" alt="Noite em claro com zumbido no ouvido às 3h da manhã" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 28px 0 32px;">
         <p>São exatamente 3 horas e 14 minutos da madrugada.</p>
         <p>A sua casa inteira está no mais absoluto silêncio. A rua está calma. As luzes apagadas. O seu parceiro dorme profundamente do outro lado da cama.</p>
         <p>Mas, dentro da sua cabeça... é como se houvesse uma <strong>turbina de avião roncando no máximo</strong>.</p>
@@ -1280,7 +1334,7 @@
         <p>Isso não é coincidência. É anatomia pura.</p>
         <p>Os nervos que controlam a sua mastigação (a articulação temporomandibular, ou ATM) e os músculos cervicais da sua nuca passam a <strong>menos de 2 milímetros do canal auditivo interno</strong>.</p>
         
-        <img src="assets/decompression_atm.jpg" alt="Exame da articulação temporomandibular (ATM) e conexão com o nervo auditivo" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 28px 0 32px;">
+        <img src="assets/nuca_travada_real.jpg" alt="Exame da articulação temporomandibular (ATM) e conexão com o nervo auditivo" style="width: 100%; border-radius: 8px; display: block; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin: 28px 0 32px;">
 
         <p>Se você tem o hábito involuntário de apertar ou ranger os dentes à noite (bruxismo), ou se passa o dia com os ombros encolhidos, essa tensão mecânica contínua esmaga a base do nervo auditivo.</p>
         <p>E se você já teve uma infecção respiratória antiga, sinusite crônica ou gripe forte, toxinas ácidas inflamatórias penetraram na raiz do ouvido, acelerando a quebra da camada protetora.</p>
@@ -2277,6 +2331,6 @@
 
   </main>
 
-  <script src="quiz.js?v=5.0"></script>
+  <script src="quiz.js?v=6.2"></script>
 </body>
 </html>

@@ -1723,9 +1723,32 @@
   // Diagnostic Clinique de Surcharge pour la VSL (Données Personnalisées Approfondies)
   function updateVslDiagnosticCard() {
     const hz = userAnswers.frequencyHz || 4250;
+    const formattedHz = hz.toLocaleString('pt-BR') + ' Hz';
+
+    // 1. Painel de Duas Frequências (Diagnóstico vs Recalibração Terapêutica)
     const vslFreqCallout = document.getElementById('vsl-freq-callout');
     if (vslFreqCallout) {
-      vslFreqCallout.textContent = hz.toLocaleString('pt-BR') + ' Hz';
+      vslFreqCallout.textContent = formattedHz;
+    }
+
+    const vslRecalibCallout = document.getElementById('vsl-recalib-callout');
+    if (vslRecalibCallout) {
+      vslRecalibCallout.textContent = 'Filtro Notched ' + formattedHz;
+    }
+
+    const vslRecalibTarget = document.getElementById('vsl-recalib-target');
+    if (vslRecalibTarget) {
+      vslRecalibTarget.textContent = formattedHz;
+    }
+
+    const diagSummaryFreqFlaw = document.getElementById('diag-summary-freq-flaw');
+    if (diagSummaryFreqFlaw) {
+      diagSummaryFreqFlaw.textContent = formattedHz + ' (Curto-circuito cortical)';
+    }
+
+    const diagSummaryFreqFilter = document.getElementById('diag-summary-freq-filter');
+    if (diagSummaryFreqFilter) {
+      diagSummaryFreqFilter.textContent = 'Filtro Notched ' + formattedHz + ' (Inibição Lateral)';
     }
 
     const soundName = soundNameDictionary[userAnswers.soundType] || 'Apito contínuo e agudo';
@@ -2003,10 +2026,34 @@
     const score = (rawScore !== undefined && rawScore !== null) ? parseInt(rawScore, 10) : 7;
     const safeScore = Math.max(1, Math.min(10, isNaN(score) ? 7 : score));
 
-    // 1. Atualiza o texto do título
+    const hz = userAnswers.frequencyHz || 4250;
+    const formattedHz = hz.toLocaleString('pt-BR') + ' Hz';
+
+    // 1. Atualiza elementos de diagnóstico da Tela 9 (Frequência e Sobrecarga)
     const scoreLabel = document.getElementById('traj-score-label');
     if (scoreLabel) {
       scoreLabel.textContent = safeScore;
+    }
+
+    const trajFreqDisplay = document.getElementById('traj-freq-display');
+    if (trajFreqDisplay) {
+      trajFreqDisplay.textContent = formattedHz;
+    }
+
+    const trajFreqHeading = document.getElementById('traj-freq-heading');
+    if (trajFreqHeading) {
+      trajFreqHeading.textContent = formattedHz;
+    }
+
+    const trajFreqCopy = document.getElementById('traj-freq-copy');
+    if (trajFreqCopy) {
+      trajFreqCopy.textContent = formattedHz;
+    }
+
+    const trajSevBadge = document.getElementById('traj-sev-badge');
+    if (trajSevBadge) {
+      const sevLabel = safeScore >= 7 ? 'Severo' : (safeScore >= 4 ? 'Moderado' : 'Leve');
+      trajSevBadge.textContent = safeScore + '/10 (' + sevLabel + ')';
     }
 
     // 2. Coordenada Y da curva de zumbido:
