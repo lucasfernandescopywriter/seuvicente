@@ -1408,7 +1408,7 @@
               if (msgAudioElodie) msgAudioElodie.style.display = 'block';
               if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
 
-              // Vicente digita msg 4a
+              // Vicente aguarda 20 segundos para o lead ouvir o áudio da Camila (23s) antes de digitar msg 4a
               waTimers.push(setTimeout(() => {
                 setTyping('text');
 
@@ -1418,7 +1418,7 @@
                   if (msg4a) msg4a.style.display = 'block';
                   if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
 
-                  // Vicente digita msg 4b
+                  // Intervalo natural de 1.3s antes de digitar msg 4b
                   waTimers.push(setTimeout(() => {
                     setTyping('text');
 
@@ -1428,7 +1428,7 @@
                       if (msg4b) msg4b.style.display = 'block';
                       if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
 
-                      // Vicente digita msg 4c (pergunta)
+                      // Intervalo natural de 1.3s antes de digitar msg 4c (pergunta)
                       waTimers.push(setTimeout(() => {
                         setTyping('text');
 
@@ -1447,13 +1447,13 @@
                             showWhatsAppInputOptions(opts2, (chosenText2) => {
                               handleStep2Send(chosenText2);
                             });
-                          }, 600));
-                        }, 900));
-                      }, 500));
-                    }, 1100));
-                  }, 500));
-                }, 1200));
-              }, 1200));
+                          }, 800));
+                        }, 1200));
+                      }, 1300));
+                    }, 1300));
+                  }, 1300));
+                }, 1300));
+              }, 20000));
             }, 1800));
           }, 30000));
         }, 6500));
