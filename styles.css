@@ -5780,16 +5780,7 @@ input:focus-visible {
 }
 
 /* 5. WhatsApp Photo Proof Card Styling com Sombra Háptica */
-.wa-photo-bubble {
-  border-radius: 12px !important;
-  overflow: hidden !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12) !important;
-}
-
-.wa-photo-preview {
-  border-radius: 8px !important;
-  transition: transform 0.3s ease !important;
-}
+/* Unificado na seção 3.3 ao final do arquivo para evitar conflito de especificidade */
 
 /* 6. Respeito ao prefers-reduced-motion (Acessibilidade) */
 @media (prefers-reduced-motion: reduce) {
@@ -6094,26 +6085,81 @@ input:focus-visible {
   line-height: 1.35 !important;
 }
 
-/* 3.3 Foto WhatsApp com Borda Perfeita e Autentica */
-.wa-photo-bubble {
-  max-width: 290px !important;
-  width: 100% !important;
-  padding: 4px 4px 6px !important;
+/* =========================================================================
+   3.3 FOTO WHATSAPP DEFINITIVA: ANTI-COLAPSO FLEXBOX E BORDA PERFEITA
+   ========================================================================= */
+
+/* Impede terminantemente que o flexbox do chat esmague qualquer balão */
+.wa-chat-scroll > *,
+.wa-bubble-in,
+.wa-bubble-out,
+.wa-bubble-voice,
+.wa-photo-bubble,
+#wa-msg-photo {
+  flex-shrink: 0 !important;
+}
+
+/* Container do Balão de Foto POV */
+.wa-photo-bubble,
+#wa-msg-photo {
+  flex-shrink: 0 !important;
+  width: 280px !important;
+  max-width: 88% !important;
+  min-height: 260px !important; /* Altura minima garantida: impede colapso */
+  padding: 4px 4px 6px 4px !important;
   background-color: #FFFFFF !important;
   border-radius: 0 8px 8px 8px !important;
   box-shadow: 0 1px 2px rgba(11, 20, 26, 0.12) !important;
-  overflow: hidden !important;
   box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  margin-bottom: 6px !important;
 }
 
+/* Evita interferência de classes genéricas de encaminhamento */
+.wa-photo-bubble.wa-bubble-forwarded {
+  padding: 4px 4px 6px 4px !important;
+  width: 280px !important;
+}
+
+/* Cabeçalho "Encaminhada" */
+.wa-photo-bubble .wa-forward-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  padding: 2px 4px 4px 4px !important;
+  font-size: 0.72rem !important;
+  color: #8696A0 !important;
+  font-style: italic !important;
+  margin-bottom: 2px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Foto com proporção e cantos suaves */
+.wa-photo-bubble .wa-photo-preview,
 .wa-photo-preview {
   width: 100% !important;
-  height: 195px !important;
+  height: 200px !important;
+  min-height: 200px !important;
+  max-height: 200px !important;
   object-fit: cover !important;
   object-position: center !important;
-  border-radius: 6px !important;
+  border-radius: 6px 6px 4px 4px !important;
   display: block !important;
   margin: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+/* Legenda com tipografia WhatsApp e contorno inferior elegante */
+.wa-photo-bubble .wa-photo-caption,
+.wa-photo-caption {
+  font-size: 0.85rem !important;
+  color: #111B21 !important;
+  line-height: 1.35 !important;
+  padding: 6px 6px 2px 6px !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
 }
 
 
