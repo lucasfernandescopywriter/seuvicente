@@ -7056,3 +7056,12 @@ input:focus-visible {
   align-items: center !important;
   gap: 1px !important;
 }
+
+.google-review-avatar-img {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  border: 1px solid #E2E8F0 !important;
+  flex-shrink: 0 !important;
+}
