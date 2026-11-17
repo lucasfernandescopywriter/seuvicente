@@ -4110,8 +4110,8 @@ main {
   display: block;
   object-fit: contain;
   background: transparent;
-  filter: drop-shadow(0 14px 28px rgba(15, 23, 42, 0.10));
-  animation: floatingMockup 5.5s ease-in-out infinite;
+  filter: drop-shadow(0 26px 38px rgba(0, 0, 0, 0.22)) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.14)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.10));
+  animation: none !important;
   transition: transform 0.3s ease;
 }
 
@@ -6941,10 +6941,25 @@ input:focus-visible {
 }
 
 .tsl-floating-mockup-img {
-  animation: floatMockup 4.5s ease-in-out infinite;
+  animation: none !important;
   transition: transform 0.3s ease;
 }
 
 .tsl-floating-mockup-img:hover {
   transform: scale(1.02);
+}
+
+
+/* Badges de Confiança do Card de Preço em Linha Única Fixa */
+.price-trust-badges-single-line {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.price-trust-badges-single-line span {
+  white-space: nowrap !important;
 }
