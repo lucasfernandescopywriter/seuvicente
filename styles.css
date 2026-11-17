@@ -4679,7 +4679,9 @@ main {
   font-size: 0.95rem;
   font-weight: 700;
   color: #475569;
-  margin-bottom: 14px;
+  text-align: center !important;
+  margin-bottom: 12px;
+  width: 100%;
 }
 
 .profile-waveform-bars {
@@ -6802,13 +6804,15 @@ input:focus-visible {
 }
 
 .freq-diagnostic-card {
-  border: 1.5px solid #FCA5A5;
-  background: #FEF2F2;
+  border: 1px solid #E2E8F0;
+  border-top: 3px solid #DC2626;
+  background: #FFFFFF;
 }
 
 .freq-solution-card {
-  border: 1.5px solid #7DD3FC;
-  background: #F0F9FF;
+  border: 1px solid #E2E8F0;
+  border-top: 3px solid #0284C7;
+  background: #FFFFFF;
 }
 
 .dual-freq-tag {
@@ -6877,8 +6881,8 @@ input:focus-visible {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #E0F2FE;
-  border: 1px solid #BAE6FD;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
   display: flex;
   align-items: center;
   justify-content: center;

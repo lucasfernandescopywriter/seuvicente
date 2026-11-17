@@ -1306,7 +1306,7 @@
       if (tag) {
         const timeStr = getLiveTimeStr(offsetMinutes);
         if (isUser) {
-          tag.innerHTML = `${timeStr} <span class="wa-blue-ticks">✓✓</span>`;
+          tag.innerHTML = `${timeStr} <svg class="wa-blue-ticks" width="15" height="10" viewBox="0 0 16 11" fill="none" style="display: inline-block; vertical-align: middle; margin-left: 2px;"><path d="M11.05 1L5.5 6.55L3.2 4.25L2 5.45L5.5 8.95L12.25 2.2L11.05 1Z" fill="#53BDEB"/><path d="M14.05 1L8.5 6.55L7.75 5.8L6.55 7L8.5 8.95L15.25 2.2L14.05 1Z" fill="#53BDEB"/></svg>`;
         } else {
           tag.textContent = timeStr;
         }
@@ -1337,7 +1337,7 @@
     function setUserBubbleText(bubbleEl, text, offsetMinutes = 0) {
       if (!bubbleEl) return;
       const timeStr = getLiveTimeStr(offsetMinutes);
-      bubbleEl.innerHTML = `${text} <span class="wa-time-tag">${timeStr} <span class="wa-blue-ticks">✓✓</span></span>`;
+      bubbleEl.innerHTML = `${text} <span class="wa-time-tag">${timeStr} <svg class="wa-blue-ticks" width="15" height="10" viewBox="0 0 16 11" fill="none" style="display: inline-block; vertical-align: middle; margin-left: 2px;"><path d="M11.05 1L5.5 6.55L3.2 4.25L2 5.45L5.5 8.95L12.25 2.2L11.05 1Z" fill="#53BDEB"/><path d="M14.05 1L8.5 6.55L7.75 5.8L6.55 7L8.5 8.95L15.25 2.2L14.05 1Z" fill="#53BDEB"/></svg></span>`;
       bubbleEl.style.display = 'block';
       if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
     }
@@ -2354,7 +2354,7 @@
       // 3. Atualiza estado visual do botão
       btnClaimVoucher.innerHTML = `
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        <span>✓ Voucher Aplicado! Abrindo sua condição especial...</span>
+        <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.5" style="display: inline-block; vertical-align: -2px; margin-right: 5px;"><polyline points="20 6 9 17 4 12"/></svg>Voucher Aplicado! Abrindo sua condição especial...</span>
       `;
       btnClaimVoucher.style.backgroundColor = '#16A34A';
       btnClaimVoucher.style.borderColor = '#16A34A';
