@@ -679,17 +679,30 @@
             <span class="wa-time-tag">10:43</span>
           </div>
 
-          <!-- Photo POV WhatsApp de Camila e o marido (Encaminhada) -->
-          <div class="wa-bubble-in wa-photo-bubble wa-bubble-forwarded" id="wa-msg-photo" style="display: none;">
-            <div class="wa-forward-header" style="margin-bottom: 4px; padding-left: 2px;">
+          <!-- Photo POV WhatsApp de Camila e o marido (Encaminhada - Somente a Foto) -->
+          <div class="wa-bubble-in wa-photo-bubble" id="wa-msg-photo" style="display: none;">
+            <div class="wa-forward-header">
               <svg class="wa-forward-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
               <span>Encaminhada</span>
             </div>
-            <img src="assets/camila_selfie_whatsapp.jpg?v=3" alt="Camila e Marcelo" class="wa-photo-preview" width="260" height="200" loading="eager">
-            <div class="wa-photo-caption">
-              "Primeiro café da manhã no silêncio absoluto depois de anos... O Marcelo e eu agradecemos de coração, Seu Vicente!"
-              <span class="wa-time-tag">10:44</span>
+            <div class="wa-photo-img-wrap" style="position: relative; border-radius: 6px; overflow: hidden; margin-top: 2px;">
+              <img src="assets/camila_selfie_whatsapp.jpg?v=3" alt="Camila e Marcelo" class="wa-photo-preview" width="260" height="200" loading="eager">
+              <div class="wa-photo-inner-time" style="position: absolute; right: 6px; bottom: 4px; background: rgba(0, 0, 0, 0.45); color: #FFFFFF; font-size: 0.65rem; padding: 2px 6px; border-radius: 10px; font-weight: 500; letter-spacing: 0.02em;">
+                <span class="wa-time-tag" style="color: #FFFFFF; margin: 0; display: inline;">10:44</span>
+              </div>
             </div>
+          </div>
+
+          <!-- Mensagem de Texto Encaminhada da Camila (Separada) -->
+          <div class="wa-bubble-in wa-bubble-forwarded wa-bubble-forwarded-text" id="wa-msg-photo-text" style="display: none;">
+            <div class="wa-forward-header">
+              <svg class="wa-forward-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              <span>Encaminhada</span>
+            </div>
+            <div class="wa-forwarded-text-body" style="font-size: 0.90rem; color: #111B21; line-height: 1.45; margin-top: 3px;">
+              "Primeiro café da manhã no silêncio absoluto depois de anos... O Marcelo e eu agradecemos de coração, Seu Vicente!"
+            </div>
+            <span class="wa-time-tag">10:44</span>
           </div>
 
           <!-- Note Vocale 2: Camila (23s) (Encaminhada) -->

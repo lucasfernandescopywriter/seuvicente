@@ -1277,6 +1277,7 @@
     const msgUser1 = document.getElementById('wa-msg-user-1');
     const msgAudio = document.getElementById('wa-msg-audio');
     const msgPhoto = document.getElementById('wa-msg-photo');
+    const msgPhotoText = document.getElementById('wa-msg-photo-text');
     const msgAudioElodie = document.getElementById('wa-msg-audio-elodie');
     const msg4a = document.getElementById('wa-msg-4a') || document.getElementById('wa-msg-4');
     const msg4b = document.getElementById('wa-msg-4b');
@@ -1314,7 +1315,7 @@
     }
 
     // Reset initial visibility
-    [msg2a, msg2b, msgUser1, msgAudio, msgPhoto, msgAudioElodie, msg4a, msg4b, msg4c, msgUser2, msg5a, msg5b, msg6a, msg6b, msgUser3, typingBubble].forEach(el => {
+    [msg2a, msg2b, msgUser1, msgAudio, msgPhoto, msgPhotoText, msgAudioElodie, msg4a, msg4b, msg4c, msgUser2, msg5a, msg5b, msg6a, msg6b, msgUser3, typingBubble].forEach(el => {
       if (el) el.style.display = 'none';
     });
     if (msg1) msg1.style.display = 'block';
@@ -1426,7 +1427,7 @@
             if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
           }
 
-          // Delay de 30 segundos após envio do áudio
+          // Delay de 30 segundos após envio do áudio de Vicente
           waTimers.push(setTimeout(() => {
             setBubbleTime(msgPhoto, false, 2);
             if (msgPhoto) {
@@ -1436,11 +1437,19 @@
               }, 50);
             }
 
-            // Áudio da Camila (2.0s)
+            // Mensagem de texto encaminhada da Camila (1.2s após a foto)
             waTimers.push(setTimeout(() => {
-              setBubbleTime(msgAudioElodie, false, 2);
-              if (msgAudioElodie) msgAudioElodie.style.display = 'block';
-              if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
+              setBubbleTime(msgPhotoText, false, 2);
+              if (msgPhotoText) {
+                msgPhotoText.style.display = 'block';
+                if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
+              }
+
+              // Áudio encaminhado da Camila (1.6s após a mensagem de texto)
+              waTimers.push(setTimeout(() => {
+                setBubbleTime(msgAudioElodie, false, 2);
+                if (msgAudioElodie) msgAudioElodie.style.display = 'block';
+                if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
 
               // Vicente aguarda 20 segundos para o lead ouvir o áudio da Camila (23s) antes de digitar msg 4a
               waTimers.push(setTimeout(() => {
@@ -1488,11 +1497,12 @@
                   }, 1300));
                 }, 1300));
               }, 20000));
-            }, 1800));
-          }, 30000));
-        }, 6500));
-      }, 1500));
-    }
+            }, 1600));
+          }, 1200));
+        }, 30000));
+      }, 6500));
+    }, 1500));
+  }
 
     function handleStep2Send(chosenText2) {
       hideWhatsAppInputOptions();
