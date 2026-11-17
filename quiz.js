@@ -74,6 +74,40 @@
 
   initUtms();
 
+  function initDirectCheckoutLinks() {
+    const directBtns = document.querySelectorAll('a[href*="payfast.greenn.com.br"]');
+    directBtns.forEach(btn => {
+      const originalHref = btn.getAttribute('data-original-href') || btn.getAttribute('href');
+      if (originalHref) {
+        if (!btn.getAttribute('data-original-href')) {
+          btn.setAttribute('data-original-href', originalHref);
+        }
+        btn.href = attachUtmsToUrl(originalHref);
+      }
+      if (!btn.getAttribute('data-track-initiate-checkout')) {
+        btn.setAttribute('data-track-initiate-checkout', 'true');
+        btn.addEventListener('click', function () {
+          const isBasic = btn.id === 'btn-pizza-basic' || (btn.href && (btn.href.includes('basico') || btn.href.includes('798777')));
+          const price = isBasic ? 67.00 : 97.00;
+          const planName = isBasic ? 'Protocolo do Silêncio - Essencial' : 'Protocolo do Silêncio - Completo';
+
+          trackPixelEvent('InitiateCheckout', {
+            content_name: planName,
+            content_category: 'Infoproduto / Terapia Neuroacústica',
+            currency: 'BRL',
+            value: price
+          }, false);
+        });
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDirectCheckoutLinks);
+  } else {
+    initDirectCheckoutLinks();
+  }
+
   // =========================================================================
   // 1. FLUXO 100% LINEAR DOS 9 BLOCOS DE VENDA (21 TELAS - ZERO RETORNOS)
   // =========================================================================
@@ -118,14 +152,14 @@
 
   // Dicionário de Nomes dos Sons (Português do Brasil)
   const soundNameDictionary = {
-    'ringing': 'Apito contínuo e agudo',
+    'ringing': 'Apito fininho, contínuo e estridente',
     'buzzing': 'Chiado constante de panela de pressão',
-    'screeching': 'Ninho de cigarras ou grilos cantando',
-    'roaring': 'Motor constante, britadeira ou turbina de avião',
+    'screeching': 'Ninho de cigarras ou grilos ensurdecedores',
+    'roaring': 'Motor de caminhão, turbina ou britadeira pesada',
     'kettle': 'Batimento cardíaco pulsátil (vu... vu... vu...)',
-    'electric': 'Curto-circuito elétrico com estalos',
-    'static': 'Vapor constante ou cachoeira',
-    'multiple': 'Mistura de múltiplos tons simultâneos'
+    'electric': 'Curto-circuito elétrico com estalos e faíscas',
+    'static': 'Vapor sob pressão constante ou cachoeira contínua',
+    'multiple': 'Mistura caótica de múltiplos tons simultâneos'
   };
 
   // Estado Central da Aplicação
@@ -855,11 +889,11 @@
     3: { badge: 'Nível leve (3 de 10)', color: '#16A34A', title: 'Início de incômodo', desc: 'Começa a chamar a sua atenção quando você tenta ler ou descansar.' },
     4: { badge: 'Nível moderado (4 de 10)', color: '#D97706', title: 'Interfere na concentração', desc: 'Você nota o apito com frequência durante as atividades do dia a dia.' },
     5: { badge: 'Nível moderado (5 de 10)', color: '#D97706', title: 'Incomoda no fim da tarde', desc: 'Com o cansaço acumulado, o som parece subir de volume e exige mais esforço mental.' },
-    6: { badge: 'Nível moderado (6 de 10)', color: '#D97706', title: 'Atrapalha o sono', desc: 'Atrasa o sono várias noites na semana por causa do chiado contínuo no travesseiro.' },
-    7: { badge: 'Nível severo (7 de 10)', color: '#DC2626', title: 'Tira a paciência e rouba o descanso', desc: 'O apito domina a sua atenção, estraga momentos de descanso e transforma a hora de dormir numa tortura mental.' },
-    8: { badge: 'Nível severo (8 de 10)', color: '#DC2626', title: 'Esgotamento mental constante', desc: 'O barulho lateja na cabeça, prejudica o sono profundo e afeta o humor e a disposição.' },
-    9: { badge: 'Nível muito severo (9 de 10)', color: '#DC2626', title: 'Desespero auditivo agudo', desc: 'Sensação de pressão na cabeça, ansiedade permanente e despertares assustados no meio da madrugada.' },
-    10: { badge: 'Nível crítico (10 de 10)', color: '#DC2626', title: 'Urgência de recalibração neural', desc: 'Insuportável 24 horas por dia. O cérebro está travado no volume máximo o tempo todo.' }
+    6: { badge: 'Nível moderado (6 de 10)', color: '#D97706', title: 'Atrapalha o sono e a paz', desc: 'Atrasa o sono várias noites na semana por causa do chiado contínuo no travesseiro.' },
+    7: { badge: 'Nível severo (7 de 10)', color: '#DC2626', title: 'Tira a paciência e rouba o sono', desc: 'O apito domina seus pensamentos, estraga momentos de lazer e transforma a hora de dormir numa tortura mental.' },
+    8: { badge: 'Nível severo (8 de 10)', color: '#DC2626', title: 'Esgotamento mental crônico', desc: 'O barulho lateja na cabeça, destrói o sono profundo e afeta seu humor, sua memória e sua paciência com a família.' },
+    9: { badge: 'Nível muito severo (9 de 10)', color: '#DC2626', title: 'Desespero e sobrecarga auditiva', desc: 'Sensação de cabeça pesada ou oca, crises de ansiedade noturna e despertares assustados no meio da madrugada.' },
+    10: { badge: 'Nível crítico (10 de 10)', color: '#DC2626', title: 'Urgência de recalibração neural', desc: 'Tortura contínua 24 horas por dia. O cérebro travou o ganho central no volume máximo e precisa de desligamento imediato.' }
   };
 
   function selectSeverityLevel(val) {
@@ -1733,7 +1767,7 @@
 
     const vslRecalibCallout = document.getElementById('vsl-recalib-callout');
     if (vslRecalibCallout) {
-      vslRecalibCallout.textContent = 'Filtro Notched ' + formattedHz;
+      vslRecalibCallout.textContent = 'Zona de Silêncio Cirúrgica';
     }
 
     const vslRecalibTarget = document.getElementById('vsl-recalib-target');
@@ -1748,7 +1782,7 @@
 
     const diagSummaryFreqFilter = document.getElementById('diag-summary-freq-filter');
     if (diagSummaryFreqFilter) {
-      diagSummaryFreqFilter.textContent = 'Filtro Notched ' + formattedHz + ' (Inibição Lateral)';
+      diagSummaryFreqFilter.textContent = 'Zona de Silêncio em ' + formattedHz + ' (Inibição Lateral)';
     }
 
     const soundName = soundNameDictionary[userAnswers.soundType] || 'Apito contínuo e agudo';
@@ -2090,7 +2124,7 @@
       pointTinnitus.setAttribute('cy', yTinnitusStart);
     }
     if (labelTinnitus) {
-      labelTinnitus.textContent = 'HOJE — ' + safeScore + '/10';
+      labelTinnitus.textContent = 'HOJE: ' + safeScore + '/10';
       labelTinnitus.setAttribute('x', '65');
       const textY = (safeScore >= 9) ? (yTinnitusStart + 16) : Math.max(26, yTinnitusStart - 8);
       labelTinnitus.setAttribute('y', textY);
@@ -2271,6 +2305,7 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  // Botoes da TSL conduzem suavemente para a Pagina de Vendas (#screen-result)
   if (btnTsl1) {
     btnTsl1.addEventListener('click', handleGoToSalesPage);
   }
