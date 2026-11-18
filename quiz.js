@@ -893,7 +893,7 @@
     7: { badge: 'Nível severo (7 de 10)', color: '#DC2626', title: 'Tira a paciência e rouba o sono', desc: 'O apito domina seus pensamentos, estraga momentos de lazer e transforma a hora de dormir numa tortura mental.' },
     8: { badge: 'Nível severo (8 de 10)', color: '#DC2626', title: 'Esgotamento mental crônico', desc: 'O barulho lateja na cabeça, destrói o sono profundo e afeta seu humor, sua memória e sua paciência com a família.' },
     9: { badge: 'Nível muito severo (9 de 10)', color: '#DC2626', title: 'Desespero e sobrecarga auditiva', desc: 'Sensação de cabeça pesada ou oca, crises de ansiedade noturna e despertares assustados no meio da madrugada.' },
-    10: { badge: 'Nível crítico (10 de 10)', color: '#DC2626', title: 'Urgência de recalibração neural', desc: 'Tortura contínua 24 horas por dia. O cérebro travou o ganho central no volume máximo e precisa de desligamento imediato.' }
+    10: { badge: 'Nível crítico (10 de 10)', color: '#DC2626', title: 'Urgência de recalibração neural', desc: 'Tortura contínua 24 horas por dia. O cérebro travou o botão de volume no máximo e precisa ser desligado agora.' }
   };
 
   function selectSeverityLevel(val) {
@@ -1787,12 +1787,12 @@
 
     const diagSummaryFreqFlaw = document.getElementById('diag-summary-freq-flaw');
     if (diagSummaryFreqFlaw) {
-      diagSummaryFreqFlaw.textContent = formattedHz + ' (Curto-circuito cortical)';
+      diagSummaryFreqFlaw.textContent = formattedHz + ' (Fio em curto-circuito)';
     }
 
     const diagSummaryFreqFilter = document.getElementById('diag-summary-freq-filter');
     if (diagSummaryFreqFilter) {
-      diagSummaryFreqFilter.textContent = 'Zona de Silêncio em ' + formattedHz + ' (Inibição Lateral)';
+      diagSummaryFreqFilter.textContent = 'Zona de Silêncio em ' + formattedHz + ' (Corte do Apito)';
     }
 
     const soundName = soundNameDictionary[userAnswers.soundType] || 'Apito contínuo e agudo';
@@ -1878,11 +1878,11 @@
       'nuca-mandibula': 'Tensão muscular na nuca / bruxismo (ATM)',
       'estresse-pressao': 'Pico severo de estresse / crise de ansiedade',
       'ruido-alto': 'Exposição a ruído alto (show, maquinário, fones)',
-      'nao-lembro': 'Desgaste gradual silencioso da mielina'
+      'nao-lembro': 'Desgaste natural da capa protetora do nervo'
     };
     const diagTrigger = document.getElementById('diag-summary-trigger');
     if (diagTrigger) {
-      diagTrigger.textContent = triggerDictionary[userAnswers.triggerOrigin] || 'Desgaste mecânico e neural da mielina';
+      diagTrigger.textContent = triggerDictionary[userAnswers.triggerOrigin] || 'Tensão e desgaste da capa protetora do nervo';
     }
 
     const impactDictionary = {
@@ -1908,7 +1908,7 @@
 
     const diagOverloadDesc = document.getElementById('diag-overload-desc');
     if (diagOverloadDesc) {
-      diagOverloadDesc.textContent = 'Capa de mielina desgastada ao longo do nervo auditivo. Sem isolar a sua frequência exata (' + hz.toLocaleString('pt-BR') + ' Hz), o cérebro interpreta as microdescargas elétricas como um alarme contínuo de emergência e amplifica o chiado 24 horas por dia.';
+      diagOverloadDesc.textContent = 'A capa protetora do nervo do ouvido está desgastada. Sem cortar fora o tom exato do seu apito (' + hz.toLocaleString('pt-BR') + ' Hz), o cérebro entende essas faíscas elétricas como um alarme de emergência e deixa o chiado no volume máximo 24 horas por dia.';
     }
 
     checkVslButtonVisibility();
@@ -1960,7 +1960,7 @@
     const phrases = [
       "Isolando a frequência sonora do seu zumbido...",
       "Analisando o aumento de volume no córtex auditivo...",
-      "Montando seu Protocolo Personalizado de Recalibração Sonora...",
+      "Montando seu Protocolo do Silêncio personalizado...",
       "Calibrando os sons compensatórios para o seu caso...",
       "Seu Plano Personalizado para silenciar o zumbido está pronto!"
     ];
